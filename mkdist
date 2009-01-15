@@ -1,0 +1,4 @@
+#!/bin/tcsh -f
+rm -rf build MANIFEST
+python setup.py bdist_rpm
+rm -rf build MANIFEST

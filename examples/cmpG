@@ -1,0 +1,4 @@
+#!/bin/tcsh -f
+set flopt="--maxrregcount 32 --use_fast_math --gpu-name sm_11"
+set lib=""
+nvcc -o ${1} -O3 $flopt ${1}.cu -lcublas
