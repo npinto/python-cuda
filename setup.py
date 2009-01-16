@@ -25,7 +25,7 @@ CUFFT examples.
 """,
     download_url='ftp://ftp.graviscom.de/pub/python-cuda/',
     license='LGPL',
-    package_dir = {'cuda':'.'},
+    package_dir = {'cuda':'src/cuda'},
     packages=['cuda','cuda.utils','cuda.examples'],
     package_data = {'cuda':['MANIFEST.in','README'],
                     'cuda.examples':

@@ -2,7 +2,8 @@
 
 from ctypes import *
 
-mm = CDLL("./_cpuFunctions.so")
+#mm = CDLL("./_cpuFunctions.so")
+mm = CDLL("./_cpuFunctions.dylib")
 
 _cvp = c_void_p
 _cfl = c_float
