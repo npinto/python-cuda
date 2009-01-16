@@ -1,0 +1,8 @@
+#!/bin/tcsh -f
+set flag1="--ptx"
+set flag2="--cubin"
+#set flopt="--maxrregcount 12 --use_fast_math --gpu-architecture sm_11"
+set flopt="--use_fast_math --gpu-architecture sm_11"
+set lib=""
+nvcc $flag1 $flopt ${1}.cu  |& grep -iv warning
+nvcc $flag2 $flopt ${1}.ptx |& grep -iv warning

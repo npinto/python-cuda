@@ -1,0 +1,6 @@
+#!/bin/sh 
+echo "Compiling CPU functions"
+compileC cpuFunctions
+echo "Compiling GPU functions"
+compileG gpuFunctions
+compileG simple
