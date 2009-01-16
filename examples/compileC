@@ -1,0 +1,9 @@
+#!/bin/tcsh -f
+set inc="-I/opt/local/Library/Frameworks/Python.framework/Versions/2.6/include/"
+#set inc="-I/usr/include/python2.5"
+set lib=""
+set flags="-fPIC -O2 -msse2"# -malign-double"
+gcc -c $flags $inc ${1}.c
+gcc -shared $lib -o _${1}.so ${1}.o
+strip -x _${1}.so
+rm *.o
