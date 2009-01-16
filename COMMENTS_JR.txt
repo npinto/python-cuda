@@ -1,1 +1,12 @@
-test for commit access
+Layout is now:
+
+README
+setup.py 
+setup.py-pycuda (stole it cause it does what we need to do ultimately...with minor edits)
+mkdist (trivial script to bundle a release)
+build
+src:
+    cuda
+        (python files for main package)
+        examples
+        utils
