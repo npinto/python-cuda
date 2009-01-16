@@ -1,1 +1,0 @@
- --import %laneid,%ctaid,%nctaid,%smid,A7,%pm3,%pm2,%pm1,__CC-temp__0__,%pm0,%tid,%clock,%warpid,%ntid,%gridid --export gpuScale,gpuPOLY5,gpuPOLY20,gpuPOLY40,init_array,gpuSAXPY,gpuSGEMM,gpuPOLY10,gpuVADD,gpuGFLOPS,gpuTRIG,gpuBLSC
