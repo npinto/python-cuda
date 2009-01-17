@@ -1,6 +1,6 @@
 # coding:utf-8: © Arno Pähler, 2007-08
-from cu_api import *
-from cu_defs import *
+from cu.cu_api import *
+from cu.cu_defs import *
 
 class GPUException(Exception):
     pass

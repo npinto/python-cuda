@@ -3,9 +3,9 @@
 from ctypes import *
 from time import time
 
-from cuda.cu_defs import *
-from cuda.cu_api import *
-from cuda.cu_utils import *
+from cu.cu_defs import *
+from cu.cu_api import *
+from utils.cu_utils import *
 
 from cpuFunctions import cpuPOLY5,cpuPOLY10,cpuPOLY20,cpuPOLY40
 

@@ -3,9 +3,12 @@
 from ctypes import *
 from time import time
 
-from cuda.cu_defs import *
-from cuda.cu_api import *
-from cuda.cu_utils import *
+#from cuda.cu_defs import *
+from cu.cu_defs import *
+#from cuda.cu_api import *
+from cu.cu_api import *
+#from cuda.cu_utils import *
+from utils.cu_utils import *
 
 from cpuFunctions import fixedInit,cpuVADD,checkError
 

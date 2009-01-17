@@ -1,10 +1,11 @@
 from cu_defs import *
-# coding:utf-8: © Arno Pähler, 2007-08
+from utils import libutils
 
 # CUDa file: cuda.h
 
-CU = "/usr/lib/libcuda.so"
-cu = CDLL(CU,mode=RTLD_GLOBAL)
+cu = libutils.get_cuda(RTLD_GLOBAL)
+#CU = "/usr/lib/libcuda.so"
+#cu = CDLL(CU,mode=RTLD_GLOBAL)
 
 class cuException(Exception):
     pass
