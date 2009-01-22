@@ -6,7 +6,7 @@ use_setuptools(version='0.6c9')
 
 from setuptools import setup, find_packages
 
-print find_packages('cuda')
+#print find_packages('cuda')
 
 setup(
     name = 'python-cuda',
@@ -15,7 +15,7 @@ setup(
     #packages = find_packages('cuda'),
     #package_dir = {'': 'cuda'}
 
-    packages=['cuda','cuda.cuda','cuda.cu', 'cuda.cublas', 'cuda.cufft', 'cuda.utils'],
+    packages= ['cuda','cuda.cuda','cuda.cu', 'cuda.cublas', 'cuda.cufft', 'cuda.utils'],
     package_dir = {'cuda':'cuda'},
 
 #     author='Arno Pähler',
