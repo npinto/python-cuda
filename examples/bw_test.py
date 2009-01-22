@@ -1,9 +1,7 @@
 #!/bin/env python
 # coding:utf-8: © Arno Pähler, 2007-08
 
-import cuda.cuda as cuda
-from cuda.cuda.cuda_api import *
-from cuda.cuda.cuda_defs import *
+from cuda.cuda import *
 from cuda.utils.cuda_utils import mallocHost
 from cuda.utils.ctypes_array import convert
 
