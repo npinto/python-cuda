@@ -12,8 +12,11 @@ setup(
     name = 'python-cuda',
     version = '2.1-jrnp001',
     
-    packages = find_packages('cuda'),
-    package_dir = {'': 'cuda'}
+    #packages = find_packages('cuda'),
+    #package_dir = {'': 'cuda'}
+
+    packages=['cuda','cuda.cuda','cuda.cu', 'cuda.cublas', 'cuda.cufft', 'cuda.utils'],
+    package_dir = {'cuda':'cuda'},
 
 #     author='Arno Pähler',
 #     author_email='paehler@graviscom.de',
