@@ -96,7 +96,6 @@ class CublasArray(CudaArrayFromArray):
         CudaArrayFromArray.__init__(self, numpy_array, numpy_array.dtype)
 
     def alloc(self):
-        print 'hi there'
         self.data = c_void_p()
         cublasAlloc(self.size ,sizeof(c_float), byref(self.data))
         self.allocated = True

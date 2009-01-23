@@ -9,8 +9,11 @@ from cuda.utils.cudaarray import CublasArray
 from cuda.utils.cudaarray import CudaArrayFromArray
 import numpy
 
+def contig(array):
+    return numpy.ascontiguousarray(array, array.dtype)
+
 # Size of square matrix
-N = 64
+N = 4096
 
 # init cublas and arrays
 cublasInit()
@@ -24,49 +27,24 @@ C = numpy.random.randn(N,N).astype(numpy.float32)
 dA = CublasArray(A)
 dB = CublasArray(B)
 dC = CublasArray(C)
+print dA.toArray()
 
 cublas_result = numpy.empty(N*N)
 print cublas_result
-# bench square matrices
-for i in range(2): 
-    transa = 'N'
-    transb = None
 
-    # transb = i ? 'T' : 'N'
-    if i == 0:
-        transb = 'T'
-    else: 
-        transb = 'N'
+transa = 'N'
+transb = 'N'
 
+print "\ntesting sgemm( '%s', '%s', n, n, n, ... )" % (transa, transb) 
 
-    print "\ntesting sgemm( '%s', '%s', n, n, n, ... )" % (transa, transb) 
-    nb = 64
+# compute with CUBLAS
+cublasSetMatrix( N , N, sizeof( c_float ), contig(C).ctypes.data, N, dC.data, N ) 
+cublasSgemm( transa, transb, N, N, N, 1, dA.data, N, dB.data, N, -1, dC.data, N )
+print cublasGetError()
+cublasGetMatrix( N, N, sizeof( c_float ), dC.data, N, cublas_result.ctypes.data, N )
 
-    print "   n   CUBLAS,Gflop/s   we,Gflop/s   \"error\"\n"
-    idim = 1 
-    while (idim <= N/nb):
-        dim = idim*nb
-
-        # set up the parameters
-        m = dim
-        n = dim
-        k = dim
-        lda = dim
-        ldb = dim
-        ldc = dim
-        alpha = 1
-        beta = -1
-
-        # compute with CUBLAS
-        cublasSetMatrix( m, n, sizeof( c_float ), C.ctypes.data, ldc, dC.data, ldc ) 
-        cublasSgemm( transa, transb, m, n, k, alpha, dA.data, lda, dB.data, ldb, beta, dC.data, ldc )
-        cublasGetError()
-        cublasGetMatrix( m, n, sizeof( c_float ), dC.data, ldc, cublas_result.ctypes.data, ldc )
-        print cublas_result
-        print numpy.dot(A,B)
-        
-        idim = int((idim+1))*1.1
-
+print cublas_result
+print numpy.dot(A,B)
 
 # shutdown
 dA.free()
