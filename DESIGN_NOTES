@@ -1,0 +1,26 @@
+SUGAR:
+
+kernel execution:
+    driver:
+        1. compile the code if not already cached (same as pycuda)
+        2. returns a string either to the entire cubin or a function in the cubin
+
+    runtime:
+        1. compile the code into shared library if not already cached (very similar but not quite the same as pycuda)
+        2. returns a callable factory representing the kernel function.
+
+numpy/cuda memory: 
+    xxx.ref is device ptr
+    page-locked flag?
+    
+    Composed of the following classes:
+    0. baseCudaNumpyArray (abstract class subclassing ndarray)
+    (these subclass baseCudaNumpyArray) 
+    1. CublasNumpyArray 
+    2. CufftNumpyArray
+    3. CudaLinearNumpyArray
+    
+error checking:
+    error checking works by passing the cuda function and its args to a wrapper function which checks for cuda errors:
+
+    sugar.check_error(func, **args)
