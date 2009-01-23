@@ -1,17 +1,13 @@
 #!/usr/bin/env python
 
-import sys 
-from cuda.cuda import *
-from cuda.utils.cuda_utils import mallocHost
-from cuda.utils.ctypes_array import convert
 from cuda.cublas import *
 from cuda.utils.cudaarray import CublasArray
-from cuda.utils.cudaarray import CudaArrayFromArray
-from numpy.random import randn
+
 from numpy import empty_like,dot
+from numpy.random import randn
 
 # Size of square matrix
-N = 4096
+N = 1024
 
 # init cublas
 cublasInit()
