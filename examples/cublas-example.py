@@ -7,49 +7,42 @@ from cuda.utils.ctypes_array import convert
 from cuda.cublas import *
 from cuda.utils.cudaarray import CublasArray
 from cuda.utils.cudaarray import CudaArrayFromArray
-import numpy
-
-def contig(array):
-    return numpy.ascontiguousarray(array, array.dtype)
+from numpy.random import randn
+from numpy import empty_like,dot
 
 # Size of square matrix
-N = 64
+N = 4096
 
-# init cublas and arrays
+# init cublas
 cublasInit()
 
 # allocate host matrices
-A = numpy.random.randn(N,N).astype(numpy.float32)
-B = numpy.random.randn(N,N).astype(numpy.float32)
-#C = numpy.random.randn(N,N).astype(numpy.float32)
-C = numpy.empty_like(A).astype(numpy.float32)
+A = randn(N,N).astype('float32')
+B = randn(N,N).astype('float32')
+C = empty_like(A).astype('float32')
 
 # allocate device matrices from host
 dA = CublasArray(A)
 dB = CublasArray(B)
 dC = CublasArray(C)
 
-cublas_result = numpy.empty(N*N).astype(numpy.float32)
-
-print '-'*80
-print cublas_result
-print '-'*80
-
+# transpose a/b ? t = yes, n = no
 transa = 'n'
 transb = 'n'
 
 # compute with CUBLAS
-cublasSetMatrix( N , N, sizeof( c_float ), contig(C).ctypes.data, N, dC.data, N ) 
 cublasSgemm( transa, transb, N, N, N, 1, dA.data, N, dB.data, N, 0, dC.data, N )
-cublasGetMatrix( N, N, sizeof( c_float ), dC.data, N, cublas_result.ctypes.data, N )
 
-print cublas_result
+# retrieve results
+C = dC.toArray()
+
 print '-'*80
-print numpy.dot(A,B)
+print C
 print '-'*80
+
+print '-'*80
+print dot(A,B)
+print '-'*80
+
 # shutdown
-dA.free()
-dB.free()
-dC.free()
-
 cublasShutdown() 

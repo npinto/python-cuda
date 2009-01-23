@@ -89,14 +89,49 @@ class CudaArrayFromArray(CudaArray):
         CudaArray.__init__(self, a.size, a.dtype)
         self.alloc()
         self.setWithArray(a)
-
+        self.rows = a.shape[0]
+        self.cols = a.shape[1]
 
 class CublasArray(CudaArrayFromArray):
     def __init__(self, numpy_array):
         CudaArrayFromArray.__init__(self, numpy_array, numpy_array.dtype)
 
     def alloc(self):
+        print 'cublas alloc'
         self.data = c_void_p()
         cublasAlloc(self.size ,sizeof(c_float), byref(self.data))
         self.allocated = True
 
+    def setWithArray(self, a):
+        print 'cublas setwitharray'
+        if not self.allocated:
+            raise Exception("Must first allocate")
+        a = numpy.asfortranarray(numpy.ascontiguousarray(a, dtype=None))
+        assert a.size == self.size, "size must be the same"
+        assert a.dtype == self.dtype, "dtype must be the same"
+        cublasSetMatrix( a.shape[0] , a.shape[1], sizeof( c_float ), a.ctypes.data, a.shape[0], self.data, a.shape[1] ) 
+
+    def toArray(self, a=None):
+        print 'cublas toarray'
+        if not self.allocated:
+            raise Exception("Must first allocate")
+        if a is None:
+            a = numpy.empty(self.size, dtype=self.dtype, order='F')
+        else:
+            # Check that the given array is appropriate.
+            if a.size != self.size:
+                raise ValueError("need an array of size %s; got %s" % (self.size, a.size))
+            if a.dtype.name != self.dtype.name:
+                # XXX: compare dtypes directly? issubdtype?
+                raise ValueError("need an array of dtype %r; got %r" % (self.dtype, a.dtype))
+
+        cublasGetMatrix( self.rows, self.cols, sizeof( c_float ), self.data, self.rows, a.ctypes.data, self.rows)
+        a = a.reshape((self.rows,self.cols),order='F')
+        return a
+
+    def free(self):
+        print 'cublas free'
+        if self.allocated:
+            cublasFree(self.data)
+            self.data = None
+            self.allocated = False

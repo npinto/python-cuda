@@ -4,9 +4,8 @@
 from ctypes import *
 from time import time
 
-from cuda.cublas_api import *
-from cuda.cublas_defs import *
-from cuda.cuda_api import cudaThreadSynchronize
+from cuda.cublas import *
+from cuda.cuda import cudaThreadSynchronize
 
 from cpuFunctions import arrayInit,cpuSGEMM,checkError
 from ctypes_array import *
