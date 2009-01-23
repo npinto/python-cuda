@@ -13,7 +13,7 @@ def contig(array):
     return numpy.ascontiguousarray(array, array.dtype)
 
 # Size of square matrix
-N = 4096
+N = 64
 
 # init cublas and arrays
 cublasInit()
@@ -21,31 +21,32 @@ cublasInit()
 # allocate host matrices
 A = numpy.random.randn(N,N).astype(numpy.float32)
 B = numpy.random.randn(N,N).astype(numpy.float32)
-C = numpy.random.randn(N,N).astype(numpy.float32)
+#C = numpy.random.randn(N,N).astype(numpy.float32)
+C = numpy.empty_like(A).astype(numpy.float32)
 
 # allocate device matrices from host
 dA = CublasArray(A)
 dB = CublasArray(B)
 dC = CublasArray(C)
-print dA.toArray()
 
-cublas_result = numpy.empty(N*N)
+cublas_result = numpy.empty(N*N).astype(numpy.float32)
+
+print '-'*80
 print cublas_result
+print '-'*80
 
-transa = 'N'
-transb = 'N'
-
-print "\ntesting sgemm( '%s', '%s', n, n, n, ... )" % (transa, transb) 
+transa = 'n'
+transb = 'n'
 
 # compute with CUBLAS
 cublasSetMatrix( N , N, sizeof( c_float ), contig(C).ctypes.data, N, dC.data, N ) 
-cublasSgemm( transa, transb, N, N, N, 1, dA.data, N, dB.data, N, -1, dC.data, N )
-print cublasGetError()
+cublasSgemm( transa, transb, N, N, N, 1, dA.data, N, dB.data, N, 0, dC.data, N )
 cublasGetMatrix( N, N, sizeof( c_float ), dC.data, N, cublas_result.ctypes.data, N )
 
 print cublas_result
+print '-'*80
 print numpy.dot(A,B)
-
+print '-'*80
 # shutdown
 dA.free()
 dB.free()
