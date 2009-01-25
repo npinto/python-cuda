@@ -15,7 +15,7 @@ from cuda.cuda import *
 from cuda.cublas import *
 import numpy
 import ctypes
-from ctypes import c_void_p
+from ctypes import *
 
 # cuda <-> dtype conversion
 cudaDtypes = {'float32': ctypes.c_float,

@@ -1,6 +1,6 @@
-# coding:utf-8: © Arno Pähler, 2007-08
-from cu.cu_api import *
-from cu.cu_defs import *
+#!/usr/bin/env python
+from cuda.cu import * 
+from ctypes import *
 
 class GPUException(Exception):
     pass

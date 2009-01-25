@@ -1,2 +1,2 @@
-from cuda_api import *
+from cuda import *
 

@@ -37,7 +37,7 @@ if options.PYTHON_FILE is None:
     if options.LIBRARY is not None:
         options.PYTHON_FILE = basename(options.LIBRARY) + '.py'
     else:
-        options.PYTHON_FILE = "output.xml"
+        options.PYTHON_FILE = "output.py"
 
 config = {'HEADER_FILE':options.HEADER_FILE, 'LIBRARY': options.LIBRARY, 'XML_FILE': options.XML_FILE, 'PYTHON_FILE': options.PYTHON_FILE}
 

@@ -1,1 +1,1 @@
-from cufft_api import *
+from cufft import *

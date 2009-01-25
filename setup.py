@@ -15,7 +15,7 @@ setup(
     #packages = find_packages('cuda'),
     #package_dir = {'': 'cuda'}
 
-    packages= ['cuda','cuda.cuda','cuda.cu', 'cuda.cublas', 'cuda.cufft', 'cuda.utils'],
+    packages= ['cuda','cuda.cu','cuda.cuda', 'cuda.cublas', 'cuda.cufft', 'cuda.kernel', 'cuda.array', 'cuda.utils'],
     package_dir = {'cuda':'cuda'},
 
 #     author='Arno Pähler',

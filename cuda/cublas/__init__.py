@@ -1,1 +1,1 @@
-from cublas_api import *
+from cublas import *

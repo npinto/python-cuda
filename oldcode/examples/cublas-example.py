@@ -1,7 +1,6 @@
 #!/usr/bin/env python
-
 from cuda.cublas import *
-from cuda.utils.cudaarray import CublasArray
+from cuda.array import CublasArray
 
 from numpy import empty_like,dot
 from numpy.random import randn
