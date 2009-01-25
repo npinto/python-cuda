@@ -1,12 +1,4 @@
-python-cuda fork by Justin Riley and Nicolas Pinto (MIT)
+Python bindings for CUDA 2.1 with numpy integration, by Justin Riley and Nicolas Pinto (MIT)
 
-see LICENCE
+see LICENSE
 
-Original Copyright:
-© Arno Pähler, 2007-08
-
-This directory contains Python bindings for CUDA, both the Application API
-and the Runtime API. It also provides bindings for CUBLAS and CUFFT.
-The support for CUBLAS is incomplete, complex BLAS routines are missing.
-In the examples directory are several test example, some translated
-from CUDA SDK examples, some self-written.
