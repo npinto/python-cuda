@@ -35,3 +35,9 @@ error checking:
     error checking works by passing the cuda function and its args to a wrapper function which checks for cuda errors:
 
     sugar.check_error(func, **args)
+
+
+automatic ctypes'ing:
+    1. script to automate h2xml + xml2py (done by Justin: cuda/utils/createbindings.py)
+    2. automatic replacement of hardcoded references to shared libs (/path/to/libxxx.so) with calls to libutils.get_lib (TODO)
+       using sed on a pipe ?
