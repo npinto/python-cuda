@@ -1658,7 +1658,7 @@ cublasSasum.__doc__ = \
 cublasSaxpy = _libraries['cublas'].cublasSaxpy
 cublasSaxpy.restype = None
 # cublasSaxpy(n, alpha, x, incx, y, incy)
-cublasSaxpy.argtypes = [c_int, c_float, POINTER(c_float), c_int, POINTER(c_float), c_int]
+cublasSaxpy.argtypes = [c_int, c_float, c_void_p, c_int, c_void_p, c_int]
 cublasSaxpy.__doc__ = \
 """void cublasSaxpy(int n, float alpha, unknown * x, int incx, float * y, int incy)
 /usr/local/cuda/include/cublas.h:411"""
