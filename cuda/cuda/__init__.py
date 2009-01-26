@@ -1,2 +1,1 @@
-from cuda import *
-
+from cudart import *

@@ -1,1 +1,1 @@
-from cu import *
+from cudadrv import *
