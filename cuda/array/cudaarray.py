@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
 """Array-like objects for CUDA."""
 
 #----------------------------------------------------------------------------
 # Copyright (c) 2007, Tech-X Corporation
 #----------------------------------------------------------------------------
-
-
-
 #----------------------------------------------------------------------------
 # Imports
 #----------------------------------------------------------------------------
@@ -25,6 +22,8 @@ cudaDtypes = {'float32': ctypes.c_float,
 
 class CudaArray(object):
 
+    ref = property(fget=lambda self: self.__get_ref())
+
     def __init__(self, size, dtype):
         self.size = size
         self.dtype = numpy.dtype(dtype)
@@ -41,6 +40,10 @@ class CudaArray(object):
         if ct is None:
             raise Exception("Unsupported dtype")
         return ct
+
+    def __get_ref(self):
+        return cast(self.data,POINTER(self._convertType(self.dtype)))
+        
 
     def alloc(self):
         #self.data = cudart.malloc(self.nbytes, self.ctype)

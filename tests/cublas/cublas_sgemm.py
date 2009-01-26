@@ -27,7 +27,7 @@ transa = 'n'
 transb = 'n'
 
 # compute with CUBLAS
-cublasSgemm( transa, transb, N, N, N, 1, dA.data, N, dB.data, N, 0, dC.data, N )
+cublasSgemm( transa, transb, N, N, N, 1, dA.ref, N, dB.ref, N, 0, dC.ref, N )
 cudaThreadSynchronize()
 
 # retrieve results

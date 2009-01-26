@@ -1,0 +1,10 @@
+Nicolas:
+    Design kernel getters (both driver and runtime versions)
+    Create project pylint specs
+    sugar/getinfo (driver and runtime versions?)
+
+Justin:
+    Finish/Cleanup of array module
+    cuda error checking
+    move utils to sugar
+    move array/kernel to sugar
