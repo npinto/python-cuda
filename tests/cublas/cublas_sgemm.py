@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-from cuda.cublas import *
+from cuda.cuda import cudaThreadSynchronize
+from cuda.cublas import cublasInit, cublasShutdown, cublasSgemm
 from cuda.array import CublasArray
 
 from numpy import empty_like,dot
@@ -27,6 +28,7 @@ transb = 'n'
 
 # compute with CUBLAS
 cublasSgemm( transa, transb, N, N, N, 1, dA.data, N, dB.data, N, 0, dC.data, N )
+cudaThreadSynchronize()
 
 # retrieve results
 C = dC.toArray()
