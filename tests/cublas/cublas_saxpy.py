@@ -1,7 +1,6 @@
 #!/bin/env python
-
 from time import time
-from ctypes import c_float
+from ctypes import cast,c_float, POINTER
 
 from numpy import empty_like,dot
 from numpy.random import randn
@@ -9,6 +8,11 @@ from numpy.random import randn
 from cuda.cublas import *
 from cuda.cuda import cudaThreadSynchronize
 from cuda.array import CudaArrayFromArray
+
+def embed_ipython():
+    from IPython.Shell import IPShellEmbed
+    ipshell = IPShellEmbed(user_ns = dict())
+    ipshell()
 
 def cpuSaxpy(a,b, alpha):
     return (alpha*a+b)
@@ -43,7 +47,8 @@ print cpuSaxpy(h_X,h_Y,alpha)
 print "-"*80
 
 # execute cublasSaxpy and sync threads
-cublasSaxpy(vlength,alpha,d_X.data,1,d_Y.data,1)
+#embed_ipython()
+cublasSaxpy(vlength,alpha,d_X.ref,1,d_Y.ref,1)
 cudaThreadSynchronize()
 
 print "-"*80

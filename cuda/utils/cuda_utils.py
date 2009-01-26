@@ -1,7 +1,4 @@
-# coding:utf-8: © Arno Pähler, 2007-08
-
-#from cuda.cuda.cuda_api import *
-#from cuda.cuda.cuda_defs import *
+#!/usr/bin/env python
 from ctypes import *
 from cuda.cuda import *
 
@@ -76,15 +73,6 @@ def getMemory(d,dtype=c_int):
             "Failed to allocate memory")
         cudaMemcpy(gmem,d,size,cudaMemcpyHostToDevice)
     return gmem.value
-
-def mallocHost(n,dtype=c_int,pageLocked=True):
-    if pageLocked:
-        p = c_void_p()
-        cudaMallocHost(byref(p),n*sizeof(dtype))
-        r = (dtype*n).from_address(p.value)
-    else:
-        r = (dtype*n)()
-    return r
 
 ### XXX
 #def devMemToTex(name,data,size):

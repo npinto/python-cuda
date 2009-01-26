@@ -25,8 +25,8 @@ numpy/cuda memory:
     page-locked flag?
     
     Composed of the following classes:
-    0. baseCudaNumpyArray (abstract class subclassing ndarray)
-    (these subclass baseCudaNumpyArray) 
+    0. BaseCudaNumpyArray (abstract class subclassing ndarray)
+    (these subclass BaseCudaNumpyArray) 
     1. CublasNumpyArray 
     2. CufftNumpyArray
     3. CudaLinearNumpyArray
@@ -40,4 +40,4 @@ error checking:
 automatic ctypes'ing:
     1. script to automate h2xml + xml2py (done by Justin: cuda/utils/createbindings.py)
     2. automatic replacement of hardcoded references to shared libs (/path/to/libxxx.so) with calls to libutils.get_lib (TODO)
-       using sed on a pipe ?
+       using sed on a pipe (done)

@@ -1658,7 +1658,7 @@ cublasSasum.__doc__ = \
 cublasSaxpy = _libraries['cublas'].cublasSaxpy
 cublasSaxpy.restype = None
 # cublasSaxpy(n, alpha, x, incx, y, incy)
-cublasSaxpy.argtypes = [c_int, c_float, c_void_p, c_int, c_void_p, c_int]
+cublasSaxpy.argtypes = [c_int, c_float, POINTER(c_float), c_int, POINTER(c_float), c_int]
 cublasSaxpy.__doc__ = \
 """void cublasSaxpy(int n, float alpha, unknown * x, int incx, float * y, int incy)
 /usr/local/cuda/include/cublas.h:411"""
@@ -1978,7 +1978,7 @@ cublasStrsv.__doc__ = \
 cublasSgemm = _libraries['cublas'].cublasSgemm
 cublasSgemm.restype = None
 # cublasSgemm(transa, transb, m, n, k, alpha, A, lda, B, ldb, beta, C, ldc)
-cublasSgemm.argtypes = [c_char, c_char, c_int, c_int, c_int, c_float, c_void_p, c_int, c_void_p, c_int, c_float, c_void_p, c_int]
+cublasSgemm.argtypes = [c_char, c_char, c_int, c_int, c_int, c_float, POINTER(c_float), c_int, POINTER(c_float), c_int, c_float, POINTER(c_float), c_int]
 cublasSgemm.__doc__ = \
 """void cublasSgemm(char transa, char transb, int m, int n, int k, float alpha, unknown * A, int lda, unknown * B, int ldb, float beta, float * C, int ldc)
 /usr/local/cuda/include/cublas.h:2231"""
