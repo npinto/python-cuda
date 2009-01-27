@@ -17,6 +17,7 @@ def fix_cdll_imports(bindings, lib):
         else:
             new_bindings.append(line.replace(lib,libname))
     new_bindings.insert(3,'from cuda.utils import get_lib\n')
+    new_bindings.insert(4,'c_longdouble = c_double\n')
     return new_bindings
 
 def main(args=None):

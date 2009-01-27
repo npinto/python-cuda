@@ -8,3 +8,8 @@ python createbindings.py -H /usr/local/cuda/include/cublas.h -l /usr/local/cuda/
 python createbindings.py -H /usr/local/cuda/include/cufft.h -l /usr/local/cuda/lib/libcufft.so -x cufft.xml -p ../cuda/cufft/cufft.py
 
 #find . -iname \*.py -exec python {} \;
+
+python ../cuda/cu/cudadrv.py
+python ../cuda/cuda/cudart.py
+python ../cuda/cublas/cublas.py
+python ../cuda/cufft/cufft.py
