@@ -1,0 +1,10 @@
+#!/bin/sh
+
+python createbindings.py -H $CUDA_PATH/include/cuda.h -l $CUDA_PATH/lib/libcuda.$LIB_EXT -x cu.xml -p ../cuda/cu/cudadrv.py
+python createbindings.py -H $CUDA_PATH/include/cuda_runtime.h -l $CUDA_PATH/lib/libcudart.$LIB_EXT -x cudart.xml -p ../cuda/cuda/cudart.py
+python createbindings.py -H $CUDA_PATH/include/cublas.h -l $CUDA_PATH/lib/libcublas.$LIB_EXT -x cublas.xml -p ../cuda/cublas/cublas.py
+python createbindings.py -H $CUDA_PATH/include/cufft.h -l $CUDA_PATH/lib/libcufft.$LIB_EXT -x cufft.xml -p ../cuda/cufft/cufft.py
+
+#find . -iname \*.py -exec python {} \;
+
+
