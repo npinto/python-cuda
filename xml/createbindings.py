@@ -83,9 +83,10 @@ def main(args=None):
     if len(options.INCLUDE_DIRS) == 0:
         options.INCLUDE_DIRS = dirname(options.HEADER_FILE)
     else:
-        options.INCLUDE_DIRS = ""
+        inc_opts = ""
         for inc in options.INCLUDE_DIRS:
-            options.INCLUDE_DIRS += ' -I %s ' % inc
+            inc_opts += ' -I %s' % inc
+        options.INCLUDE_DIRS=inc_opts
     
     library_options = []
     for lib in options.LIBRARIES:
@@ -97,7 +98,7 @@ def main(args=None):
               'INCLUDE': options.INCLUDE_DIRS}
 
     h2xmlcmd = 'python -m ctypeslib.h2xml %(HEADER_FILE)s' + \
-        ' -I %(INCLUDE)s -o %(XML_FILE)s'
+        ' %(INCLUDE)s -o %(XML_FILE)s'
     h2xmlcmd = h2xmlcmd % config
     print "h2xmlcmd =", h2xmlcmd
     p = Popen(h2xmlcmd, shell=True)
