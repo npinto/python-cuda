@@ -9,23 +9,369 @@ _libraries['cublas'] = get_lib('cublas')
 STRING = c_char_p
 
 
+FP_INFINITE = 1
 _SVID_ = 0
 _XOPEN_ = 1
-FP_NAN = 0
-FP_ZERO = 2
 _POSIX_ = 2
-FP_INFINITE = 1
-_ISOC_ = 3
-FP_SUBNORMAL = 3
-FP_NORMAL = 4
 _IEEE_ = -1
+FP_ZERO = 2
+FP_NORMAL = 4
+FP_SUBNORMAL = 3
+_ISOC_ = 3
+FP_NAN = 0
+# ./my_CUDA2100_vector_types.h 55
+class char1(Structure):
+    pass
+char1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 55
+    ('x', c_byte),
+]
+# ./my_CUDA2100_vector_types.h 61
+class uchar1(Structure):
+    pass
+uchar1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 61
+    ('x', c_ubyte),
+]
+# ./my_CUDA2100_vector_types.h 67
+class char2(Structure):
+    pass
+char2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 67
+    ('x', c_byte),
+    ('y', c_byte),
+]
+# ./my_CUDA2100_vector_types.h 73
+class uchar2(Structure):
+    pass
+uchar2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 73
+    ('x', c_ubyte),
+    ('y', c_ubyte),
+]
+# ./my_CUDA2100_vector_types.h 79
+class char3(Structure):
+    pass
+char3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 79
+    ('x', c_byte),
+    ('y', c_byte),
+    ('z', c_byte),
+]
+# ./my_CUDA2100_vector_types.h 85
+class uchar3(Structure):
+    pass
+uchar3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 85
+    ('x', c_ubyte),
+    ('y', c_ubyte),
+    ('z', c_ubyte),
+]
+# ./my_CUDA2100_vector_types.h 91
+class char4(Structure):
+    pass
+char4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 91
+    ('x', c_byte),
+    ('y', c_byte),
+    ('z', c_byte),
+    ('w', c_byte),
+]
+# ./my_CUDA2100_vector_types.h 97
+class uchar4(Structure):
+    pass
+uchar4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 97
+    ('x', c_ubyte),
+    ('y', c_ubyte),
+    ('z', c_ubyte),
+    ('w', c_ubyte),
+]
+# ./my_CUDA2100_vector_types.h 103
+class short1(Structure):
+    pass
+short1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 103
+    ('x', c_short),
+]
+# ./my_CUDA2100_vector_types.h 109
+class ushort1(Structure):
+    pass
+ushort1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 109
+    ('x', c_ushort),
+]
+# ./my_CUDA2100_vector_types.h 115
+class short2(Structure):
+    pass
+short2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 115
+    ('x', c_short),
+    ('y', c_short),
+]
+# ./my_CUDA2100_vector_types.h 121
+class ushort2(Structure):
+    pass
+ushort2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 121
+    ('x', c_ushort),
+    ('y', c_ushort),
+]
+# ./my_CUDA2100_vector_types.h 127
+class short3(Structure):
+    pass
+short3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 127
+    ('x', c_short),
+    ('y', c_short),
+    ('z', c_short),
+]
+# ./my_CUDA2100_vector_types.h 133
+class ushort3(Structure):
+    pass
+ushort3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 133
+    ('x', c_ushort),
+    ('y', c_ushort),
+    ('z', c_ushort),
+]
+# ./my_CUDA2100_vector_types.h 139
+class short4(Structure):
+    pass
+short4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 139
+    ('x', c_short),
+    ('y', c_short),
+    ('z', c_short),
+    ('w', c_short),
+]
+# ./my_CUDA2100_vector_types.h 145
+class ushort4(Structure):
+    pass
+ushort4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 145
+    ('x', c_ushort),
+    ('y', c_ushort),
+    ('z', c_ushort),
+    ('w', c_ushort),
+]
+# ./my_CUDA2100_vector_types.h 151
+class int1(Structure):
+    pass
+int1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 151
+    ('x', c_int),
+]
+# ./my_CUDA2100_vector_types.h 157
+class uint1(Structure):
+    pass
+uint1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 157
+    ('x', c_uint),
+]
+# ./my_CUDA2100_vector_types.h 163
+class int2(Structure):
+    pass
+int2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 163
+    ('x', c_int),
+    ('y', c_int),
+]
+# ./my_CUDA2100_vector_types.h 169
+class uint2(Structure):
+    pass
+uint2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 169
+    ('x', c_uint),
+    ('y', c_uint),
+]
+# ./my_CUDA2100_vector_types.h 175
+class int3(Structure):
+    pass
+int3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 175
+    ('x', c_int),
+    ('y', c_int),
+    ('z', c_int),
+]
+# ./my_CUDA2100_vector_types.h 181
+class uint3(Structure):
+    pass
+uint3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 181
+    ('x', c_uint),
+    ('y', c_uint),
+    ('z', c_uint),
+]
+# ./my_CUDA2100_vector_types.h 187
+class int4(Structure):
+    pass
+int4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 187
+    ('x', c_int),
+    ('y', c_int),
+    ('z', c_int),
+    ('w', c_int),
+]
+# ./my_CUDA2100_vector_types.h 193
+class uint4(Structure):
+    pass
+uint4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 193
+    ('x', c_uint),
+    ('y', c_uint),
+    ('z', c_uint),
+    ('w', c_uint),
+]
+# ./my_CUDA2100_vector_types.h 199
+class long1(Structure):
+    pass
+long1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 199
+    ('x', c_long),
+]
+# ./my_CUDA2100_vector_types.h 205
+class ulong1(Structure):
+    pass
+ulong1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 205
+    ('x', c_ulong),
+]
+# ./my_CUDA2100_vector_types.h 217
+class long2(Structure):
+    pass
+long2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 217
+    ('x', c_long),
+    ('y', c_long),
+]
+# ./my_CUDA2100_vector_types.h 229
+class ulong2(Structure):
+    pass
+ulong2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 229
+    ('x', c_ulong),
+    ('y', c_ulong),
+]
+# ./my_CUDA2100_vector_types.h 263
+class float1(Structure):
+    pass
+float1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 263
+    ('x', c_float),
+]
+# ./my_CUDA2100_vector_types.h 269
+class float2(Structure):
+    pass
+float2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 269
+    ('x', c_float),
+    ('y', c_float),
+]
+# ./my_CUDA2100_vector_types.h 275
+class float3(Structure):
+    pass
+float3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 275
+    ('x', c_float),
+    ('y', c_float),
+    ('z', c_float),
+]
+# ./my_CUDA2100_vector_types.h 281
+class float4(Structure):
+    pass
+float4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 281
+    ('x', c_float),
+    ('y', c_float),
+    ('z', c_float),
+    ('w', c_float),
+]
+# ./my_CUDA2100_vector_types.h 287
+class longlong1(Structure):
+    pass
+longlong1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 287
+    ('x', c_longlong),
+]
+# ./my_CUDA2100_vector_types.h 293
+class ulonglong1(Structure):
+    pass
+ulonglong1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 293
+    ('x', c_ulonglong),
+]
+# ./my_CUDA2100_vector_types.h 299
+class longlong2(Structure):
+    pass
+longlong2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 299
+    ('x', c_longlong),
+    ('y', c_longlong),
+]
+# ./my_CUDA2100_vector_types.h 305
+class ulonglong2(Structure):
+    pass
+ulonglong2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 305
+    ('x', c_ulonglong),
+    ('y', c_ulonglong),
+]
+# ./my_CUDA2100_vector_types.h 311
+class double1(Structure):
+    pass
+double1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 311
+    ('x', c_double),
+]
+# ./my_CUDA2100_vector_types.h 317
+class double2(Structure):
+    pass
+double2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 317
+    ('x', c_double),
+    ('y', c_double),
+]
+# ./my_CUDA2100_vector_types.h 384
+class long3(Structure):
+    pass
+long3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 384
+]
+# ./my_CUDA2100_vector_types.h 386
+class ulong3(Structure):
+    pass
+ulong3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 386
+]
+# ./my_CUDA2100_vector_types.h 388
+class long4(Structure):
+    pass
+long4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 388
+]
+# ./my_CUDA2100_vector_types.h 390
+class ulong4(Structure):
+    pass
+ulong4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 390
+]
+# ./my_CUDA2100_vector_types.h 423
+class dim3(Structure):
+    pass
+dim3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 423
+    ('x', c_uint),
+    ('y', c_uint),
+    ('z', c_uint),
+]
 # /usr/include/bits/mathcalls.h 55
-acosl = _libraries['cublas'].acosl
-acosl.restype = c_longdouble
-# acosl(__x)
-acosl.argtypes = [c_longdouble]
-acosl.__doc__ = \
-"""long double acosl(long double __x)
+acosf = _libraries['cublas'].acosf
+acosf.restype = c_float
+# acosf(__x)
+acosf.argtypes = [c_float]
+acosf.__doc__ = \
+"""float acosf(float __x)
 /usr/include/bits/mathcalls.h:55"""
 # /usr/include/bits/mathcalls.h 55
 acos = _libraries['cublas'].acos
@@ -36,20 +382,20 @@ acos.__doc__ = \
 """double acos(double __x)
 /usr/include/bits/mathcalls.h:55"""
 # /usr/include/bits/mathcalls.h 55
-acosf = _libraries['cublas'].acosf
-acosf.restype = c_float
-# acosf(__x)
-acosf.argtypes = [c_float]
-acosf.__doc__ = \
-"""float acosf(float __x)
+acosl = _libraries['cublas'].acosl
+acosl.restype = c_longdouble
+# acosl(__x)
+acosl.argtypes = [c_longdouble]
+acosl.__doc__ = \
+"""long double acosl(long double __x)
 /usr/include/bits/mathcalls.h:55"""
 # /usr/include/bits/mathcalls.h 57
-asin = _libraries['cublas'].asin
-asin.restype = c_double
-# asin(__x)
-asin.argtypes = [c_double]
-asin.__doc__ = \
-"""double asin(double __x)
+asinl = _libraries['cublas'].asinl
+asinl.restype = c_longdouble
+# asinl(__x)
+asinl.argtypes = [c_longdouble]
+asinl.__doc__ = \
+"""long double asinl(long double __x)
 /usr/include/bits/mathcalls.h:57"""
 # /usr/include/bits/mathcalls.h 57
 asinf = _libraries['cublas'].asinf
@@ -60,20 +406,20 @@ asinf.__doc__ = \
 """float asinf(float __x)
 /usr/include/bits/mathcalls.h:57"""
 # /usr/include/bits/mathcalls.h 57
-asinl = _libraries['cublas'].asinl
-asinl.restype = c_longdouble
-# asinl(__x)
-asinl.argtypes = [c_longdouble]
-asinl.__doc__ = \
-"""long double asinl(long double __x)
+asin = _libraries['cublas'].asin
+asin.restype = c_double
+# asin(__x)
+asin.argtypes = [c_double]
+asin.__doc__ = \
+"""double asin(double __x)
 /usr/include/bits/mathcalls.h:57"""
 # /usr/include/bits/mathcalls.h 59
-atanl = _libraries['cublas'].atanl
-atanl.restype = c_longdouble
-# atanl(__x)
-atanl.argtypes = [c_longdouble]
-atanl.__doc__ = \
-"""long double atanl(long double __x)
+atanf = _libraries['cublas'].atanf
+atanf.restype = c_float
+# atanf(__x)
+atanf.argtypes = [c_float]
+atanf.__doc__ = \
+"""float atanf(float __x)
 /usr/include/bits/mathcalls.h:59"""
 # /usr/include/bits/mathcalls.h 59
 atan = _libraries['cublas'].atan
@@ -84,21 +430,13 @@ atan.__doc__ = \
 """double atan(double __x)
 /usr/include/bits/mathcalls.h:59"""
 # /usr/include/bits/mathcalls.h 59
-atanf = _libraries['cublas'].atanf
-atanf.restype = c_float
-# atanf(__x)
-atanf.argtypes = [c_float]
-atanf.__doc__ = \
-"""float atanf(float __x)
+atanl = _libraries['cublas'].atanl
+atanl.restype = c_longdouble
+# atanl(__x)
+atanl.argtypes = [c_longdouble]
+atanl.__doc__ = \
+"""long double atanl(long double __x)
 /usr/include/bits/mathcalls.h:59"""
-# /usr/include/bits/mathcalls.h 61
-atan2 = _libraries['cublas'].atan2
-atan2.restype = c_double
-# atan2(__y, __x)
-atan2.argtypes = [c_double, c_double]
-atan2.__doc__ = \
-"""double atan2(double __y, double __x)
-/usr/include/bits/mathcalls.h:61"""
 # /usr/include/bits/mathcalls.h 61
 atan2f = _libraries['cublas'].atan2f
 atan2f.restype = c_float
@@ -114,6 +452,14 @@ atan2l.restype = c_longdouble
 atan2l.argtypes = [c_longdouble, c_longdouble]
 atan2l.__doc__ = \
 """long double atan2l(long double __y, long double __x)
+/usr/include/bits/mathcalls.h:61"""
+# /usr/include/bits/mathcalls.h 61
+atan2 = _libraries['cublas'].atan2
+atan2.restype = c_double
+# atan2(__y, __x)
+atan2.argtypes = [c_double, c_double]
+atan2.__doc__ = \
+"""double atan2(double __y, double __x)
 /usr/include/bits/mathcalls.h:61"""
 # /usr/include/bits/mathcalls.h 64
 cosf = _libraries['cublas'].cosf
@@ -148,20 +494,20 @@ sinl.__doc__ = \
 """long double sinl(long double __x)
 /usr/include/bits/mathcalls.h:66"""
 # /usr/include/bits/mathcalls.h 66
-sinf = _libraries['cublas'].sinf
-sinf.restype = c_float
-# sinf(__x)
-sinf.argtypes = [c_float]
-sinf.__doc__ = \
-"""float sinf(float __x)
-/usr/include/bits/mathcalls.h:66"""
-# /usr/include/bits/mathcalls.h 66
 sin = _libraries['cublas'].sin
 sin.restype = c_double
 # sin(__x)
 sin.argtypes = [c_double]
 sin.__doc__ = \
 """double sin(double __x)
+/usr/include/bits/mathcalls.h:66"""
+# /usr/include/bits/mathcalls.h 66
+sinf = _libraries['cublas'].sinf
+sinf.restype = c_float
+# sinf(__x)
+sinf.argtypes = [c_float]
+sinf.__doc__ = \
+"""float sinf(float __x)
 /usr/include/bits/mathcalls.h:66"""
 # /usr/include/bits/mathcalls.h 68
 tanl = _libraries['cublas'].tanl
@@ -172,14 +518,6 @@ tanl.__doc__ = \
 """long double tanl(long double __x)
 /usr/include/bits/mathcalls.h:68"""
 # /usr/include/bits/mathcalls.h 68
-tan = _libraries['cublas'].tan
-tan.restype = c_double
-# tan(__x)
-tan.argtypes = [c_double]
-tan.__doc__ = \
-"""double tan(double __x)
-/usr/include/bits/mathcalls.h:68"""
-# /usr/include/bits/mathcalls.h 68
 tanf = _libraries['cublas'].tanf
 tanf.restype = c_float
 # tanf(__x)
@@ -187,6 +525,22 @@ tanf.argtypes = [c_float]
 tanf.__doc__ = \
 """float tanf(float __x)
 /usr/include/bits/mathcalls.h:68"""
+# /usr/include/bits/mathcalls.h 68
+tan = _libraries['cublas'].tan
+tan.restype = c_double
+# tan(__x)
+tan.argtypes = [c_double]
+tan.__doc__ = \
+"""double tan(double __x)
+/usr/include/bits/mathcalls.h:68"""
+# /usr/include/bits/mathcalls.h 73
+coshf = _libraries['cublas'].coshf
+coshf.restype = c_float
+# coshf(__x)
+coshf.argtypes = [c_float]
+coshf.__doc__ = \
+"""float coshf(float __x)
+/usr/include/bits/mathcalls.h:73"""
 # /usr/include/bits/mathcalls.h 73
 cosh = _libraries['cublas'].cosh
 cosh.restype = c_double
@@ -203,22 +557,6 @@ coshl.argtypes = [c_longdouble]
 coshl.__doc__ = \
 """long double coshl(long double __x)
 /usr/include/bits/mathcalls.h:73"""
-# /usr/include/bits/mathcalls.h 73
-coshf = _libraries['cublas'].coshf
-coshf.restype = c_float
-# coshf(__x)
-coshf.argtypes = [c_float]
-coshf.__doc__ = \
-"""float coshf(float __x)
-/usr/include/bits/mathcalls.h:73"""
-# /usr/include/bits/mathcalls.h 75
-sinhl = _libraries['cublas'].sinhl
-sinhl.restype = c_longdouble
-# sinhl(__x)
-sinhl.argtypes = [c_longdouble]
-sinhl.__doc__ = \
-"""long double sinhl(long double __x)
-/usr/include/bits/mathcalls.h:75"""
 # /usr/include/bits/mathcalls.h 75
 sinhf = _libraries['cublas'].sinhf
 sinhf.restype = c_float
@@ -226,6 +564,14 @@ sinhf.restype = c_float
 sinhf.argtypes = [c_float]
 sinhf.__doc__ = \
 """float sinhf(float __x)
+/usr/include/bits/mathcalls.h:75"""
+# /usr/include/bits/mathcalls.h 75
+sinhl = _libraries['cublas'].sinhl
+sinhl.restype = c_longdouble
+# sinhl(__x)
+sinhl.argtypes = [c_longdouble]
+sinhl.__doc__ = \
+"""long double sinhl(long double __x)
 /usr/include/bits/mathcalls.h:75"""
 # /usr/include/bits/mathcalls.h 75
 sinh = _libraries['cublas'].sinh
@@ -244,14 +590,6 @@ tanhl.__doc__ = \
 """long double tanhl(long double __x)
 /usr/include/bits/mathcalls.h:77"""
 # /usr/include/bits/mathcalls.h 77
-tanhf = _libraries['cublas'].tanhf
-tanhf.restype = c_float
-# tanhf(__x)
-tanhf.argtypes = [c_float]
-tanhf.__doc__ = \
-"""float tanhf(float __x)
-/usr/include/bits/mathcalls.h:77"""
-# /usr/include/bits/mathcalls.h 77
 tanh = _libraries['cublas'].tanh
 tanh.restype = c_double
 # tanh(__x)
@@ -259,14 +597,14 @@ tanh.argtypes = [c_double]
 tanh.__doc__ = \
 """double tanh(double __x)
 /usr/include/bits/mathcalls.h:77"""
-# /usr/include/bits/mathcalls.h 82
-sincosl = _libraries['cublas'].sincosl
-sincosl.restype = None
-# sincosl(__x, __sinx, __cosx)
-sincosl.argtypes = [c_longdouble, POINTER(c_longdouble), POINTER(c_longdouble)]
-sincosl.__doc__ = \
-"""void sincosl(long double __x, long double * __sinx, long double * __cosx)
-/usr/include/bits/mathcalls.h:82"""
+# /usr/include/bits/mathcalls.h 77
+tanhf = _libraries['cublas'].tanhf
+tanhf.restype = c_float
+# tanhf(__x)
+tanhf.argtypes = [c_float]
+tanhf.__doc__ = \
+"""float tanhf(float __x)
+/usr/include/bits/mathcalls.h:77"""
 # /usr/include/bits/mathcalls.h 82
 sincosf = _libraries['cublas'].sincosf
 sincosf.restype = None
@@ -283,14 +621,14 @@ sincos.argtypes = [c_double, POINTER(c_double), POINTER(c_double)]
 sincos.__doc__ = \
 """void sincos(double __x, double * __sinx, double * __cosx)
 /usr/include/bits/mathcalls.h:82"""
-# /usr/include/bits/mathcalls.h 89
-acoshf = _libraries['cublas'].acoshf
-acoshf.restype = c_float
-# acoshf(__x)
-acoshf.argtypes = [c_float]
-acoshf.__doc__ = \
-"""float acoshf(float __x)
-/usr/include/bits/mathcalls.h:89"""
+# /usr/include/bits/mathcalls.h 82
+sincosl = _libraries['cublas'].sincosl
+sincosl.restype = None
+# sincosl(__x, __sinx, __cosx)
+sincosl.argtypes = [c_longdouble, POINTER(c_longdouble), POINTER(c_longdouble)]
+sincosl.__doc__ = \
+"""void sincosl(long double __x, long double * __sinx, long double * __cosx)
+/usr/include/bits/mathcalls.h:82"""
 # /usr/include/bits/mathcalls.h 89
 acosh = _libraries['cublas'].acosh
 acosh.restype = c_double
@@ -300,6 +638,14 @@ acosh.__doc__ = \
 """double acosh(double __x)
 /usr/include/bits/mathcalls.h:89"""
 # /usr/include/bits/mathcalls.h 89
+acoshf = _libraries['cublas'].acoshf
+acoshf.restype = c_float
+# acoshf(__x)
+acoshf.argtypes = [c_float]
+acoshf.__doc__ = \
+"""float acoshf(float __x)
+/usr/include/bits/mathcalls.h:89"""
+# /usr/include/bits/mathcalls.h 89
 acoshl = _libraries['cublas'].acoshl
 acoshl.restype = c_longdouble
 # acoshl(__x)
@@ -307,6 +653,14 @@ acoshl.argtypes = [c_longdouble]
 acoshl.__doc__ = \
 """long double acoshl(long double __x)
 /usr/include/bits/mathcalls.h:89"""
+# /usr/include/bits/mathcalls.h 91
+asinhf = _libraries['cublas'].asinhf
+asinhf.restype = c_float
+# asinhf(__x)
+asinhf.argtypes = [c_float]
+asinhf.__doc__ = \
+"""float asinhf(float __x)
+/usr/include/bits/mathcalls.h:91"""
 # /usr/include/bits/mathcalls.h 91
 asinh = _libraries['cublas'].asinh
 asinh.restype = c_double
@@ -322,14 +676,6 @@ asinhl.restype = c_longdouble
 asinhl.argtypes = [c_longdouble]
 asinhl.__doc__ = \
 """long double asinhl(long double __x)
-/usr/include/bits/mathcalls.h:91"""
-# /usr/include/bits/mathcalls.h 91
-asinhf = _libraries['cublas'].asinhf
-asinhf.restype = c_float
-# asinhf(__x)
-asinhf.argtypes = [c_float]
-asinhf.__doc__ = \
-"""float asinhf(float __x)
 /usr/include/bits/mathcalls.h:91"""
 # /usr/include/bits/mathcalls.h 93
 atanhf = _libraries['cublas'].atanhf
@@ -356,14 +702,6 @@ atanh.__doc__ = \
 """double atanh(double __x)
 /usr/include/bits/mathcalls.h:93"""
 # /usr/include/bits/mathcalls.h 101
-expf = _libraries['cublas'].expf
-expf.restype = c_float
-# expf(__x)
-expf.argtypes = [c_float]
-expf.__doc__ = \
-"""float expf(float __x)
-/usr/include/bits/mathcalls.h:101"""
-# /usr/include/bits/mathcalls.h 101
 exp = _libraries['cublas'].exp
 exp.restype = c_double
 # exp(__x)
@@ -379,13 +717,21 @@ expl.argtypes = [c_longdouble]
 expl.__doc__ = \
 """long double expl(long double __x)
 /usr/include/bits/mathcalls.h:101"""
+# /usr/include/bits/mathcalls.h 101
+expf = _libraries['cublas'].expf
+expf.restype = c_float
+# expf(__x)
+expf.argtypes = [c_float]
+expf.__doc__ = \
+"""float expf(float __x)
+/usr/include/bits/mathcalls.h:101"""
 # /usr/include/bits/mathcalls.h 104
-frexp = _libraries['cublas'].frexp
-frexp.restype = c_double
-# frexp(__x, __exponent)
-frexp.argtypes = [c_double, POINTER(c_int)]
-frexp.__doc__ = \
-"""double frexp(double __x, int * __exponent)
+frexpl = _libraries['cublas'].frexpl
+frexpl.restype = c_longdouble
+# frexpl(__x, __exponent)
+frexpl.argtypes = [c_longdouble, POINTER(c_int)]
+frexpl.__doc__ = \
+"""long double frexpl(long double __x, int * __exponent)
 /usr/include/bits/mathcalls.h:104"""
 # /usr/include/bits/mathcalls.h 104
 frexpf = _libraries['cublas'].frexpf
@@ -396,12 +742,12 @@ frexpf.__doc__ = \
 """float frexpf(float __x, int * __exponent)
 /usr/include/bits/mathcalls.h:104"""
 # /usr/include/bits/mathcalls.h 104
-frexpl = _libraries['cublas'].frexpl
-frexpl.restype = c_longdouble
-# frexpl(__x, __exponent)
-frexpl.argtypes = [c_longdouble, POINTER(c_int)]
-frexpl.__doc__ = \
-"""long double frexpl(long double __x, int * __exponent)
+frexp = _libraries['cublas'].frexp
+frexp.restype = c_double
+# frexp(__x, __exponent)
+frexp.argtypes = [c_double, POINTER(c_int)]
+frexp.__doc__ = \
+"""double frexp(double __x, int * __exponent)
 /usr/include/bits/mathcalls.h:104"""
 # /usr/include/bits/mathcalls.h 107
 ldexpf = _libraries['cublas'].ldexpf
@@ -452,20 +798,20 @@ log.__doc__ = \
 """double log(double __x)
 /usr/include/bits/mathcalls.h:110"""
 # /usr/include/bits/mathcalls.h 113
-log10l = _libraries['cublas'].log10l
-log10l.restype = c_longdouble
-# log10l(__x)
-log10l.argtypes = [c_longdouble]
-log10l.__doc__ = \
-"""long double log10l(long double __x)
-/usr/include/bits/mathcalls.h:113"""
-# /usr/include/bits/mathcalls.h 113
 log10 = _libraries['cublas'].log10
 log10.restype = c_double
 # log10(__x)
 log10.argtypes = [c_double]
 log10.__doc__ = \
 """double log10(double __x)
+/usr/include/bits/mathcalls.h:113"""
+# /usr/include/bits/mathcalls.h 113
+log10l = _libraries['cublas'].log10l
+log10l.restype = c_longdouble
+# log10l(__x)
+log10l.argtypes = [c_longdouble]
+log10l.__doc__ = \
+"""long double log10l(long double __x)
 /usr/include/bits/mathcalls.h:113"""
 # /usr/include/bits/mathcalls.h 113
 log10f = _libraries['cublas'].log10f
@@ -475,14 +821,6 @@ log10f.argtypes = [c_float]
 log10f.__doc__ = \
 """float log10f(float __x)
 /usr/include/bits/mathcalls.h:113"""
-# /usr/include/bits/mathcalls.h 116
-modf = _libraries['cublas'].modf
-modf.restype = c_double
-# modf(__x, __iptr)
-modf.argtypes = [c_double, POINTER(c_double)]
-modf.__doc__ = \
-"""double modf(double __x, double * __iptr)
-/usr/include/bits/mathcalls.h:116"""
 # /usr/include/bits/mathcalls.h 116
 modfl = _libraries['cublas'].modfl
 modfl.restype = c_longdouble
@@ -498,6 +836,14 @@ modff.restype = c_float
 modff.argtypes = [c_float, POINTER(c_float)]
 modff.__doc__ = \
 """float modff(float __x, float * __iptr)
+/usr/include/bits/mathcalls.h:116"""
+# /usr/include/bits/mathcalls.h 116
+modf = _libraries['cublas'].modf
+modf.restype = c_double
+# modf(__x, __iptr)
+modf.argtypes = [c_double, POINTER(c_double)]
+modf.__doc__ = \
+"""double modf(double __x, double * __iptr)
 /usr/include/bits/mathcalls.h:116"""
 # /usr/include/bits/mathcalls.h 121
 exp10l = _libraries['cublas'].exp10l
@@ -524,12 +870,12 @@ exp10.__doc__ = \
 """double exp10(double __x)
 /usr/include/bits/mathcalls.h:121"""
 # /usr/include/bits/mathcalls.h 123
-pow10 = _libraries['cublas'].pow10
-pow10.restype = c_double
-# pow10(__x)
-pow10.argtypes = [c_double]
-pow10.__doc__ = \
-"""double pow10(double __x)
+pow10l = _libraries['cublas'].pow10l
+pow10l.restype = c_longdouble
+# pow10l(__x)
+pow10l.argtypes = [c_longdouble]
+pow10l.__doc__ = \
+"""long double pow10l(long double __x)
 /usr/include/bits/mathcalls.h:123"""
 # /usr/include/bits/mathcalls.h 123
 pow10f = _libraries['cublas'].pow10f
@@ -540,21 +886,13 @@ pow10f.__doc__ = \
 """float pow10f(float __x)
 /usr/include/bits/mathcalls.h:123"""
 # /usr/include/bits/mathcalls.h 123
-pow10l = _libraries['cublas'].pow10l
-pow10l.restype = c_longdouble
-# pow10l(__x)
-pow10l.argtypes = [c_longdouble]
-pow10l.__doc__ = \
-"""long double pow10l(long double __x)
+pow10 = _libraries['cublas'].pow10
+pow10.restype = c_double
+# pow10(__x)
+pow10.argtypes = [c_double]
+pow10.__doc__ = \
+"""double pow10(double __x)
 /usr/include/bits/mathcalls.h:123"""
-# /usr/include/bits/mathcalls.h 129
-expm1l = _libraries['cublas'].expm1l
-expm1l.restype = c_longdouble
-# expm1l(__x)
-expm1l.argtypes = [c_longdouble]
-expm1l.__doc__ = \
-"""long double expm1l(long double __x)
-/usr/include/bits/mathcalls.h:129"""
 # /usr/include/bits/mathcalls.h 129
 expm1 = _libraries['cublas'].expm1
 expm1.restype = c_double
@@ -564,6 +902,14 @@ expm1.__doc__ = \
 """double expm1(double __x)
 /usr/include/bits/mathcalls.h:129"""
 # /usr/include/bits/mathcalls.h 129
+expm1l = _libraries['cublas'].expm1l
+expm1l.restype = c_longdouble
+# expm1l(__x)
+expm1l.argtypes = [c_longdouble]
+expm1l.__doc__ = \
+"""long double expm1l(long double __x)
+/usr/include/bits/mathcalls.h:129"""
+# /usr/include/bits/mathcalls.h 129
 expm1f = _libraries['cublas'].expm1f
 expm1f.restype = c_float
 # expm1f(__x)
@@ -571,14 +917,6 @@ expm1f.argtypes = [c_float]
 expm1f.__doc__ = \
 """float expm1f(float __x)
 /usr/include/bits/mathcalls.h:129"""
-# /usr/include/bits/mathcalls.h 132
-log1pl = _libraries['cublas'].log1pl
-log1pl.restype = c_longdouble
-# log1pl(__x)
-log1pl.argtypes = [c_longdouble]
-log1pl.__doc__ = \
-"""long double log1pl(long double __x)
-/usr/include/bits/mathcalls.h:132"""
 # /usr/include/bits/mathcalls.h 132
 log1pf = _libraries['cublas'].log1pf
 log1pf.restype = c_float
@@ -595,14 +933,14 @@ log1p.argtypes = [c_double]
 log1p.__doc__ = \
 """double log1p(double __x)
 /usr/include/bits/mathcalls.h:132"""
-# /usr/include/bits/mathcalls.h 135
-logbf = _libraries['cublas'].logbf
-logbf.restype = c_float
-# logbf(__x)
-logbf.argtypes = [c_float]
-logbf.__doc__ = \
-"""float logbf(float __x)
-/usr/include/bits/mathcalls.h:135"""
+# /usr/include/bits/mathcalls.h 132
+log1pl = _libraries['cublas'].log1pl
+log1pl.restype = c_longdouble
+# log1pl(__x)
+log1pl.argtypes = [c_longdouble]
+log1pl.__doc__ = \
+"""long double log1pl(long double __x)
+/usr/include/bits/mathcalls.h:132"""
 # /usr/include/bits/mathcalls.h 135
 logbl = _libraries['cublas'].logbl
 logbl.restype = c_longdouble
@@ -619,14 +957,14 @@ logb.argtypes = [c_double]
 logb.__doc__ = \
 """double logb(double __x)
 /usr/include/bits/mathcalls.h:135"""
-# /usr/include/bits/mathcalls.h 142
-exp2l = _libraries['cublas'].exp2l
-exp2l.restype = c_longdouble
-# exp2l(__x)
-exp2l.argtypes = [c_longdouble]
-exp2l.__doc__ = \
-"""long double exp2l(long double __x)
-/usr/include/bits/mathcalls.h:142"""
+# /usr/include/bits/mathcalls.h 135
+logbf = _libraries['cublas'].logbf
+logbf.restype = c_float
+# logbf(__x)
+logbf.argtypes = [c_float]
+logbf.__doc__ = \
+"""float logbf(float __x)
+/usr/include/bits/mathcalls.h:135"""
 # /usr/include/bits/mathcalls.h 142
 exp2f = _libraries['cublas'].exp2f
 exp2f.restype = c_float
@@ -643,6 +981,14 @@ exp2.argtypes = [c_double]
 exp2.__doc__ = \
 """double exp2(double __x)
 /usr/include/bits/mathcalls.h:142"""
+# /usr/include/bits/mathcalls.h 142
+exp2l = _libraries['cublas'].exp2l
+exp2l.restype = c_longdouble
+# exp2l(__x)
+exp2l.argtypes = [c_longdouble]
+exp2l.__doc__ = \
+"""long double exp2l(long double __x)
+/usr/include/bits/mathcalls.h:142"""
 # /usr/include/bits/mathcalls.h 145
 log2 = _libraries['cublas'].log2
 log2.restype = c_double
@@ -652,20 +998,20 @@ log2.__doc__ = \
 """double log2(double __x)
 /usr/include/bits/mathcalls.h:145"""
 # /usr/include/bits/mathcalls.h 145
-log2l = _libraries['cublas'].log2l
-log2l.restype = c_longdouble
-# log2l(__x)
-log2l.argtypes = [c_longdouble]
-log2l.__doc__ = \
-"""long double log2l(long double __x)
-/usr/include/bits/mathcalls.h:145"""
-# /usr/include/bits/mathcalls.h 145
 log2f = _libraries['cublas'].log2f
 log2f.restype = c_float
 # log2f(__x)
 log2f.argtypes = [c_float]
 log2f.__doc__ = \
 """float log2f(float __x)
+/usr/include/bits/mathcalls.h:145"""
+# /usr/include/bits/mathcalls.h 145
+log2l = _libraries['cublas'].log2l
+log2l.restype = c_longdouble
+# log2l(__x)
+log2l.argtypes = [c_longdouble]
+log2l.__doc__ = \
+"""long double log2l(long double __x)
 /usr/include/bits/mathcalls.h:145"""
 # /usr/include/bits/mathcalls.h 154
 powf = _libraries['cublas'].powf
@@ -692,14 +1038,6 @@ pow.__doc__ = \
 """double pow(double __x, double __y)
 /usr/include/bits/mathcalls.h:154"""
 # /usr/include/bits/mathcalls.h 157
-sqrtf = _libraries['cublas'].sqrtf
-sqrtf.restype = c_float
-# sqrtf(__x)
-sqrtf.argtypes = [c_float]
-sqrtf.__doc__ = \
-"""float sqrtf(float __x)
-/usr/include/bits/mathcalls.h:157"""
-# /usr/include/bits/mathcalls.h 157
 sqrt = _libraries['cublas'].sqrt
 sqrt.restype = c_double
 # sqrt(__x)
@@ -715,13 +1053,21 @@ sqrtl.argtypes = [c_longdouble]
 sqrtl.__doc__ = \
 """long double sqrtl(long double __x)
 /usr/include/bits/mathcalls.h:157"""
+# /usr/include/bits/mathcalls.h 157
+sqrtf = _libraries['cublas'].sqrtf
+sqrtf.restype = c_float
+# sqrtf(__x)
+sqrtf.argtypes = [c_float]
+sqrtf.__doc__ = \
+"""float sqrtf(float __x)
+/usr/include/bits/mathcalls.h:157"""
 # /usr/include/bits/mathcalls.h 163
-hypotl = _libraries['cublas'].hypotl
-hypotl.restype = c_longdouble
-# hypotl(__x, __y)
-hypotl.argtypes = [c_longdouble, c_longdouble]
-hypotl.__doc__ = \
-"""long double hypotl(long double __x, long double __y)
+hypot = _libraries['cublas'].hypot
+hypot.restype = c_double
+# hypot(__x, __y)
+hypot.argtypes = [c_double, c_double]
+hypot.__doc__ = \
+"""double hypot(double __x, double __y)
 /usr/include/bits/mathcalls.h:163"""
 # /usr/include/bits/mathcalls.h 163
 hypotf = _libraries['cublas'].hypotf
@@ -732,12 +1078,12 @@ hypotf.__doc__ = \
 """float hypotf(float __x, float __y)
 /usr/include/bits/mathcalls.h:163"""
 # /usr/include/bits/mathcalls.h 163
-hypot = _libraries['cublas'].hypot
-hypot.restype = c_double
-# hypot(__x, __y)
-hypot.argtypes = [c_double, c_double]
-hypot.__doc__ = \
-"""double hypot(double __x, double __y)
+hypotl = _libraries['cublas'].hypotl
+hypotl.restype = c_longdouble
+# hypotl(__x, __y)
+hypotl.argtypes = [c_longdouble, c_longdouble]
+hypotl.__doc__ = \
+"""long double hypotl(long double __x, long double __y)
 /usr/include/bits/mathcalls.h:163"""
 # /usr/include/bits/mathcalls.h 170
 cbrtl = _libraries['cublas'].cbrtl
@@ -772,20 +1118,20 @@ ceil.__doc__ = \
 """double ceil(double __x)
 /usr/include/bits/mathcalls.h:179"""
 # /usr/include/bits/mathcalls.h 179
-ceilf = _libraries['cublas'].ceilf
-ceilf.restype = c_float
-# ceilf(__x)
-ceilf.argtypes = [c_float]
-ceilf.__doc__ = \
-"""float ceilf(float __x)
-/usr/include/bits/mathcalls.h:179"""
-# /usr/include/bits/mathcalls.h 179
 ceill = _libraries['cublas'].ceill
 ceill.restype = c_longdouble
 # ceill(__x)
 ceill.argtypes = [c_longdouble]
 ceill.__doc__ = \
 """long double ceill(long double __x)
+/usr/include/bits/mathcalls.h:179"""
+# /usr/include/bits/mathcalls.h 179
+ceilf = _libraries['cublas'].ceilf
+ceilf.restype = c_float
+# ceilf(__x)
+ceilf.argtypes = [c_float]
+ceilf.__doc__ = \
+"""float ceilf(float __x)
 /usr/include/bits/mathcalls.h:179"""
 # /usr/include/bits/mathcalls.h 182
 fabs = _libraries['cublas'].fabs
@@ -820,20 +1166,20 @@ floorl.__doc__ = \
 """long double floorl(long double __x)
 /usr/include/bits/mathcalls.h:185"""
 # /usr/include/bits/mathcalls.h 185
-floorf = _libraries['cublas'].floorf
-floorf.restype = c_float
-# floorf(__x)
-floorf.argtypes = [c_float]
-floorf.__doc__ = \
-"""float floorf(float __x)
-/usr/include/bits/mathcalls.h:185"""
-# /usr/include/bits/mathcalls.h 185
 floor = _libraries['cublas'].floor
 floor.restype = c_double
 # floor(__x)
 floor.argtypes = [c_double]
 floor.__doc__ = \
 """double floor(double __x)
+/usr/include/bits/mathcalls.h:185"""
+# /usr/include/bits/mathcalls.h 185
+floorf = _libraries['cublas'].floorf
+floorf.restype = c_float
+# floorf(__x)
+floorf.argtypes = [c_float]
+floorf.__doc__ = \
+"""float floorf(float __x)
 /usr/include/bits/mathcalls.h:185"""
 # /usr/include/bits/mathcalls.h 188
 fmodl = _libraries['cublas'].fmodl
@@ -844,14 +1190,6 @@ fmodl.__doc__ = \
 """long double fmodl(long double __x, long double __y)
 /usr/include/bits/mathcalls.h:188"""
 # /usr/include/bits/mathcalls.h 188
-fmodf = _libraries['cublas'].fmodf
-fmodf.restype = c_float
-# fmodf(__x, __y)
-fmodf.argtypes = [c_float, c_float]
-fmodf.__doc__ = \
-"""float fmodf(float __x, float __y)
-/usr/include/bits/mathcalls.h:188"""
-# /usr/include/bits/mathcalls.h 188
 fmod = _libraries['cublas'].fmod
 fmod.restype = c_double
 # fmod(__x, __y)
@@ -859,13 +1197,21 @@ fmod.argtypes = [c_double, c_double]
 fmod.__doc__ = \
 """double fmod(double __x, double __y)
 /usr/include/bits/mathcalls.h:188"""
+# /usr/include/bits/mathcalls.h 188
+fmodf = _libraries['cublas'].fmodf
+fmodf.restype = c_float
+# fmodf(__x, __y)
+fmodf.argtypes = [c_float, c_float]
+fmodf.__doc__ = \
+"""float fmodf(float __x, float __y)
+/usr/include/bits/mathcalls.h:188"""
 # /usr/include/bits/mathcalls.h 193
-__isinff = _libraries['cublas'].__isinff
-__isinff.restype = c_int
-# __isinff(__value)
-__isinff.argtypes = [c_float]
-__isinff.__doc__ = \
-"""int __isinff(float __value)
+__isinf = _libraries['cublas'].__isinf
+__isinf.restype = c_int
+# __isinf(__value)
+__isinf.argtypes = [c_double]
+__isinf.__doc__ = \
+"""int __isinf(double __value)
 /usr/include/bits/mathcalls.h:193"""
 # /usr/include/bits/mathcalls.h 193
 __isinfl = _libraries['cublas'].__isinfl
@@ -876,12 +1222,12 @@ __isinfl.__doc__ = \
 """int __isinfl(long double __value)
 /usr/include/bits/mathcalls.h:193"""
 # /usr/include/bits/mathcalls.h 193
-__isinf = _libraries['cublas'].__isinf
-__isinf.restype = c_int
-# __isinf(__value)
-__isinf.argtypes = [c_double]
-__isinf.__doc__ = \
-"""int __isinf(double __value)
+__isinff = _libraries['cublas'].__isinff
+__isinff.restype = c_int
+# __isinff(__value)
+__isinff.argtypes = [c_float]
+__isinff.__doc__ = \
+"""int __isinff(float __value)
 /usr/include/bits/mathcalls.h:193"""
 # /usr/include/bits/mathcalls.h 196
 __finite = _libraries['cublas'].__finite
@@ -908,12 +1254,12 @@ __finitel.__doc__ = \
 """int __finitel(long double __value)
 /usr/include/bits/mathcalls.h:196"""
 # /usr/include/bits/mathcalls.h 202
-isinf = _libraries['cublas'].isinf
-isinf.restype = c_int
-# isinf(__value)
-isinf.argtypes = [c_double]
-isinf.__doc__ = \
-"""int isinf(double __value)
+isinff = _libraries['cublas'].isinff
+isinff.restype = c_int
+# isinff(__value)
+isinff.argtypes = [c_float]
+isinff.__doc__ = \
+"""int isinff(float __value)
 /usr/include/bits/mathcalls.h:202"""
 # /usr/include/bits/mathcalls.h 202
 isinfl = _libraries['cublas'].isinfl
@@ -924,12 +1270,12 @@ isinfl.__doc__ = \
 """int isinfl(long double __value)
 /usr/include/bits/mathcalls.h:202"""
 # /usr/include/bits/mathcalls.h 202
-isinff = _libraries['cublas'].isinff
-isinff.restype = c_int
-# isinff(__value)
-isinff.argtypes = [c_float]
-isinff.__doc__ = \
-"""int isinff(float __value)
+isinf = _libraries['cublas'].isinf
+isinf.restype = c_int
+# isinf(__value)
+isinf.argtypes = [c_double]
+isinf.__doc__ = \
+"""int isinf(double __value)
 /usr/include/bits/mathcalls.h:202"""
 # /usr/include/bits/mathcalls.h 205
 finite = _libraries['cublas'].finite
@@ -940,14 +1286,6 @@ finite.__doc__ = \
 """int finite(double __value)
 /usr/include/bits/mathcalls.h:205"""
 # /usr/include/bits/mathcalls.h 205
-finitel = _libraries['cublas'].finitel
-finitel.restype = c_int
-# finitel(__value)
-finitel.argtypes = [c_longdouble]
-finitel.__doc__ = \
-"""int finitel(long double __value)
-/usr/include/bits/mathcalls.h:205"""
-# /usr/include/bits/mathcalls.h 205
 finitef = _libraries['cublas'].finitef
 finitef.restype = c_int
 # finitef(__value)
@@ -955,14 +1293,14 @@ finitef.argtypes = [c_float]
 finitef.__doc__ = \
 """int finitef(float __value)
 /usr/include/bits/mathcalls.h:205"""
-# /usr/include/bits/mathcalls.h 208
-dreml = _libraries['cublas'].dreml
-dreml.restype = c_longdouble
-# dreml(__x, __y)
-dreml.argtypes = [c_longdouble, c_longdouble]
-dreml.__doc__ = \
-"""long double dreml(long double __x, long double __y)
-/usr/include/bits/mathcalls.h:208"""
+# /usr/include/bits/mathcalls.h 205
+finitel = _libraries['cublas'].finitel
+finitel.restype = c_int
+# finitel(__value)
+finitel.argtypes = [c_longdouble]
+finitel.__doc__ = \
+"""int finitel(long double __value)
+/usr/include/bits/mathcalls.h:205"""
 # /usr/include/bits/mathcalls.h 208
 dremf = _libraries['cublas'].dremf
 dremf.restype = c_float
@@ -979,14 +1317,14 @@ drem.argtypes = [c_double, c_double]
 drem.__doc__ = \
 """double drem(double __x, double __y)
 /usr/include/bits/mathcalls.h:208"""
-# /usr/include/bits/mathcalls.h 212
-significand = _libraries['cublas'].significand
-significand.restype = c_double
-# significand(__x)
-significand.argtypes = [c_double]
-significand.__doc__ = \
-"""double significand(double __x)
-/usr/include/bits/mathcalls.h:212"""
+# /usr/include/bits/mathcalls.h 208
+dreml = _libraries['cublas'].dreml
+dreml.restype = c_longdouble
+# dreml(__x, __y)
+dreml.argtypes = [c_longdouble, c_longdouble]
+dreml.__doc__ = \
+"""long double dreml(long double __x, long double __y)
+/usr/include/bits/mathcalls.h:208"""
 # /usr/include/bits/mathcalls.h 212
 significandf = _libraries['cublas'].significandf
 significandf.restype = c_float
@@ -994,6 +1332,14 @@ significandf.restype = c_float
 significandf.argtypes = [c_float]
 significandf.__doc__ = \
 """float significandf(float __x)
+/usr/include/bits/mathcalls.h:212"""
+# /usr/include/bits/mathcalls.h 212
+significand = _libraries['cublas'].significand
+significand.restype = c_double
+# significand(__x)
+significand.argtypes = [c_double]
+significand.__doc__ = \
+"""double significand(double __x)
 /usr/include/bits/mathcalls.h:212"""
 # /usr/include/bits/mathcalls.h 212
 significandl = _libraries['cublas'].significandl
@@ -1028,14 +1374,6 @@ copysignl.__doc__ = \
 """long double copysignl(long double __x, long double __y)
 /usr/include/bits/mathcalls.h:218"""
 # /usr/include/bits/mathcalls.h 225
-nanf = _libraries['cublas'].nanf
-nanf.restype = c_float
-# nanf(__tagb)
-nanf.argtypes = [STRING]
-nanf.__doc__ = \
-"""float nanf(unknown * __tagb)
-/usr/include/bits/mathcalls.h:225"""
-# /usr/include/bits/mathcalls.h 225
 nan = _libraries['cublas'].nan
 nan.restype = c_double
 # nan(__tagb)
@@ -1051,6 +1389,22 @@ nanl.argtypes = [STRING]
 nanl.__doc__ = \
 """long double nanl(unknown * __tagb)
 /usr/include/bits/mathcalls.h:225"""
+# /usr/include/bits/mathcalls.h 225
+nanf = _libraries['cublas'].nanf
+nanf.restype = c_float
+# nanf(__tagb)
+nanf.argtypes = [STRING]
+nanf.__doc__ = \
+"""float nanf(unknown * __tagb)
+/usr/include/bits/mathcalls.h:225"""
+# /usr/include/bits/mathcalls.h 231
+__isnanf = _libraries['cublas'].__isnanf
+__isnanf.restype = c_int
+# __isnanf(__value)
+__isnanf.argtypes = [c_float]
+__isnanf.__doc__ = \
+"""int __isnanf(float __value)
+/usr/include/bits/mathcalls.h:231"""
 # /usr/include/bits/mathcalls.h 231
 __isnan = _libraries['cublas'].__isnan
 __isnan.restype = c_int
@@ -1067,22 +1421,6 @@ __isnanl.argtypes = [c_longdouble]
 __isnanl.__doc__ = \
 """int __isnanl(long double __value)
 /usr/include/bits/mathcalls.h:231"""
-# /usr/include/bits/mathcalls.h 231
-__isnanf = _libraries['cublas'].__isnanf
-__isnanf.restype = c_int
-# __isnanf(__value)
-__isnanf.argtypes = [c_float]
-__isnanf.__doc__ = \
-"""int __isnanf(float __value)
-/usr/include/bits/mathcalls.h:231"""
-# /usr/include/bits/mathcalls.h 235
-isnanl = _libraries['cublas'].isnanl
-isnanl.restype = c_int
-# isnanl(__value)
-isnanl.argtypes = [c_longdouble]
-isnanl.__doc__ = \
-"""int isnanl(long double __value)
-/usr/include/bits/mathcalls.h:235"""
 # /usr/include/bits/mathcalls.h 235
 isnanf = _libraries['cublas'].isnanf
 isnanf.restype = c_int
@@ -1090,6 +1428,14 @@ isnanf.restype = c_int
 isnanf.argtypes = [c_float]
 isnanf.__doc__ = \
 """int isnanf(float __value)
+/usr/include/bits/mathcalls.h:235"""
+# /usr/include/bits/mathcalls.h 235
+isnanl = _libraries['cublas'].isnanl
+isnanl.restype = c_int
+# isnanl(__value)
+isnanl.argtypes = [c_longdouble]
+isnanl.__doc__ = \
+"""int isnanl(long double __value)
 /usr/include/bits/mathcalls.h:235"""
 # /usr/include/bits/mathcalls.h 235
 isnan = _libraries['cublas'].isnan
@@ -1124,12 +1470,12 @@ j0.__doc__ = \
 """double j0(double p1)
 /usr/include/bits/mathcalls.h:238"""
 # /usr/include/bits/mathcalls.h 239
-j1f = _libraries['cublas'].j1f
-j1f.restype = c_float
-# j1f(p1)
-j1f.argtypes = [c_float]
-j1f.__doc__ = \
-"""float j1f(float p1)
+j1l = _libraries['cublas'].j1l
+j1l.restype = c_longdouble
+# j1l(p1)
+j1l.argtypes = [c_longdouble]
+j1l.__doc__ = \
+"""long double j1l(long double p1)
 /usr/include/bits/mathcalls.h:239"""
 # /usr/include/bits/mathcalls.h 239
 j1 = _libraries['cublas'].j1
@@ -1140,20 +1486,20 @@ j1.__doc__ = \
 """double j1(double p1)
 /usr/include/bits/mathcalls.h:239"""
 # /usr/include/bits/mathcalls.h 239
-j1l = _libraries['cublas'].j1l
-j1l.restype = c_longdouble
-# j1l(p1)
-j1l.argtypes = [c_longdouble]
-j1l.__doc__ = \
-"""long double j1l(long double p1)
+j1f = _libraries['cublas'].j1f
+j1f.restype = c_float
+# j1f(p1)
+j1f.argtypes = [c_float]
+j1f.__doc__ = \
+"""float j1f(float p1)
 /usr/include/bits/mathcalls.h:239"""
 # /usr/include/bits/mathcalls.h 240
-jnf = _libraries['cublas'].jnf
-jnf.restype = c_float
-# jnf(p1, p2)
-jnf.argtypes = [c_int, c_float]
-jnf.__doc__ = \
-"""float jnf(int p1, float p2)
+jnl = _libraries['cublas'].jnl
+jnl.restype = c_longdouble
+# jnl(p1, p2)
+jnl.argtypes = [c_int, c_longdouble]
+jnl.__doc__ = \
+"""long double jnl(int p1, long double p2)
 /usr/include/bits/mathcalls.h:240"""
 # /usr/include/bits/mathcalls.h 240
 jn = _libraries['cublas'].jn
@@ -1164,12 +1510,12 @@ jn.__doc__ = \
 """double jn(int p1, double p2)
 /usr/include/bits/mathcalls.h:240"""
 # /usr/include/bits/mathcalls.h 240
-jnl = _libraries['cublas'].jnl
-jnl.restype = c_longdouble
-# jnl(p1, p2)
-jnl.argtypes = [c_int, c_longdouble]
-jnl.__doc__ = \
-"""long double jnl(int p1, long double p2)
+jnf = _libraries['cublas'].jnf
+jnf.restype = c_float
+# jnf(p1, p2)
+jnf.argtypes = [c_int, c_float]
+jnf.__doc__ = \
+"""float jnf(int p1, float p2)
 /usr/include/bits/mathcalls.h:240"""
 # /usr/include/bits/mathcalls.h 241
 y0 = _libraries['cublas'].y0
@@ -1180,20 +1526,20 @@ y0.__doc__ = \
 """double y0(double p1)
 /usr/include/bits/mathcalls.h:241"""
 # /usr/include/bits/mathcalls.h 241
-y0f = _libraries['cublas'].y0f
-y0f.restype = c_float
-# y0f(p1)
-y0f.argtypes = [c_float]
-y0f.__doc__ = \
-"""float y0f(float p1)
-/usr/include/bits/mathcalls.h:241"""
-# /usr/include/bits/mathcalls.h 241
 y0l = _libraries['cublas'].y0l
 y0l.restype = c_longdouble
 # y0l(p1)
 y0l.argtypes = [c_longdouble]
 y0l.__doc__ = \
 """long double y0l(long double p1)
+/usr/include/bits/mathcalls.h:241"""
+# /usr/include/bits/mathcalls.h 241
+y0f = _libraries['cublas'].y0f
+y0f.restype = c_float
+# y0f(p1)
+y0f.argtypes = [c_float]
+y0f.__doc__ = \
+"""float y0f(float p1)
 /usr/include/bits/mathcalls.h:241"""
 # /usr/include/bits/mathcalls.h 242
 y1l = _libraries['cublas'].y1l
@@ -1228,20 +1574,20 @@ yn.__doc__ = \
 """double yn(int p1, double p2)
 /usr/include/bits/mathcalls.h:243"""
 # /usr/include/bits/mathcalls.h 243
-ynl = _libraries['cublas'].ynl
-ynl.restype = c_longdouble
-# ynl(p1, p2)
-ynl.argtypes = [c_int, c_longdouble]
-ynl.__doc__ = \
-"""long double ynl(int p1, long double p2)
-/usr/include/bits/mathcalls.h:243"""
-# /usr/include/bits/mathcalls.h 243
 ynf = _libraries['cublas'].ynf
 ynf.restype = c_float
 # ynf(p1, p2)
 ynf.argtypes = [c_int, c_float]
 ynf.__doc__ = \
 """float ynf(int p1, float p2)
+/usr/include/bits/mathcalls.h:243"""
+# /usr/include/bits/mathcalls.h 243
+ynl = _libraries['cublas'].ynl
+ynl.restype = c_longdouble
+# ynl(p1, p2)
+ynl.argtypes = [c_int, c_longdouble]
+ynl.__doc__ = \
+"""long double ynl(int p1, long double p2)
 /usr/include/bits/mathcalls.h:243"""
 # /usr/include/bits/mathcalls.h 250
 erf = _libraries['cublas'].erf
@@ -1268,14 +1614,6 @@ erfl.__doc__ = \
 """long double erfl(long double p1)
 /usr/include/bits/mathcalls.h:250"""
 # /usr/include/bits/mathcalls.h 251
-erfcf = _libraries['cublas'].erfcf
-erfcf.restype = c_float
-# erfcf(p1)
-erfcf.argtypes = [c_float]
-erfcf.__doc__ = \
-"""float erfcf(float p1)
-/usr/include/bits/mathcalls.h:251"""
-# /usr/include/bits/mathcalls.h 251
 erfc = _libraries['cublas'].erfc
 erfc.restype = c_double
 # erfc(p1)
@@ -1291,6 +1629,22 @@ erfcl.argtypes = [c_longdouble]
 erfcl.__doc__ = \
 """long double erfcl(long double p1)
 /usr/include/bits/mathcalls.h:251"""
+# /usr/include/bits/mathcalls.h 251
+erfcf = _libraries['cublas'].erfcf
+erfcf.restype = c_float
+# erfcf(p1)
+erfcf.argtypes = [c_float]
+erfcf.__doc__ = \
+"""float erfcf(float p1)
+/usr/include/bits/mathcalls.h:251"""
+# /usr/include/bits/mathcalls.h 252
+lgammaf = _libraries['cublas'].lgammaf
+lgammaf.restype = c_float
+# lgammaf(p1)
+lgammaf.argtypes = [c_float]
+lgammaf.__doc__ = \
+"""float lgammaf(float p1)
+/usr/include/bits/mathcalls.h:252"""
 # /usr/include/bits/mathcalls.h 252
 lgamma = _libraries['cublas'].lgamma
 lgamma.restype = c_double
@@ -1307,14 +1661,14 @@ lgammal.argtypes = [c_longdouble]
 lgammal.__doc__ = \
 """long double lgammal(long double p1)
 /usr/include/bits/mathcalls.h:252"""
-# /usr/include/bits/mathcalls.h 252
-lgammaf = _libraries['cublas'].lgammaf
-lgammaf.restype = c_float
-# lgammaf(p1)
-lgammaf.argtypes = [c_float]
-lgammaf.__doc__ = \
-"""float lgammaf(float p1)
-/usr/include/bits/mathcalls.h:252"""
+# /usr/include/bits/mathcalls.h 259
+tgammaf = _libraries['cublas'].tgammaf
+tgammaf.restype = c_float
+# tgammaf(p1)
+tgammaf.argtypes = [c_float]
+tgammaf.__doc__ = \
+"""float tgammaf(float p1)
+/usr/include/bits/mathcalls.h:259"""
 # /usr/include/bits/mathcalls.h 259
 tgammal = _libraries['cublas'].tgammal
 tgammal.restype = c_longdouble
@@ -1330,14 +1684,6 @@ tgamma.restype = c_double
 tgamma.argtypes = [c_double]
 tgamma.__doc__ = \
 """double tgamma(double p1)
-/usr/include/bits/mathcalls.h:259"""
-# /usr/include/bits/mathcalls.h 259
-tgammaf = _libraries['cublas'].tgammaf
-tgammaf.restype = c_float
-# tgammaf(p1)
-tgammaf.argtypes = [c_float]
-tgammaf.__doc__ = \
-"""float tgammaf(float p1)
 /usr/include/bits/mathcalls.h:259"""
 # /usr/include/bits/mathcalls.h 265
 gammal = _libraries['cublas'].gammal
@@ -1364,6 +1710,14 @@ gammaf.__doc__ = \
 """float gammaf(float p1)
 /usr/include/bits/mathcalls.h:265"""
 # /usr/include/bits/mathcalls.h 272
+lgamma_r = _libraries['cublas'].lgamma_r
+lgamma_r.restype = c_double
+# lgamma_r(p1, __signgamp)
+lgamma_r.argtypes = [c_double, POINTER(c_int)]
+lgamma_r.__doc__ = \
+"""double lgamma_r(double p1, int * __signgamp)
+/usr/include/bits/mathcalls.h:272"""
+# /usr/include/bits/mathcalls.h 272
 lgammal_r = _libraries['cublas'].lgammal_r
 lgammal_r.restype = c_longdouble
 # lgammal_r(p1, __signgamp)
@@ -1379,22 +1733,6 @@ lgammaf_r.argtypes = [c_float, POINTER(c_int)]
 lgammaf_r.__doc__ = \
 """float lgammaf_r(float p1, int * __signgamp)
 /usr/include/bits/mathcalls.h:272"""
-# /usr/include/bits/mathcalls.h 272
-lgamma_r = _libraries['cublas'].lgamma_r
-lgamma_r.restype = c_double
-# lgamma_r(p1, __signgamp)
-lgamma_r.argtypes = [c_double, POINTER(c_int)]
-lgamma_r.__doc__ = \
-"""double lgamma_r(double p1, int * __signgamp)
-/usr/include/bits/mathcalls.h:272"""
-# /usr/include/bits/mathcalls.h 280
-rintl = _libraries['cublas'].rintl
-rintl.restype = c_longdouble
-# rintl(__x)
-rintl.argtypes = [c_longdouble]
-rintl.__doc__ = \
-"""long double rintl(long double __x)
-/usr/include/bits/mathcalls.h:280"""
 # /usr/include/bits/mathcalls.h 280
 rintf = _libraries['cublas'].rintf
 rintf.restype = c_float
@@ -1402,6 +1740,14 @@ rintf.restype = c_float
 rintf.argtypes = [c_float]
 rintf.__doc__ = \
 """float rintf(float __x)
+/usr/include/bits/mathcalls.h:280"""
+# /usr/include/bits/mathcalls.h 280
+rintl = _libraries['cublas'].rintl
+rintl.restype = c_longdouble
+# rintl(__x)
+rintl.argtypes = [c_longdouble]
+rintl.__doc__ = \
+"""long double rintl(long double __x)
 /usr/include/bits/mathcalls.h:280"""
 # /usr/include/bits/mathcalls.h 280
 rint = _libraries['cublas'].rint
@@ -1420,14 +1766,6 @@ nextafter.__doc__ = \
 """double nextafter(double __x, double __y)
 /usr/include/bits/mathcalls.h:283"""
 # /usr/include/bits/mathcalls.h 283
-nextafterf = _libraries['cublas'].nextafterf
-nextafterf.restype = c_float
-# nextafterf(__x, __y)
-nextafterf.argtypes = [c_float, c_float]
-nextafterf.__doc__ = \
-"""float nextafterf(float __x, float __y)
-/usr/include/bits/mathcalls.h:283"""
-# /usr/include/bits/mathcalls.h 283
 nextafterl = _libraries['cublas'].nextafterl
 nextafterl.restype = c_longdouble
 # nextafterl(__x, __y)
@@ -1435,13 +1773,21 @@ nextafterl.argtypes = [c_longdouble, c_longdouble]
 nextafterl.__doc__ = \
 """long double nextafterl(long double __x, long double __y)
 /usr/include/bits/mathcalls.h:283"""
+# /usr/include/bits/mathcalls.h 283
+nextafterf = _libraries['cublas'].nextafterf
+nextafterf.restype = c_float
+# nextafterf(__x, __y)
+nextafterf.argtypes = [c_float, c_float]
+nextafterf.__doc__ = \
+"""float nextafterf(float __x, float __y)
+/usr/include/bits/mathcalls.h:283"""
 # /usr/include/bits/mathcalls.h 285
-nexttoward = _libraries['cublas'].nexttoward
-nexttoward.restype = c_double
-# nexttoward(__x, __y)
-nexttoward.argtypes = [c_double, c_longdouble]
-nexttoward.__doc__ = \
-"""double nexttoward(double __x, long double __y)
+nexttowardf = _libraries['cublas'].nexttowardf
+nexttowardf.restype = c_float
+# nexttowardf(__x, __y)
+nexttowardf.argtypes = [c_float, c_longdouble]
+nexttowardf.__doc__ = \
+"""float nexttowardf(float __x, long double __y)
 /usr/include/bits/mathcalls.h:285"""
 # /usr/include/bits/mathcalls.h 285
 nexttowardl = _libraries['cublas'].nexttowardl
@@ -1452,12 +1798,12 @@ nexttowardl.__doc__ = \
 """long double nexttowardl(long double __x, long double __y)
 /usr/include/bits/mathcalls.h:285"""
 # /usr/include/bits/mathcalls.h 285
-nexttowardf = _libraries['cublas'].nexttowardf
-nexttowardf.restype = c_float
-# nexttowardf(__x, __y)
-nexttowardf.argtypes = [c_float, c_longdouble]
-nexttowardf.__doc__ = \
-"""float nexttowardf(float __x, long double __y)
+nexttoward = _libraries['cublas'].nexttoward
+nexttoward.restype = c_double
+# nexttoward(__x, __y)
+nexttoward.argtypes = [c_double, c_longdouble]
+nexttoward.__doc__ = \
+"""double nexttoward(double __x, long double __y)
 /usr/include/bits/mathcalls.h:285"""
 # /usr/include/bits/mathcalls.h 289
 remainderl = _libraries['cublas'].remainderl
@@ -1468,20 +1814,20 @@ remainderl.__doc__ = \
 """long double remainderl(long double __x, long double __y)
 /usr/include/bits/mathcalls.h:289"""
 # /usr/include/bits/mathcalls.h 289
-remainderf = _libraries['cublas'].remainderf
-remainderf.restype = c_float
-# remainderf(__x, __y)
-remainderf.argtypes = [c_float, c_float]
-remainderf.__doc__ = \
-"""float remainderf(float __x, float __y)
-/usr/include/bits/mathcalls.h:289"""
-# /usr/include/bits/mathcalls.h 289
 remainder = _libraries['cublas'].remainder
 remainder.restype = c_double
 # remainder(__x, __y)
 remainder.argtypes = [c_double, c_double]
 remainder.__doc__ = \
 """double remainder(double __x, double __y)
+/usr/include/bits/mathcalls.h:289"""
+# /usr/include/bits/mathcalls.h 289
+remainderf = _libraries['cublas'].remainderf
+remainderf.restype = c_float
+# remainderf(__x, __y)
+remainderf.argtypes = [c_float, c_float]
+remainderf.__doc__ = \
+"""float remainderf(float __x, float __y)
 /usr/include/bits/mathcalls.h:289"""
 # /usr/include/bits/mathcalls.h 293
 scalbnf = _libraries['cublas'].scalbnf
@@ -1492,14 +1838,6 @@ scalbnf.__doc__ = \
 """float scalbnf(float __x, int __n)
 /usr/include/bits/mathcalls.h:293"""
 # /usr/include/bits/mathcalls.h 293
-scalbn = _libraries['cublas'].scalbn
-scalbn.restype = c_double
-# scalbn(__x, __n)
-scalbn.argtypes = [c_double, c_int]
-scalbn.__doc__ = \
-"""double scalbn(double __x, int __n)
-/usr/include/bits/mathcalls.h:293"""
-# /usr/include/bits/mathcalls.h 293
 scalbnl = _libraries['cublas'].scalbnl
 scalbnl.restype = c_longdouble
 # scalbnl(__x, __n)
@@ -1507,14 +1845,14 @@ scalbnl.argtypes = [c_longdouble, c_int]
 scalbnl.__doc__ = \
 """long double scalbnl(long double __x, int __n)
 /usr/include/bits/mathcalls.h:293"""
-# /usr/include/bits/mathcalls.h 297
-ilogbf = _libraries['cublas'].ilogbf
-ilogbf.restype = c_int
-# ilogbf(__x)
-ilogbf.argtypes = [c_float]
-ilogbf.__doc__ = \
-"""int ilogbf(float __x)
-/usr/include/bits/mathcalls.h:297"""
+# /usr/include/bits/mathcalls.h 293
+scalbn = _libraries['cublas'].scalbn
+scalbn.restype = c_double
+# scalbn(__x, __n)
+scalbn.argtypes = [c_double, c_int]
+scalbn.__doc__ = \
+"""double scalbn(double __x, int __n)
+/usr/include/bits/mathcalls.h:293"""
 # /usr/include/bits/mathcalls.h 297
 ilogb = _libraries['cublas'].ilogb
 ilogb.restype = c_int
@@ -1530,6 +1868,14 @@ ilogbl.restype = c_int
 ilogbl.argtypes = [c_longdouble]
 ilogbl.__doc__ = \
 """int ilogbl(long double __x)
+/usr/include/bits/mathcalls.h:297"""
+# /usr/include/bits/mathcalls.h 297
+ilogbf = _libraries['cublas'].ilogbf
+ilogbf.restype = c_int
+# ilogbf(__x)
+ilogbf.argtypes = [c_float]
+ilogbf.__doc__ = \
+"""int ilogbf(float __x)
 /usr/include/bits/mathcalls.h:297"""
 # /usr/include/bits/mathcalls.h 302
 scalblnf = _libraries['cublas'].scalblnf
@@ -1580,12 +1926,12 @@ nearbyintf.__doc__ = \
 """float nearbyintf(float __x)
 /usr/include/bits/mathcalls.h:306"""
 # /usr/include/bits/mathcalls.h 310
-roundl = _libraries['cublas'].roundl
-roundl.restype = c_longdouble
-# roundl(__x)
-roundl.argtypes = [c_longdouble]
-roundl.__doc__ = \
-"""long double roundl(long double __x)
+round = _libraries['cublas'].round
+round.restype = c_double
+# round(__x)
+round.argtypes = [c_double]
+round.__doc__ = \
+"""double round(double __x)
 /usr/include/bits/mathcalls.h:310"""
 # /usr/include/bits/mathcalls.h 310
 roundf = _libraries['cublas'].roundf
@@ -1596,13 +1942,21 @@ roundf.__doc__ = \
 """float roundf(float __x)
 /usr/include/bits/mathcalls.h:310"""
 # /usr/include/bits/mathcalls.h 310
-round = _libraries['cublas'].round
-round.restype = c_double
-# round(__x)
-round.argtypes = [c_double]
-round.__doc__ = \
-"""double round(double __x)
+roundl = _libraries['cublas'].roundl
+roundl.restype = c_longdouble
+# roundl(__x)
+roundl.argtypes = [c_longdouble]
+roundl.__doc__ = \
+"""long double roundl(long double __x)
 /usr/include/bits/mathcalls.h:310"""
+# /usr/include/bits/mathcalls.h 314
+truncl = _libraries['cublas'].truncl
+truncl.restype = c_longdouble
+# truncl(__x)
+truncl.argtypes = [c_longdouble]
+truncl.__doc__ = \
+"""long double truncl(long double __x)
+/usr/include/bits/mathcalls.h:314"""
 # /usr/include/bits/mathcalls.h 314
 trunc = _libraries['cublas'].trunc
 trunc.restype = c_double
@@ -1618,14 +1972,6 @@ truncf.restype = c_float
 truncf.argtypes = [c_float]
 truncf.__doc__ = \
 """float truncf(float __x)
-/usr/include/bits/mathcalls.h:314"""
-# /usr/include/bits/mathcalls.h 314
-truncl = _libraries['cublas'].truncl
-truncl.restype = c_longdouble
-# truncl(__x)
-truncl.argtypes = [c_longdouble]
-truncl.__doc__ = \
-"""long double truncl(long double __x)
 /usr/include/bits/mathcalls.h:314"""
 # /usr/include/bits/mathcalls.h 319
 remquo = _libraries['cublas'].remquo
@@ -1652,14 +1998,6 @@ remquof.__doc__ = \
 """float remquof(float __x, float __y, int * __quo)
 /usr/include/bits/mathcalls.h:319"""
 # /usr/include/bits/mathcalls.h 326
-lrintf = _libraries['cublas'].lrintf
-lrintf.restype = c_long
-# lrintf(__x)
-lrintf.argtypes = [c_float]
-lrintf.__doc__ = \
-"""long int lrintf(float __x)
-/usr/include/bits/mathcalls.h:326"""
-# /usr/include/bits/mathcalls.h 326
 lrint = _libraries['cublas'].lrint
 lrint.restype = c_long
 # lrint(__x)
@@ -1675,14 +2013,14 @@ lrintl.argtypes = [c_longdouble]
 lrintl.__doc__ = \
 """long int lrintl(long double __x)
 /usr/include/bits/mathcalls.h:326"""
-# /usr/include/bits/mathcalls.h 327
-llrint = _libraries['cublas'].llrint
-llrint.restype = c_longlong
-# llrint(__x)
-llrint.argtypes = [c_double]
-llrint.__doc__ = \
-"""long long int llrint(double __x)
-/usr/include/bits/mathcalls.h:327"""
+# /usr/include/bits/mathcalls.h 326
+lrintf = _libraries['cublas'].lrintf
+lrintf.restype = c_long
+# lrintf(__x)
+lrintf.argtypes = [c_float]
+lrintf.__doc__ = \
+"""long int lrintf(float __x)
+/usr/include/bits/mathcalls.h:326"""
 # /usr/include/bits/mathcalls.h 327
 llrintl = _libraries['cublas'].llrintl
 llrintl.restype = c_longlong
@@ -1699,14 +2037,14 @@ llrintf.argtypes = [c_float]
 llrintf.__doc__ = \
 """long long int llrintf(float __x)
 /usr/include/bits/mathcalls.h:327"""
-# /usr/include/bits/mathcalls.h 331
-lround = _libraries['cublas'].lround
-lround.restype = c_long
-# lround(__x)
-lround.argtypes = [c_double]
-lround.__doc__ = \
-"""long int lround(double __x)
-/usr/include/bits/mathcalls.h:331"""
+# /usr/include/bits/mathcalls.h 327
+llrint = _libraries['cublas'].llrint
+llrint.restype = c_longlong
+# llrint(__x)
+llrint.argtypes = [c_double]
+llrint.__doc__ = \
+"""long long int llrint(double __x)
+/usr/include/bits/mathcalls.h:327"""
 # /usr/include/bits/mathcalls.h 331
 lroundf = _libraries['cublas'].lroundf
 lroundf.restype = c_long
@@ -1723,14 +2061,14 @@ lroundl.argtypes = [c_longdouble]
 lroundl.__doc__ = \
 """long int lroundl(long double __x)
 /usr/include/bits/mathcalls.h:331"""
-# /usr/include/bits/mathcalls.h 332
-llroundf = _libraries['cublas'].llroundf
-llroundf.restype = c_longlong
-# llroundf(__x)
-llroundf.argtypes = [c_float]
-llroundf.__doc__ = \
-"""long long int llroundf(float __x)
-/usr/include/bits/mathcalls.h:332"""
+# /usr/include/bits/mathcalls.h 331
+lround = _libraries['cublas'].lround
+lround.restype = c_long
+# lround(__x)
+lround.argtypes = [c_double]
+lround.__doc__ = \
+"""long int lround(double __x)
+/usr/include/bits/mathcalls.h:331"""
 # /usr/include/bits/mathcalls.h 332
 llround = _libraries['cublas'].llround
 llround.restype = c_longlong
@@ -1747,13 +2085,21 @@ llroundl.argtypes = [c_longdouble]
 llroundl.__doc__ = \
 """long long int llroundl(long double __x)
 /usr/include/bits/mathcalls.h:332"""
+# /usr/include/bits/mathcalls.h 332
+llroundf = _libraries['cublas'].llroundf
+llroundf.restype = c_longlong
+# llroundf(__x)
+llroundf.argtypes = [c_float]
+llroundf.__doc__ = \
+"""long long int llroundf(float __x)
+/usr/include/bits/mathcalls.h:332"""
 # /usr/include/bits/mathcalls.h 336
-fdim = _libraries['cublas'].fdim
-fdim.restype = c_double
-# fdim(__x, __y)
-fdim.argtypes = [c_double, c_double]
-fdim.__doc__ = \
-"""double fdim(double __x, double __y)
+fdiml = _libraries['cublas'].fdiml
+fdiml.restype = c_longdouble
+# fdiml(__x, __y)
+fdiml.argtypes = [c_longdouble, c_longdouble]
+fdiml.__doc__ = \
+"""long double fdiml(long double __x, long double __y)
 /usr/include/bits/mathcalls.h:336"""
 # /usr/include/bits/mathcalls.h 336
 fdimf = _libraries['cublas'].fdimf
@@ -1764,12 +2110,12 @@ fdimf.__doc__ = \
 """float fdimf(float __x, float __y)
 /usr/include/bits/mathcalls.h:336"""
 # /usr/include/bits/mathcalls.h 336
-fdiml = _libraries['cublas'].fdiml
-fdiml.restype = c_longdouble
-# fdiml(__x, __y)
-fdiml.argtypes = [c_longdouble, c_longdouble]
-fdiml.__doc__ = \
-"""long double fdiml(long double __x, long double __y)
+fdim = _libraries['cublas'].fdim
+fdim.restype = c_double
+# fdim(__x, __y)
+fdim.argtypes = [c_double, c_double]
+fdim.__doc__ = \
+"""double fdim(double __x, double __y)
 /usr/include/bits/mathcalls.h:336"""
 # /usr/include/bits/mathcalls.h 339
 fmaxl = _libraries['cublas'].fmaxl
@@ -1796,20 +2142,20 @@ fmax.__doc__ = \
 """double fmax(double __x, double __y)
 /usr/include/bits/mathcalls.h:339"""
 # /usr/include/bits/mathcalls.h 342
-fminl = _libraries['cublas'].fminl
-fminl.restype = c_longdouble
-# fminl(__x, __y)
-fminl.argtypes = [c_longdouble, c_longdouble]
-fminl.__doc__ = \
-"""long double fminl(long double __x, long double __y)
-/usr/include/bits/mathcalls.h:342"""
-# /usr/include/bits/mathcalls.h 342
 fminf = _libraries['cublas'].fminf
 fminf.restype = c_float
 # fminf(__x, __y)
 fminf.argtypes = [c_float, c_float]
 fminf.__doc__ = \
 """float fminf(float __x, float __y)
+/usr/include/bits/mathcalls.h:342"""
+# /usr/include/bits/mathcalls.h 342
+fminl = _libraries['cublas'].fminl
+fminl.restype = c_longdouble
+# fminl(__x, __y)
+fminl.argtypes = [c_longdouble, c_longdouble]
+fminl.__doc__ = \
+"""long double fminl(long double __x, long double __y)
 /usr/include/bits/mathcalls.h:342"""
 # /usr/include/bits/mathcalls.h 342
 fmin = _libraries['cublas'].fmin
@@ -1820,12 +2166,12 @@ fmin.__doc__ = \
 """double fmin(double __x, double __y)
 /usr/include/bits/mathcalls.h:342"""
 # /usr/include/bits/mathcalls.h 347
-__fpclassify = _libraries['cublas'].__fpclassify
-__fpclassify.restype = c_int
-# __fpclassify(__value)
-__fpclassify.argtypes = [c_double]
-__fpclassify.__doc__ = \
-"""int __fpclassify(double __value)
+__fpclassifyf = _libraries['cublas'].__fpclassifyf
+__fpclassifyf.restype = c_int
+# __fpclassifyf(__value)
+__fpclassifyf.argtypes = [c_float]
+__fpclassifyf.__doc__ = \
+"""int __fpclassifyf(float __value)
 /usr/include/bits/mathcalls.h:347"""
 # /usr/include/bits/mathcalls.h 347
 __fpclassifyl = _libraries['cublas'].__fpclassifyl
@@ -1836,21 +2182,13 @@ __fpclassifyl.__doc__ = \
 """int __fpclassifyl(long double __value)
 /usr/include/bits/mathcalls.h:347"""
 # /usr/include/bits/mathcalls.h 347
-__fpclassifyf = _libraries['cublas'].__fpclassifyf
-__fpclassifyf.restype = c_int
-# __fpclassifyf(__value)
-__fpclassifyf.argtypes = [c_float]
-__fpclassifyf.__doc__ = \
-"""int __fpclassifyf(float __value)
+__fpclassify = _libraries['cublas'].__fpclassify
+__fpclassify.restype = c_int
+# __fpclassify(__value)
+__fpclassify.argtypes = [c_double]
+__fpclassify.__doc__ = \
+"""int __fpclassify(double __value)
 /usr/include/bits/mathcalls.h:347"""
-# /usr/include/bits/mathcalls.h 351
-__signbit = _libraries['cublas'].__signbit
-__signbit.restype = c_int
-# __signbit(__value)
-__signbit.argtypes = [c_double]
-__signbit.__doc__ = \
-"""int __signbit(double __value)
-/usr/include/bits/mathcalls.h:351"""
 # /usr/include/bits/mathcalls.h 351
 __signbitl = _libraries['cublas'].__signbitl
 __signbitl.restype = c_int
@@ -1867,14 +2205,14 @@ __signbitf.argtypes = [c_float]
 __signbitf.__doc__ = \
 """int __signbitf(float __value)
 /usr/include/bits/mathcalls.h:351"""
-# /usr/include/bits/mathcalls.h 355
-fmal = _libraries['cublas'].fmal
-fmal.restype = c_longdouble
-# fmal(__x, __y, __z)
-fmal.argtypes = [c_longdouble, c_longdouble, c_longdouble]
-fmal.__doc__ = \
-"""long double fmal(long double __x, long double __y, long double __z)
-/usr/include/bits/mathcalls.h:355"""
+# /usr/include/bits/mathcalls.h 351
+__signbit = _libraries['cublas'].__signbit
+__signbit.restype = c_int
+# __signbit(__value)
+__signbit.argtypes = [c_double]
+__signbit.__doc__ = \
+"""int __signbit(double __value)
+/usr/include/bits/mathcalls.h:351"""
 # /usr/include/bits/mathcalls.h 355
 fma = _libraries['cublas'].fma
 fma.restype = c_double
@@ -1884,6 +2222,14 @@ fma.__doc__ = \
 """double fma(double __x, double __y, double __z)
 /usr/include/bits/mathcalls.h:355"""
 # /usr/include/bits/mathcalls.h 355
+fmal = _libraries['cublas'].fmal
+fmal.restype = c_longdouble
+# fmal(__x, __y, __z)
+fmal.argtypes = [c_longdouble, c_longdouble, c_longdouble]
+fmal.__doc__ = \
+"""long double fmal(long double __x, long double __y, long double __z)
+/usr/include/bits/mathcalls.h:355"""
+# /usr/include/bits/mathcalls.h 355
 fmaf = _libraries['cublas'].fmaf
 fmaf.restype = c_float
 # fmaf(__x, __y, __z)
@@ -1891,14 +2237,6 @@ fmaf.argtypes = [c_float, c_float, c_float]
 fmaf.__doc__ = \
 """float fmaf(float __x, float __y, float __z)
 /usr/include/bits/mathcalls.h:355"""
-# /usr/include/bits/mathcalls.h 364
-scalbl = _libraries['cublas'].scalbl
-scalbl.restype = c_longdouble
-# scalbl(__x, __n)
-scalbl.argtypes = [c_longdouble, c_longdouble]
-scalbl.__doc__ = \
-"""long double scalbl(long double __x, long double __n)
-/usr/include/bits/mathcalls.h:364"""
 # /usr/include/bits/mathcalls.h 364
 scalb = _libraries['cublas'].scalb
 scalb.restype = c_double
@@ -1914,6 +2252,14 @@ scalbf.restype = c_float
 scalbf.argtypes = [c_float, c_float]
 scalbf.__doc__ = \
 """float scalbf(float __x, float __n)
+/usr/include/bits/mathcalls.h:364"""
+# /usr/include/bits/mathcalls.h 364
+scalbl = _libraries['cublas'].scalbl
+scalbl.restype = c_longdouble
+# scalbl(__x, __n)
+scalbl.argtypes = [c_longdouble, c_longdouble]
+scalbl.__doc__ = \
+"""long double scalbl(long double __x, long double __n)
 /usr/include/bits/mathcalls.h:364"""
 float_t = c_float
 double_t = c_double
@@ -1943,13 +2289,7 @@ matherr.argtypes = [POINTER(__exception)]
 matherr.__doc__ = \
 """int matherr(__exception * __exc)
 /usr/include/math.h:320"""
-# /usr/local/cuda/include/vector_types.h 269
-class float2(Structure):
-    pass
 cuFloatComplex = float2
-# /usr/local/cuda/include/vector_types.h 317
-class double2(Structure):
-    pass
 cuDoubleComplex = double2
 cuComplex = cuFloatComplex
 cublasStatus = c_uint
@@ -2625,355 +2965,18 @@ cublasZgemm.argtypes = [c_char, c_char, c_int, c_int, c_int, cuDoubleComplex, PO
 cublasZgemm.__doc__ = \
 """void cublasZgemm(char transa, char transb, int m, int n, int k, cuDoubleComplex alpha, unknown * A, int lda, unknown * B, int ldb, cuDoubleComplex beta, cuDoubleComplex * C, int ldc)
 /usr/local/cuda/include/cublas.h:3968"""
-# /usr/local/cuda/include/vector_types.h 55
-class char1(Structure):
-    pass
-char1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 55
-    ('x', c_byte),
-]
-# /usr/local/cuda/include/vector_types.h 61
-class uchar1(Structure):
-    pass
-uchar1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 61
-    ('x', c_ubyte),
-]
-# /usr/local/cuda/include/vector_types.h 67
-class char2(Structure):
-    pass
-char2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 67
-    ('x', c_byte),
-    ('y', c_byte),
-]
-# /usr/local/cuda/include/vector_types.h 73
-class uchar2(Structure):
-    pass
-uchar2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 73
-    ('x', c_ubyte),
-    ('y', c_ubyte),
-]
-# /usr/local/cuda/include/vector_types.h 79
-class char3(Structure):
-    pass
-char3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 79
-    ('x', c_byte),
-    ('y', c_byte),
-    ('z', c_byte),
-]
-# /usr/local/cuda/include/vector_types.h 85
-class uchar3(Structure):
-    pass
-uchar3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 85
-    ('x', c_ubyte),
-    ('y', c_ubyte),
-    ('z', c_ubyte),
-]
-# /usr/local/cuda/include/vector_types.h 91
-class char4(Structure):
-    pass
-char4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 91
-    ('x', c_byte),
-    ('y', c_byte),
-    ('z', c_byte),
-    ('w', c_byte),
-]
-# /usr/local/cuda/include/vector_types.h 97
-class uchar4(Structure):
-    pass
-uchar4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 97
-    ('x', c_ubyte),
-    ('y', c_ubyte),
-    ('z', c_ubyte),
-    ('w', c_ubyte),
-]
-# /usr/local/cuda/include/vector_types.h 103
-class short1(Structure):
-    pass
-short1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 103
-    ('x', c_short),
-]
-# /usr/local/cuda/include/vector_types.h 109
-class ushort1(Structure):
-    pass
-ushort1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 109
-    ('x', c_ushort),
-]
-# /usr/local/cuda/include/vector_types.h 115
-class short2(Structure):
-    pass
-short2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 115
-    ('x', c_short),
-    ('y', c_short),
-]
-# /usr/local/cuda/include/vector_types.h 121
-class ushort2(Structure):
-    pass
-ushort2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 121
-    ('x', c_ushort),
-    ('y', c_ushort),
-]
-# /usr/local/cuda/include/vector_types.h 127
-class short3(Structure):
-    pass
-short3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 127
-    ('x', c_short),
-    ('y', c_short),
-    ('z', c_short),
-]
-# /usr/local/cuda/include/vector_types.h 133
-class ushort3(Structure):
-    pass
-ushort3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 133
-    ('x', c_ushort),
-    ('y', c_ushort),
-    ('z', c_ushort),
-]
-# /usr/local/cuda/include/vector_types.h 139
-class short4(Structure):
-    pass
-short4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 139
-    ('x', c_short),
-    ('y', c_short),
-    ('z', c_short),
-    ('w', c_short),
-]
-# /usr/local/cuda/include/vector_types.h 145
-class ushort4(Structure):
-    pass
-ushort4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 145
-    ('x', c_ushort),
-    ('y', c_ushort),
-    ('z', c_ushort),
-    ('w', c_ushort),
-]
-# /usr/local/cuda/include/vector_types.h 151
-class int1(Structure):
-    pass
-int1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 151
-    ('x', c_int),
-]
-# /usr/local/cuda/include/vector_types.h 157
-class uint1(Structure):
-    pass
-uint1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 157
-    ('x', c_uint),
-]
-# /usr/local/cuda/include/vector_types.h 163
-class int2(Structure):
-    pass
-int2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 163
-    ('x', c_int),
-    ('y', c_int),
-]
-# /usr/local/cuda/include/vector_types.h 169
-class uint2(Structure):
-    pass
-uint2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 169
-    ('x', c_uint),
-    ('y', c_uint),
-]
-# /usr/local/cuda/include/vector_types.h 175
-class int3(Structure):
-    pass
-int3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 175
-    ('x', c_int),
-    ('y', c_int),
-    ('z', c_int),
-]
-# /usr/local/cuda/include/vector_types.h 181
-class uint3(Structure):
-    pass
-uint3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 181
-    ('x', c_uint),
-    ('y', c_uint),
-    ('z', c_uint),
-]
-# /usr/local/cuda/include/vector_types.h 187
-class int4(Structure):
-    pass
-int4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 187
-    ('x', c_int),
-    ('y', c_int),
-    ('z', c_int),
-    ('w', c_int),
-]
-# /usr/local/cuda/include/vector_types.h 193
-class uint4(Structure):
-    pass
-uint4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 193
-    ('x', c_uint),
-    ('y', c_uint),
-    ('z', c_uint),
-    ('w', c_uint),
-]
-# /usr/local/cuda/include/vector_types.h 199
-class long1(Structure):
-    pass
-long1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 199
-    ('x', c_long),
-]
-# /usr/local/cuda/include/vector_types.h 205
-class ulong1(Structure):
-    pass
-ulong1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 205
-    ('x', c_ulong),
-]
-# /usr/local/cuda/include/vector_types.h 217
-class long2(Structure):
-    pass
-long2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 217
-    ('x', c_long),
-    ('y', c_long),
-]
-# /usr/local/cuda/include/vector_types.h 229
-class ulong2(Structure):
-    pass
-ulong2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 229
-    ('x', c_ulong),
-    ('y', c_ulong),
-]
-# /usr/local/cuda/include/vector_types.h 263
-class float1(Structure):
-    pass
-float1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 263
-    ('x', c_float),
-]
-float2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 269
-    ('x', c_float),
-    ('y', c_float),
-]
-# /usr/local/cuda/include/vector_types.h 275
-class float3(Structure):
-    pass
-float3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 275
-    ('x', c_float),
-    ('y', c_float),
-    ('z', c_float),
-]
-# /usr/local/cuda/include/vector_types.h 281
-class float4(Structure):
-    pass
-float4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 281
-    ('x', c_float),
-    ('y', c_float),
-    ('z', c_float),
-    ('w', c_float),
-]
-# /usr/local/cuda/include/vector_types.h 287
-class longlong1(Structure):
-    pass
-longlong1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 287
-    ('x', c_longlong),
-]
-# /usr/local/cuda/include/vector_types.h 293
-class ulonglong1(Structure):
-    pass
-ulonglong1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 293
-    ('x', c_ulonglong),
-]
-# /usr/local/cuda/include/vector_types.h 299
-class longlong2(Structure):
-    pass
-longlong2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 299
-    ('x', c_longlong),
-    ('y', c_longlong),
-]
-# /usr/local/cuda/include/vector_types.h 305
-class ulonglong2(Structure):
-    pass
-ulonglong2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 305
-    ('x', c_ulonglong),
-    ('y', c_ulonglong),
-]
-# /usr/local/cuda/include/vector_types.h 311
-class double1(Structure):
-    pass
-double1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 311
-    ('x', c_double),
-]
-double2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 317
-    ('x', c_double),
-    ('y', c_double),
-]
-# /usr/local/cuda/include/vector_types.h 384
-class long3(Structure):
-    pass
-long3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 384
-]
-# /usr/local/cuda/include/vector_types.h 386
-class ulong3(Structure):
-    pass
-ulong3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 386
-]
-# /usr/local/cuda/include/vector_types.h 388
-class long4(Structure):
-    pass
-long4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 388
-]
-# /usr/local/cuda/include/vector_types.h 390
-class ulong4(Structure):
-    pass
-ulong4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 390
-]
-# /usr/local/cuda/include/vector_types.h 423
-class dim3(Structure):
-    pass
-dim3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 423
-]
 __all__ = ['cublasDswap', 'cublasSsymv', 'cbrtf', 'nearbyint',
            'cbrtl', 'acosl', 'ldexpl', 'acosh', 'cublasSsymm',
            'acosf', 'ldexpf', 'log2f', 'cublasDrotmg', 'cublasStrsm',
            'log2l', 'ilogb', 'cublasStrsv', 'cublasAlloc', 'scalbnf',
            'scalbnl', 'cublasInit', 'cublasGetVector', 'tanh',
            'cublasCgemm', 'round', 'cublasXerbla', 'expm1f', 'cosf',
-           'nexttoward', 'cosl', 'cosh', '__signbit', '_POSIX_',
+           'nexttoward', 'cosl', 'cosh', 'cublasStbsv', '_POSIX_',
            'sincos', 'asin', 'cublasSswap', 'nanl', 'y1f', 'nanf',
            'llroundl', 'expm1l', 'llroundf', 'cublasSsyr',
            'cublasScopy', 'significandl', 'fmax', 'tgammaf',
            'cublasDtrsm', 'copysign', 'significandf', 'cublasDtrsv',
-           'cublasDcopy', 'drem', 'acoshf', 'sinf', 'acoshl', 'trunc',
+           'sinl', 'drem', 'sinh', 'sinf', 'acoshl', 'trunc',
            'lroundf', 'cublasShutdown', 'ulonglong1', 'cublasDsymm',
            'lroundl', 'cbrt', '_LIB_VERSION_TYPE', 'cublasStbmv',
            'fdimf', 'fdiml', 'cublasDrot', 'exp10', 'uint4', 'uint1',
@@ -2981,16 +2984,16 @@ __all__ = ['cublasDswap', 'cublasSsymv', 'cbrtf', 'nearbyint',
            'llrintf', 'cublasSsyr2', 'dim3', 'cublasIcamax', 'erf',
            '__fpclassifyl', 'cublasSrot', '__fpclassifyf', 'tan',
            'atanf', 'atanh', 'atanl', '_IEEE_', 'sin', 'atan',
-           'cublasDgemm', 'cublasDgemv', 'gammaf', 'gammal',
-           'cublasSsyr2k', 'cublasIsamax', 'atan2', 'short4', 'coshf',
-           'coshl', 'roundl', 'jnf', 'finitef', 'y1', 'y0', 'finitel',
-           'jnl', 'short2', 'j1f', 'ulong4', 'ulong3', 'ulong2',
-           'ulong1', 'remquo', 'yn', 'cublasIdamin', 'pow10f',
-           'pow10l', 'ynl', 'ynf', 'uchar1', 'uchar3', 'uchar2',
-           'uchar4', 'modf', 'cublasCrotg', 'logf', 'logb', 'sinhf',
-           'logl', 'sinhl', 'cublasDsyrk', 'atan2l', 'atan2f',
-           'cublasStbsv', 'log2', 'remainder', 'cublasSsbmv', 'expm1',
-           'erff', 'erfc', 'exp2', 'pow10', 'erfl', 'cublasSrotmg',
+           'cublasDgemm', 'cublasSsbmv', 'gammaf', 'gammal',
+           'cublasSsyr2k', 'cublasIsamax', 'atan2', 'cublasSrotmg',
+           'coshf', 'coshl', 'roundl', 'jnf', 'finitef', 'y1', 'y0',
+           'finitel', 'jnl', 'short2', 'j1f', 'ulong4', 'ulong3',
+           'ulong2', 'ulong1', 'remquo', 'yn', 'cublasIdamin',
+           'pow10f', 'pow10l', 'ynl', 'ynf', 'uchar1', 'uchar3',
+           'uchar2', 'uchar4', 'modf', 'cublasCrotg', 'logf', 'logb',
+           'sinhf', 'logl', 'sinhl', 'cublasDsyrk', 'atan2l',
+           'atan2f', '__signbit', 'log2', 'remainder', 'cublasDgemv',
+           'expm1', 'erff', 'erfc', 'exp2', 'pow10', 'erfl', 'short4',
            'cublasDasum', 'short1', 'floorf', 'short3', 'rint',
            'floorl', 'ldexp', 'copysignf', 'cublasFree', 'copysignl',
            'cublasSetVector', 'fma', 'nearbyintl', 'nearbyintf',
@@ -2999,44 +3002,44 @@ __all__ = ['cublasDswap', 'cublasSsymv', 'cbrtf', 'nearbyint',
            'char4', 'FP_ZERO', 'cublasDscal', 'cublasSrotm', 'frexpl',
            'cublasSrotg', 'frexpf', 'significand', 'y1l', 'long3',
            'long2', 'long1', 'long4', 'logbf', 'cublasCsrot', 'logbl',
-           'exp', 'int1', '_SVID_', 'cublasCaxpy', 'cublasSspr',
+           'exp', 'cublasSdot', '_SVID_', 'cublasCaxpy', 'cublasSspr',
            '__fpclassify', 'frexp', 'ushort1', 'ushort2', 'ushort3',
            'ushort4', 'double2', 'double1', 'cublasIdamax', 'lgammaf',
            'tgamma', 'cublasStpsv', 'lgammal', 'ceil', 'cublasDdot',
-           'FP_NAN', 'fdim', 'nextafterl', 'nextafterf', 'j0', 'j1',
-           'cublasDrotm', 'float4', 'cublasDrotg', 'float1', 'float2',
-           'float3', 'isnan', '_LIB_VERSION', 'cuComplex', 'erfcf',
-           'lgammal_r', 'erfcl', 'FP_INFINITE', 'scalbln',
+           'FP_NAN', 'cublasSgemm', 'nextafterl', 'nextafterf', 'j0',
+           'j1', 'cublasDrotm', 'float4', 'cublasDrotg', 'float1',
+           'float2', 'float3', 'isnan', '_LIB_VERSION', 'cuComplex',
+           'erfcf', 'lgammal_r', 'erfcl', 'FP_INFINITE', 'scalbln',
            'cublasIsamin', 'ilogbl', 'jn', 'ilogbf', 'cublasSasum',
-           'atanhl', 'cos', 'atanhf', 'sinl', 'cublasDsyr', 'lrintf',
-           'fmaf', 'fmaxf', 'pow', 'double_t', 'fmaxl', 'fabsl',
-           'cublasCscal', 'hypotf', 'hypotl', 'fmal', '__finite',
-           'cublasSgbmv', 'fminf', '__isnan', 'fminl', 'cublasDsyr2k',
-           'asinh', 'j0l', 'cublasCrot', 'asinf', 'j0f',
-           'cublasDtrmm', 'cublasDger', 'tanl', 'truncl',
+           'atanhl', 'cos', 'atanhf', 'cublasDcopy', 'cublasDsyr',
+           'lrintf', 'fmaf', 'fmaxf', 'pow', 'double_t', 'fmaxl',
+           'fabsl', 'cublasCscal', 'hypotf', 'hypotl', 'fmal',
+           '__finite', 'cublasSgbmv', 'fminf', '__exception', 'fminl',
+           'cublasDsyr2k', 'asinh', 'j0l', 'cublasCrot', 'asinf',
+           'j0f', 'cublasDtrmm', 'cublasDger', 'tanl', 'truncl',
            'cublasSetMatrix', 'scalblnf', 'tanf', 'scalblnl',
            'truncf', 'lgamma', 'lgammaf_r', 'cuFloatComplex',
            'ulonglong2', 'log10l', 'log10f', 'cublasCcopy', 'fabs',
            'sqrt', 'finite', 'nextafter', 'ceilf', 'cublasScnrm2',
-           'ceill', 'isinff', 'isnanf', 'isinfl', 'isnanl', 'scalb',
-           'cublasStatus', 'powl', 'powf', 'rintf', '__isinff',
-           '__isinfl', 'rintl', 'cublasGetError', 'dremf', '_ISOC_',
-           'dreml', 'fabsf', 'lrintl', '_XOPEN_', 'cublasSspmv',
-           'fmodf', 'scalbf', 'exp10l', 'scalbl', 'scalbn', 'exp10f',
-           'FP_NORMAL', 'cublasSaxpy', 'cublasSscal', 'float_t',
-           'modfl', 'tanhl', 'tanhf', 'hypot', 'exp2f', 'exp2l',
-           '__signbitf', '__signbitl', 'log1pl', 'fmod', 'tgammal',
-           'log1pf', 'matherr', 'cublasScasum', 'cublasSger',
-           'FP_SUBNORMAL', 'cublasStrmm', 'cublasStrmv', 'signgam',
-           'fmin', 'llround', 'acos', 'gamma', 'remquol', 'j1l',
-           'roundf', 'sqrtl', 'sqrtf', 'log', 'lround', 'log10',
-           'remquof', '__finitel', 'int4', 'cublasCswap',
-           'cublasSdot', 'int3', 'int2', '__finitef', 'lrint',
-           'longlong1', 'longlong2', 'cublasSgemm', 'cublasSgemv',
-           '__exception', 'cublasCsscal', 'cublasGetMatrix',
+           'ceill', 'isinff', 'isnanf', 'isinfl', 'isnanl', 'acoshf',
+           'scalb', 'cublasStatus', 'powl', 'powf', 'rintf',
+           '__isinff', '__isinfl', 'rintl', 'cublasGetError', 'dremf',
+           '_ISOC_', 'dreml', 'fabsf', 'lrintl', '_XOPEN_',
+           'cublasSspmv', 'fmodf', 'scalbf', 'exp10l', 'scalbl',
+           'scalbn', 'exp10f', 'FP_NORMAL', 'cublasSaxpy',
+           'cublasSscal', 'float_t', 'fmodl', 'tanhl', 'tanhf',
+           'hypot', 'exp2f', 'exp2l', '__signbitf', '__signbitl',
+           'log1pl', 'fmod', 'tgammal', 'log1pf', 'matherr',
+           'cublasScasum', 'cublasSger', 'FP_SUBNORMAL',
+           'cublasStrmm', 'cublasStrmv', 'signgam', 'fmin', 'llround',
+           'acos', 'gamma', 'remquol', 'j1l', 'roundf', 'sqrtl',
+           'sqrtf', 'log', 'lround', 'log10', 'remquof', '__finitel',
+           'int4', 'cublasCswap', 'int1', 'int3', 'int2', '__finitef',
+           'lrint', 'longlong1', 'longlong2', 'fdim', 'cublasSgemv',
+           '__isnan', 'cublasCsscal', 'cublasGetMatrix',
            'cublasSsyrk', 'log1p', '__isnanf', 'cublasDaxpy',
            '__isnanl', 'lgamma_r', 'cublasCdotc', 'asinl', 'floor',
            'uint2', 'nan', 'cuDoubleComplex', 'cublasCdotu', 'modff',
-           'cublasZgemm', 'fmodl', 'remainderf', 'isinf',
-           'cublasStpmv', 'remainderl', 'sinh', 'cublasSspr2',
-           '__isinf', 'asinhf', 'sincosl', 'sincosf', 'asinhl']
+           'cublasZgemm', 'modfl', 'remainderf', 'isinf',
+           'cublasStpmv', 'remainderl', 'cublasSspr2', '__isinf',
+           'asinhf', 'sincosl', 'sincosf', 'asinhl']
