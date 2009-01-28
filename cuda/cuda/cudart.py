@@ -9,63 +9,409 @@ _libraries['cudart'] = get_lib('cudart')
 STRING = c_char_p
 
 
-cudaErrorInvalidFilterSetting = 26
-cudaErrorInvalidValue = 11
-cudaErrorInvalidTextureBinding = 19
-cudaErrorInitializationError = 3
-cudaFilterModePoint = 0
-cudaErrorInvalidNormSetting = 27
-cudaErrorInvalidChannelDescriptor = 20
-cudaErrorLaunchFailure = 4
-cudaAddressModeWrap = 0
-cudaFilterModeLinear = 1
+cudaErrorInsufficientDriver = 35
 cudaErrorInvalidMemcpyDirection = 21
-cudaErrorPriorLaunchFailure = 5
-cudaAddressModeClamp = 1
-cudaErrorCudartUnloading = 29
-cudaMemcpyHostToDevice = 1
-cudaErrorSynchronizationError = 25
-cudaErrorLaunchTimeout = 6
-cudaErrorUnknown = 30
-cudaMemcpyDeviceToHost = 2
-cudaRoundNearest = 0
-cudaErrorLaunchOutOfResources = 7
-cudaMemcpyDeviceToDevice = 3
-cudaRoundZero = 1
-cudaErrorInvalidDeviceFunction = 8
-cudaErrorMemoryValueTooLarge = 32
-cudaRoundPosInf = 2
-cudaErrorInvalidConfiguration = 9
-cudaErrorInvalidResourceHandle = 33
-cudaRoundMinInf = 3
-cudaErrorApiFailureBase = 10000
-cudaErrorInvalidDevice = 10
-cudaChannelFormatKindSigned = 0
-cudaChannelFormatKindUnsigned = 1
-cudaErrorInvalidPitchValue = 12
-cudaErrorNotReady = 34
-cudaChannelFormatKindFloat = 2
-cudaErrorSetOnActiveProcess = 36
-cudaErrorInvalidSymbol = 13
-cudaChannelFormatKindNone = 3
-cudaErrorNotYetImplemented = 31
-cudaErrorStartupFailure = 127
-cudaReadModeElementType = 0
 cudaErrorMapBufferObjectFailed = 14
+cudaErrorAddressOfConstant = 22
 cudaErrorUnmapBufferObjectFailed = 15
-cudaErrorMixedDeviceExecution = 28
-cudaMemcpyHostToHost = 0
+cudaErrorMemoryValueTooLarge = 32
+cudaChannelFormatKindSigned = 0
 cudaErrorTextureFetchFailed = 23
 cudaErrorInvalidHostPointer = 16
+cudaChannelFormatKindUnsigned = 1
 cudaSuccess = 0
-cudaErrorInvalidDevicePointer = 17
 cudaErrorTextureNotBound = 24
+cudaErrorInvalidDevicePointer = 17
 cudaErrorMissingConfiguration = 1
-cudaErrorInvalidTexture = 18
-cudaErrorAddressOfConstant = 22
-cudaErrorInsufficientDriver = 35
-cudaReadModeNormalizedFloat = 1
+cudaMemcpyHostToHost = 0
+cudaChannelFormatKindNone = 3
 cudaErrorMemoryAllocation = 2
+cudaAddressModeWrap = 0
+cudaErrorInvalidFilterSetting = 26
+cudaRoundNearest = 0
+cudaErrorInitializationError = 3
+cudaAddressModeClamp = 1
+cudaFilterModePoint = 0
+cudaMemcpyHostToDevice = 1
+cudaRoundZero = 1
+cudaErrorPriorLaunchFailure = 5
+cudaErrorLaunchFailure = 4
+cudaFilterModeLinear = 1
+cudaChannelFormatKindFloat = 2
+cudaErrorMixedDeviceExecution = 28
+cudaMemcpyDeviceToHost = 2
+cudaErrorInvalidResourceHandle = 33
+cudaErrorCudartUnloading = 29
+cudaMemcpyDeviceToDevice = 3
+cudaRoundMinInf = 3
+cudaErrorLaunchTimeout = 6
+cudaErrorInvalidNormSetting = 27
+cudaErrorUnknown = 30
+cudaErrorLaunchOutOfResources = 7
+cudaErrorInvalidDeviceFunction = 8
+cudaErrorNotReady = 34
+cudaErrorInvalidConfiguration = 9
+cudaErrorInvalidDevice = 10
+cudaErrorNotYetImplemented = 31
+cudaErrorInvalidTexture = 18
+cudaErrorInvalidValue = 11
+cudaRoundPosInf = 2
+cudaReadModeElementType = 0
+cudaErrorInvalidTextureBinding = 19
+cudaErrorInvalidPitchValue = 12
+cudaErrorApiFailureBase = 10000
+cudaErrorSynchronizationError = 25
+cudaErrorSetOnActiveProcess = 36
+cudaReadModeNormalizedFloat = 1
+cudaErrorInvalidChannelDescriptor = 20
+cudaErrorInvalidSymbol = 13
+cudaErrorStartupFailure = 127
+# ./my_CUDA2100_vector_types.h 55
+class char1(Structure):
+    pass
+char1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 55
+    ('x', c_byte),
+]
+# ./my_CUDA2100_vector_types.h 61
+class uchar1(Structure):
+    pass
+uchar1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 61
+    ('x', c_ubyte),
+]
+# ./my_CUDA2100_vector_types.h 67
+class char2(Structure):
+    pass
+char2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 67
+    ('x', c_byte),
+    ('y', c_byte),
+]
+# ./my_CUDA2100_vector_types.h 73
+class uchar2(Structure):
+    pass
+uchar2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 73
+    ('x', c_ubyte),
+    ('y', c_ubyte),
+]
+# ./my_CUDA2100_vector_types.h 79
+class char3(Structure):
+    pass
+char3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 79
+    ('x', c_byte),
+    ('y', c_byte),
+    ('z', c_byte),
+]
+# ./my_CUDA2100_vector_types.h 85
+class uchar3(Structure):
+    pass
+uchar3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 85
+    ('x', c_ubyte),
+    ('y', c_ubyte),
+    ('z', c_ubyte),
+]
+# ./my_CUDA2100_vector_types.h 91
+class char4(Structure):
+    pass
+char4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 91
+    ('x', c_byte),
+    ('y', c_byte),
+    ('z', c_byte),
+    ('w', c_byte),
+]
+# ./my_CUDA2100_vector_types.h 97
+class uchar4(Structure):
+    pass
+uchar4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 97
+    ('x', c_ubyte),
+    ('y', c_ubyte),
+    ('z', c_ubyte),
+    ('w', c_ubyte),
+]
+# ./my_CUDA2100_vector_types.h 103
+class short1(Structure):
+    pass
+short1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 103
+    ('x', c_short),
+]
+# ./my_CUDA2100_vector_types.h 109
+class ushort1(Structure):
+    pass
+ushort1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 109
+    ('x', c_ushort),
+]
+# ./my_CUDA2100_vector_types.h 115
+class short2(Structure):
+    pass
+short2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 115
+    ('x', c_short),
+    ('y', c_short),
+]
+# ./my_CUDA2100_vector_types.h 121
+class ushort2(Structure):
+    pass
+ushort2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 121
+    ('x', c_ushort),
+    ('y', c_ushort),
+]
+# ./my_CUDA2100_vector_types.h 127
+class short3(Structure):
+    pass
+short3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 127
+    ('x', c_short),
+    ('y', c_short),
+    ('z', c_short),
+]
+# ./my_CUDA2100_vector_types.h 133
+class ushort3(Structure):
+    pass
+ushort3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 133
+    ('x', c_ushort),
+    ('y', c_ushort),
+    ('z', c_ushort),
+]
+# ./my_CUDA2100_vector_types.h 139
+class short4(Structure):
+    pass
+short4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 139
+    ('x', c_short),
+    ('y', c_short),
+    ('z', c_short),
+    ('w', c_short),
+]
+# ./my_CUDA2100_vector_types.h 145
+class ushort4(Structure):
+    pass
+ushort4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 145
+    ('x', c_ushort),
+    ('y', c_ushort),
+    ('z', c_ushort),
+    ('w', c_ushort),
+]
+# ./my_CUDA2100_vector_types.h 151
+class int1(Structure):
+    pass
+int1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 151
+    ('x', c_int),
+]
+# ./my_CUDA2100_vector_types.h 157
+class uint1(Structure):
+    pass
+uint1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 157
+    ('x', c_uint),
+]
+# ./my_CUDA2100_vector_types.h 163
+class int2(Structure):
+    pass
+int2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 163
+    ('x', c_int),
+    ('y', c_int),
+]
+# ./my_CUDA2100_vector_types.h 169
+class uint2(Structure):
+    pass
+uint2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 169
+    ('x', c_uint),
+    ('y', c_uint),
+]
+# ./my_CUDA2100_vector_types.h 175
+class int3(Structure):
+    pass
+int3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 175
+    ('x', c_int),
+    ('y', c_int),
+    ('z', c_int),
+]
+# ./my_CUDA2100_vector_types.h 181
+class uint3(Structure):
+    pass
+uint3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 181
+    ('x', c_uint),
+    ('y', c_uint),
+    ('z', c_uint),
+]
+# ./my_CUDA2100_vector_types.h 187
+class int4(Structure):
+    pass
+int4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 187
+    ('x', c_int),
+    ('y', c_int),
+    ('z', c_int),
+    ('w', c_int),
+]
+# ./my_CUDA2100_vector_types.h 193
+class uint4(Structure):
+    pass
+uint4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 193
+    ('x', c_uint),
+    ('y', c_uint),
+    ('z', c_uint),
+    ('w', c_uint),
+]
+# ./my_CUDA2100_vector_types.h 199
+class long1(Structure):
+    pass
+long1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 199
+    ('x', c_long),
+]
+# ./my_CUDA2100_vector_types.h 205
+class ulong1(Structure):
+    pass
+ulong1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 205
+    ('x', c_ulong),
+]
+# ./my_CUDA2100_vector_types.h 217
+class long2(Structure):
+    pass
+long2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 217
+    ('x', c_long),
+    ('y', c_long),
+]
+# ./my_CUDA2100_vector_types.h 229
+class ulong2(Structure):
+    pass
+ulong2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 229
+    ('x', c_ulong),
+    ('y', c_ulong),
+]
+# ./my_CUDA2100_vector_types.h 263
+class float1(Structure):
+    pass
+float1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 263
+    ('x', c_float),
+]
+# ./my_CUDA2100_vector_types.h 269
+class float2(Structure):
+    pass
+float2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 269
+    ('x', c_float),
+    ('y', c_float),
+]
+# ./my_CUDA2100_vector_types.h 275
+class float3(Structure):
+    pass
+float3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 275
+    ('x', c_float),
+    ('y', c_float),
+    ('z', c_float),
+]
+# ./my_CUDA2100_vector_types.h 281
+class float4(Structure):
+    pass
+float4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 281
+    ('x', c_float),
+    ('y', c_float),
+    ('z', c_float),
+    ('w', c_float),
+]
+# ./my_CUDA2100_vector_types.h 287
+class longlong1(Structure):
+    pass
+longlong1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 287
+    ('x', c_longlong),
+]
+# ./my_CUDA2100_vector_types.h 293
+class ulonglong1(Structure):
+    pass
+ulonglong1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 293
+    ('x', c_ulonglong),
+]
+# ./my_CUDA2100_vector_types.h 299
+class longlong2(Structure):
+    pass
+longlong2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 299
+    ('x', c_longlong),
+    ('y', c_longlong),
+]
+# ./my_CUDA2100_vector_types.h 305
+class ulonglong2(Structure):
+    pass
+ulonglong2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 305
+    ('x', c_ulonglong),
+    ('y', c_ulonglong),
+]
+# ./my_CUDA2100_vector_types.h 311
+class double1(Structure):
+    pass
+double1._fields_ = [
+    # ./my_CUDA2100_vector_types.h 311
+    ('x', c_double),
+]
+# ./my_CUDA2100_vector_types.h 317
+class double2(Structure):
+    pass
+double2._fields_ = [
+    # ./my_CUDA2100_vector_types.h 317
+    ('x', c_double),
+    ('y', c_double),
+]
+# ./my_CUDA2100_vector_types.h 384
+class long3(Structure):
+    pass
+long3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 384
+]
+# ./my_CUDA2100_vector_types.h 386
+class ulong3(Structure):
+    pass
+ulong3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 386
+]
+# ./my_CUDA2100_vector_types.h 388
+class long4(Structure):
+    pass
+long4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 388
+]
+# ./my_CUDA2100_vector_types.h 390
+class ulong4(Structure):
+    pass
+ulong4._fields_ = [
+    # ./my_CUDA2100_vector_types.h 390
+]
+# ./my_CUDA2100_vector_types.h 423
+class dim3(Structure):
+    pass
+dim3._fields_ = [
+    # ./my_CUDA2100_vector_types.h 423
+    ('x', c_uint),
+    ('y', c_uint),
+    ('z', c_uint),
+]
 ptrdiff_t = c_long
 size_t = c_ulong
 # /usr/local/cuda/include/driver_types.h 113
@@ -795,9 +1141,6 @@ cudaGetErrorString.argtypes = [cudaError_t]
 cudaGetErrorString.__doc__ = \
 """unknown * cudaGetErrorString(cudaError_t error)
 /usr/local/cuda/include/cuda_runtime_api.h:200"""
-# /usr/local/cuda/include/vector_types.h 423
-class dim3(Structure):
-    pass
 # /usr/local/cuda/include/cuda_runtime_api.h 208
 cudaConfigureCall = _libraries['cudart'].cudaConfigureCall
 cudaConfigureCall.restype = cudaError_t
@@ -941,406 +1284,65 @@ cudaRoundMode = c_int # enum
 
 # values for enumeration 'cudaTextureReadMode'
 cudaTextureReadMode = c_int # enum
-# /usr/local/cuda/include/vector_types.h 55
-class char1(Structure):
-    pass
-char1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 55
-    ('x', c_byte),
-]
-# /usr/local/cuda/include/vector_types.h 61
-class uchar1(Structure):
-    pass
-uchar1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 61
-    ('x', c_ubyte),
-]
-# /usr/local/cuda/include/vector_types.h 67
-class char2(Structure):
-    pass
-char2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 67
-    ('x', c_byte),
-    ('y', c_byte),
-]
-# /usr/local/cuda/include/vector_types.h 73
-class uchar2(Structure):
-    pass
-uchar2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 73
-    ('x', c_ubyte),
-    ('y', c_ubyte),
-]
-# /usr/local/cuda/include/vector_types.h 79
-class char3(Structure):
-    pass
-char3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 79
-    ('x', c_byte),
-    ('y', c_byte),
-    ('z', c_byte),
-]
-# /usr/local/cuda/include/vector_types.h 85
-class uchar3(Structure):
-    pass
-uchar3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 85
-    ('x', c_ubyte),
-    ('y', c_ubyte),
-    ('z', c_ubyte),
-]
-# /usr/local/cuda/include/vector_types.h 91
-class char4(Structure):
-    pass
-char4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 91
-    ('x', c_byte),
-    ('y', c_byte),
-    ('z', c_byte),
-    ('w', c_byte),
-]
-# /usr/local/cuda/include/vector_types.h 97
-class uchar4(Structure):
-    pass
-uchar4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 97
-    ('x', c_ubyte),
-    ('y', c_ubyte),
-    ('z', c_ubyte),
-    ('w', c_ubyte),
-]
-# /usr/local/cuda/include/vector_types.h 103
-class short1(Structure):
-    pass
-short1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 103
-    ('x', c_short),
-]
-# /usr/local/cuda/include/vector_types.h 109
-class ushort1(Structure):
-    pass
-ushort1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 109
-    ('x', c_ushort),
-]
-# /usr/local/cuda/include/vector_types.h 115
-class short2(Structure):
-    pass
-short2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 115
-    ('x', c_short),
-    ('y', c_short),
-]
-# /usr/local/cuda/include/vector_types.h 121
-class ushort2(Structure):
-    pass
-ushort2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 121
-    ('x', c_ushort),
-    ('y', c_ushort),
-]
-# /usr/local/cuda/include/vector_types.h 127
-class short3(Structure):
-    pass
-short3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 127
-    ('x', c_short),
-    ('y', c_short),
-    ('z', c_short),
-]
-# /usr/local/cuda/include/vector_types.h 133
-class ushort3(Structure):
-    pass
-ushort3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 133
-    ('x', c_ushort),
-    ('y', c_ushort),
-    ('z', c_ushort),
-]
-# /usr/local/cuda/include/vector_types.h 139
-class short4(Structure):
-    pass
-short4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 139
-    ('x', c_short),
-    ('y', c_short),
-    ('z', c_short),
-    ('w', c_short),
-]
-# /usr/local/cuda/include/vector_types.h 145
-class ushort4(Structure):
-    pass
-ushort4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 145
-    ('x', c_ushort),
-    ('y', c_ushort),
-    ('z', c_ushort),
-    ('w', c_ushort),
-]
-# /usr/local/cuda/include/vector_types.h 151
-class int1(Structure):
-    pass
-int1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 151
-    ('x', c_int),
-]
-# /usr/local/cuda/include/vector_types.h 157
-class uint1(Structure):
-    pass
-uint1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 157
-    ('x', c_uint),
-]
-# /usr/local/cuda/include/vector_types.h 163
-class int2(Structure):
-    pass
-int2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 163
-    ('x', c_int),
-    ('y', c_int),
-]
-# /usr/local/cuda/include/vector_types.h 169
-class uint2(Structure):
-    pass
-uint2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 169
-    ('x', c_uint),
-    ('y', c_uint),
-]
-# /usr/local/cuda/include/vector_types.h 175
-class int3(Structure):
-    pass
-int3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 175
-    ('x', c_int),
-    ('y', c_int),
-    ('z', c_int),
-]
-# /usr/local/cuda/include/vector_types.h 181
-class uint3(Structure):
-    pass
-uint3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 181
-    ('x', c_uint),
-    ('y', c_uint),
-    ('z', c_uint),
-]
-# /usr/local/cuda/include/vector_types.h 187
-class int4(Structure):
-    pass
-int4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 187
-    ('x', c_int),
-    ('y', c_int),
-    ('z', c_int),
-    ('w', c_int),
-]
-# /usr/local/cuda/include/vector_types.h 193
-class uint4(Structure):
-    pass
-uint4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 193
-    ('x', c_uint),
-    ('y', c_uint),
-    ('z', c_uint),
-    ('w', c_uint),
-]
-# /usr/local/cuda/include/vector_types.h 199
-class long1(Structure):
-    pass
-long1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 199
-    ('x', c_long),
-]
-# /usr/local/cuda/include/vector_types.h 205
-class ulong1(Structure):
-    pass
-ulong1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 205
-    ('x', c_ulong),
-]
-# /usr/local/cuda/include/vector_types.h 217
-class long2(Structure):
-    pass
-long2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 217
-    ('x', c_long),
-    ('y', c_long),
-]
-# /usr/local/cuda/include/vector_types.h 229
-class ulong2(Structure):
-    pass
-ulong2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 229
-    ('x', c_ulong),
-    ('y', c_ulong),
-]
-# /usr/local/cuda/include/vector_types.h 263
-class float1(Structure):
-    pass
-float1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 263
-    ('x', c_float),
-]
-# /usr/local/cuda/include/vector_types.h 269
-class float2(Structure):
-    pass
-float2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 269
-    ('x', c_float),
-    ('y', c_float),
-]
-# /usr/local/cuda/include/vector_types.h 275
-class float3(Structure):
-    pass
-float3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 275
-    ('x', c_float),
-    ('y', c_float),
-    ('z', c_float),
-]
-# /usr/local/cuda/include/vector_types.h 281
-class float4(Structure):
-    pass
-float4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 281
-    ('x', c_float),
-    ('y', c_float),
-    ('z', c_float),
-    ('w', c_float),
-]
-# /usr/local/cuda/include/vector_types.h 287
-class longlong1(Structure):
-    pass
-longlong1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 287
-    ('x', c_longlong),
-]
-# /usr/local/cuda/include/vector_types.h 293
-class ulonglong1(Structure):
-    pass
-ulonglong1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 293
-    ('x', c_ulonglong),
-]
-# /usr/local/cuda/include/vector_types.h 299
-class longlong2(Structure):
-    pass
-longlong2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 299
-    ('x', c_longlong),
-    ('y', c_longlong),
-]
-# /usr/local/cuda/include/vector_types.h 305
-class ulonglong2(Structure):
-    pass
-ulonglong2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 305
-    ('x', c_ulonglong),
-    ('y', c_ulonglong),
-]
-# /usr/local/cuda/include/vector_types.h 311
-class double1(Structure):
-    pass
-double1._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 311
-    ('x', c_double),
-]
-# /usr/local/cuda/include/vector_types.h 317
-class double2(Structure):
-    pass
-double2._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 317
-    ('x', c_double),
-    ('y', c_double),
-]
-# /usr/local/cuda/include/vector_types.h 384
-class long3(Structure):
-    pass
-long3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 384
-]
-# /usr/local/cuda/include/vector_types.h 386
-class ulong3(Structure):
-    pass
-ulong3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 386
-]
-# /usr/local/cuda/include/vector_types.h 388
-class long4(Structure):
-    pass
-long4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 388
-]
-# /usr/local/cuda/include/vector_types.h 390
-class ulong4(Structure):
-    pass
-ulong4._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 390
-]
-dim3._fields_ = [
-    # /usr/local/cuda/include/vector_types.h 423
-]
 __all__ = ['cudaMalloc3DArray', 'cudaGetTextureAlignmentOffset',
            'cudaErrorInvalidResourceHandle', 'cudaAddressModeWrap',
            'cudaErrorTextureNotBound', 'cudaStream_t',
            'cudaMemcpyHostToHost', 'size_t', 'cudaGetSymbolAddress',
-           'cudaMallocArray', 'cudaPitchedPtr', 'cudaFree',
-           'cudaErrorCudartUnloading', 'cudaMemcpy3DParms', 'ushort2',
-           'cudaMalloc', 'ushort4', 'cudaChannelFormatKind',
-           'cudaMemcpy2D', 'double1', 'cudaGetDeviceCount', 'ulong2',
-           'ulong1', 'cudaMemcpyFromArrayAsync', 'cudaMemcpyToArray',
-           'cudaErrorMixedDeviceExecution', 'cudaPos',
-           'cudaThreadExit', 'cudaErrorMemoryAllocation',
+           'cudaMallocArray', 'cudaPitchedPtr',
+           'cudaErrorInvalidNormSetting', 'cudaErrorCudartUnloading',
+           'ushort1', 'ushort2', 'ushort3', 'ushort4', 'double2',
+           'cudaMemcpy2D', 'cudaThreadSynchronize', 'double1',
+           'ulong3', 'ulong2', 'ulong1', 'cudaMemcpyFromArrayAsync',
+           'cudaMemcpyToArray', 'cudaErrorMixedDeviceExecution',
+           'cudaPos', 'cudaThreadExit', 'cudaErrorMemoryAllocation',
            'cudaGetLastError', 'cudaChooseDevice',
            'cudaErrorMapBufferObjectFailed', 'cudaErrorLaunchFailure',
            'cudaMemcpyToSymbol', 'cudaStreamSynchronize',
-           'cudaErrorInvalidTextureBinding', 'uchar3', 'uchar2',
-           'cudaEvent_t', 'cudaMemcpy3D', 'cudaMemset',
-           'cudaErrorInvalidMemcpyDirection', 'cudaSetupArgument',
+           'cudaGetErrorString', 'uchar1', 'uchar3', 'uchar2',
+           'uchar4', 'cudaMemcpy3D', 'float4',
+           'cudaMemcpyDeviceToHost', 'cudaSetupArgument',
            'cudaBindTexture', 'cudaMemcpyFromSymbolAsync',
            'cudaChannelFormatDesc', 'cudaEventSynchronize',
            'cudaStreamQuery', 'cudaErrorMemoryValueTooLarge',
-           'ushort1', 'cudaErrorNotReady',
-           'cudaErrorInsufficientDriver', 'cudaMemcpyHostToDevice',
-           'float1', 'cudaGetErrorString', 'float3', 'cudaMemset3D',
+           'cudaErrorInvalidTexture', 'cudaErrorInsufficientDriver',
+           'cudaMemcpyHostToDevice', 'float1', 'float2', 'float3',
+           'cudaErrorInvalidTextureBinding',
            'cudaErrorInvalidDeviceFunction',
-           'cudaErrorPriorLaunchFailure', 'cudaMemcpy', 'double2',
-           'cudaChannelFormatKindNone', 'cudaSetDevice',
-           'cudaDeviceProp', 'cudaGetSymbolSize', 'uchar1',
-           'cudaChannelFormatKindSigned',
+           'cudaErrorPriorLaunchFailure', 'cudaMemcpy',
+           'cudaChannelFormatKindNone', 'long3', 'cudaDeviceProp',
+           'long2', 'cudaChannelFormatKindSigned',
            'cudaChannelFormatKindFloat', 'cudaCreateChannelDesc',
            'cudaMemcpy2DFromArrayAsync', 'cudaMalloc3D', 'ulong4',
            'cudaMemcpyFromArray', 'cudaErrorLaunchTimeout',
-           'cudaReadModeNormalizedFloat', 'cudaGetDeviceProperties',
-           'cudaRoundMinInf', 'cudaConfigureCall', 'cudaLaunch',
-           'cudaGetChannelDesc', 'cudaMemcpyFromSymbol',
-           'cudaError_t', 'long4', 'cudaRoundMode',
-           'cudaErrorUnmapBufferObjectFailed',
-           'cudaThreadSynchronize', 'cudaMemcpy2DToArrayAsync',
+           'cudaReadModeNormalizedFloat', 'cudaUnbindTexture',
+           'cudaGetDeviceProperties', 'cudaRoundMinInf',
+           'cudaConfigureCall', 'cudaLaunch', 'cudaGetChannelDesc',
+           'cudaMemcpyFromSymbol', 'cudaError_t', 'cudaMemset',
+           'cudaRoundMode', 'cudaErrorUnmapBufferObjectFailed',
+           'cudaGetTextureReference', 'cudaMemcpy2DToArrayAsync',
            'cudaMemset2D', 'cudaRoundPosInf', 'ptrdiff_t',
-           'cudaMemcpyDeviceToHost', 'short4',
-           'cudaErrorInvalidDevice', 'cudaErrorInvalidNormSetting',
-           'short1', 'short2', 'short3', 'cudaAddressModeClamp',
-           'float4', 'cudaError', 'cudaMemcpyAsync',
-           'cudaEventCreate', 'cudaSetDoubleForDevice',
-           'cudaErrorLaunchOutOfResources', 'cudaMemcpy3DAsync',
-           'float2', 'ushort3', 'cudaStreamCreate', 'ulonglong1',
+           'cudaErrorInvalidMemcpyDirection', 'short4',
+           'cudaErrorInvalidDevice', 'cudaFree', 'short1', 'short2',
+           'short3', 'cudaAddressModeClamp', 'cudaEvent_t',
+           'cudaError', 'cudaMemcpyAsync', 'cudaEventCreate',
+           'cudaSetDoubleForDevice', 'cudaErrorLaunchOutOfResources',
+           'cudaMemcpy3DAsync', 'cudaMalloc', 'cudaStreamCreate',
            'cudaErrorTextureFetchFailed', 'cudaTextureFilterMode',
            'uint4', 'uint1', 'uint3', 'uint2', 'char4',
-           'textureReference', 'int4', 'cudaEventDestroy',
-           'cudaGetDevice', 'int3', 'int2', 'uchar4',
-           'cudaMallocHost', 'cudaMemcpy2DArrayToArray',
-           'cudaEventElapsedTime', 'longlong1', 'longlong2',
+           'textureReference', 'int4', 'cudaEventDestroy', 'int1',
+           'int3', 'int2', 'cudaMallocHost',
+           'cudaMemcpy2DArrayToArray', 'cudaEventElapsedTime',
+           'longlong1', 'cudaGetSymbolSize', 'longlong2',
            'cudaErrorInvalidValue', 'dim3', 'cudaTextureReadMode',
-           'ulong3', 'cudaErrorMissingConfiguration',
+           'cudaGetDeviceCount', 'cudaErrorMissingConfiguration',
            'cudaMemcpy2DAsync', 'cudaFilterModeLinear',
-           'cudaReadModeElementType', 'cudaErrorInvalidDevicePointer',
-           'cudaEventRecord', 'cudaGetTextureReference', 'ulonglong2',
-           'cudaSuccess', 'char1', 'char3', 'char2',
-           'cudaTextureAddressMode', 'cudaErrorInvalidFilterSetting',
-           'cudaErrorInvalidTexture', 'cudaErrorSynchronizationError',
-           'cudaEventQuery', 'long3', 'cudaErrorInitializationError',
+           'cudaSetDevice', 'cudaReadModeElementType',
+           'cudaErrorInvalidDevicePointer', 'cudaEventRecord',
+           'ulonglong1', 'ulonglong2', 'cudaSuccess', 'char1',
+           'char3', 'char2', 'cudaTextureAddressMode',
+           'cudaErrorInvalidFilterSetting', 'cudaErrorNotReady',
+           'cudaErrorSynchronizationError', 'cudaEventQuery',
+           'cudaErrorInitializationError',
            'cudaErrorInvalidPitchValue', 'cudaMemcpyToArrayAsync',
            'cudaFreeArray', 'cudaMemcpyDeviceToDevice',
            'cudaMemcpyArrayToArray', 'cudaRoundZero',
@@ -1352,10 +1354,10 @@ __all__ = ['cudaMalloc3DArray', 'cudaGetTextureAlignmentOffset',
            'cudaErrorUnknown', 'cudaFreeHost',
            'cudaErrorNotYetImplemented', 'cudaStreamDestroy',
            'cudaErrorStartupFailure', 'cudaMemcpyKind',
-           'cudaErrorInvalidSymbol',
+           'cudaMemset3D', 'cudaErrorInvalidSymbol',
            'cudaErrorInvalidChannelDescriptor', 'long1',
-           'cudaMallocPitch', 'cudaUnbindTexture',
-           'cudaChannelFormatKindUnsigned', 'cudaArray',
-           'cudaErrorSetOnActiveProcess', 'cudaFilterModePoint',
-           'cudaSetDoubleForHost', 'cudaBindTextureToArray', 'int1',
-           'long2']
+           'cudaMallocPitch', 'long4', 'cudaChannelFormatKind',
+           'cudaChannelFormatKindUnsigned', 'cudaMemcpy3DParms',
+           'cudaArray', 'cudaErrorSetOnActiveProcess',
+           'cudaFilterModePoint', 'cudaSetDoubleForHost',
+           'cudaBindTextureToArray', 'cudaGetDevice']
