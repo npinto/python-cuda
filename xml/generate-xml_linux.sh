@@ -16,3 +16,4 @@ python cublas.py && cp -vf cublas.py ../cuda/cublas/
 python createbindings.py -H my_CUDA2100_vector_types.h -H cufft.h -l /usr/local/cuda/lib/libcufft.so $INCLUDES -x cufft.xml -p cufft.py && \
 python cufft.py && cp -vf cufft.py ../cuda/cufft/
 
+rm -vf cudadrv.xml cudadrv.py cudart.xml cudart.py cublas.xml cublas.py cufft.xml cufft.py
