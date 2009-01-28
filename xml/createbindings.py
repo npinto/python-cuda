@@ -98,7 +98,7 @@ def main(args=None):
               'INCLUDE': options.INCLUDE_DIRS}
 
     h2xmlcmd = 'python -m ctypeslib.h2xml %(HEADER_FILE)s' + \
-        ' %(INCLUDE)s -o %(XML_FILE)s'
+        ' -I %(INCLUDE)s -o %(XML_FILE)s'
     h2xmlcmd = h2xmlcmd % config
     print "h2xmlcmd =", h2xmlcmd
     p = Popen(h2xmlcmd, shell=True)
