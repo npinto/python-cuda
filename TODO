@@ -1,6 +1,11 @@
 Nicolas:
-    Design kernel getters (both driver and runtime versions)
+    Design kernel getters (both driver and runtime versions)		
+      1) RuntimeKernelFactory and DriverKernelFactory w/o source compilation (waiting on new arrays)
+      2) Source compilation a-la-pycuda w/o caching
+      3) Source compilation a-la-pycuda with caching
+
     Create project pylint specs
+
     sugar/getinfo (driver and runtime versions?)
 
 Justin:
@@ -8,3 +13,14 @@ Justin:
     cuda error checking
     move utils to sugar
     move array/kernel to sugar
+
+Open:
+- wrap cudaGL.h
+- wrap cuda_gl_interop.h  
+- wrap cuda_runtime_api.h 
+- wrap cuda_texture_types.h
+- PyOpenGL interop
+
+
+
+
