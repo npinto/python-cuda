@@ -2,7 +2,8 @@ import ctypes
 from cuda.cuda import *
 
 
-class KernelGetter(object):
+# TODO: change name!
+class RuntimeKernelFactory(object):
     """ Wraps a ctypes CDLL instance for accessing CUDA kernels.
 
     Example
@@ -66,5 +67,5 @@ class Kernel(object):
         cudart.cudaConfigureCall(self.gridDim, self.blockDim, self.sharedMem, self.tokens)
         self.funcptr(*args)
         # Check to make sure we didn't get an error.
-        err = cudart.getLastError()
-        cudart._checkCudaStatus(err)
+        #err = cudart.getLastError()
+        #cudart._checkCudaStatus(err)
