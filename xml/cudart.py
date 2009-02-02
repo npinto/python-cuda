@@ -9,63 +9,63 @@ _libraries['cudart'] = get_lib('cudart')
 STRING = c_char_p
 
 
-cudaFilterModeLinear = 1
-cudaErrorInvalidHostPointer = 16
-cudaChannelFormatKindFloat = 2
-cudaSuccess = 0
-cudaChannelFormatKindNone = 3
-cudaErrorMissingConfiguration = 1
 cudaErrorInvalidTexture = 18
+cudaErrorMixedDeviceExecution = 28
 cudaErrorMemoryAllocation = 2
 cudaAddressModeWrap = 0
-cudaErrorSynchronizationError = 25
 cudaErrorInvalidTextureBinding = 19
 cudaErrorInitializationError = 3
+cudaErrorSynchronizationError = 25
 cudaAddressModeClamp = 1
-cudaErrorInvalidDevicePointer = 17
-cudaErrorInvalidFilterSetting = 26
+cudaMemcpyDeviceToHost = 2
 cudaErrorInvalidChannelDescriptor = 20
 cudaErrorLaunchFailure = 4
 cudaFilterModePoint = 0
 cudaErrorInvalidNormSetting = 27
+cudaErrorInvalidSymbol = 13
 cudaErrorInvalidMemcpyDirection = 21
-cudaErrorPriorLaunchFailure = 5
-cudaErrorMixedDeviceExecution = 28
+cudaErrorMemoryValueTooLarge = 32
 cudaErrorAddressOfConstant = 22
-cudaErrorInvalidValue = 11
+cudaErrorLaunchTimeout = 6
 cudaErrorCudartUnloading = 29
 cudaErrorTextureFetchFailed = 23
-cudaMemcpyHostToDevice = 1
 cudaErrorLaunchOutOfResources = 7
-cudaMemcpyDeviceToHost = 2
+cudaErrorUnknown = 30
 cudaErrorTextureNotBound = 24
-cudaErrorLaunchTimeout = 6
 cudaRoundNearest = 0
 cudaErrorInvalidDeviceFunction = 8
-cudaErrorApiFailureBase = 10000
+cudaErrorInvalidFilterSetting = 26
+cudaMemcpyDeviceToDevice = 3
 cudaErrorNotYetImplemented = 31
 cudaRoundZero = 1
 cudaErrorInvalidConfiguration = 9
-cudaErrorMemoryValueTooLarge = 32
 cudaRoundPosInf = 2
 cudaErrorInvalidDevice = 10
-cudaChannelFormatKindUnsigned = 1
-cudaRoundMinInf = 3
 cudaErrorInvalidResourceHandle = 33
+cudaRoundMinInf = 3
+cudaErrorInvalidValue = 11
+cudaErrorPriorLaunchFailure = 5
 cudaErrorNotReady = 34
 cudaReadModeElementType = 0
 cudaErrorInvalidPitchValue = 12
-cudaMemcpyDeviceToDevice = 3
-cudaErrorInsufficientDriver = 35
 cudaReadModeNormalizedFloat = 1
-cudaErrorUnknown = 30
-cudaErrorInvalidSymbol = 13
-cudaMemcpyHostToHost = 0
 cudaErrorSetOnActiveProcess = 36
+cudaErrorMapBufferObjectFailed = 14
 cudaChannelFormatKindSigned = 0
 cudaErrorStartupFailure = 127
-cudaErrorMapBufferObjectFailed = 14
+cudaMemcpyHostToDevice = 1
 cudaErrorUnmapBufferObjectFailed = 15
+cudaChannelFormatKindUnsigned = 1
+cudaErrorApiFailureBase = 10000
+cudaErrorInsufficientDriver = 35
+cudaErrorInvalidHostPointer = 16
+cudaChannelFormatKindFloat = 2
+cudaSuccess = 0
+cudaFilterModeLinear = 1
+cudaMemcpyHostToHost = 0
+cudaErrorInvalidDevicePointer = 17
+cudaChannelFormatKindNone = 3
+cudaErrorMissingConfiguration = 1
 # ./my_CUDA2100_vector_types.h 55
 class char1(Structure):
     pass
@@ -1328,21 +1328,21 @@ __all__ = ['cudaMalloc3DArray', 'cudaGetTextureAlignmentOffset',
            'cudaSetDoubleForDevice', 'cudaErrorLaunchOutOfResources',
            'cudaMemcpy3DAsync', 'cudaMalloc', 'cudaStreamCreate',
            'cudaErrorTextureFetchFailed', 'cudaTextureFilterMode',
-           'uint4', 'uint1', 'uint3', 'uint2', 'char4',
-           'textureReference', 'int4', 'cudaEventDestroy', 'int1',
-           'int3', 'int2', 'cudaMallocHost',
-           'cudaMemcpy2DArrayToArray', 'cudaEventElapsedTime',
-           'longlong1', 'cudaGetSymbolSize', 'longlong2',
-           'cudaErrorInvalidValue', 'dim3', 'cudaTextureReadMode',
-           'cudaGetDeviceCount', 'cudaErrorMissingConfiguration',
-           'cudaMemcpy2DAsync', 'cudaFilterModeLinear',
-           'cudaSetDevice', 'cudaReadModeElementType',
-           'cudaErrorInvalidDevicePointer', 'cudaEventRecord',
-           'ulonglong1', 'ulonglong2', 'cudaSuccess', 'char1',
-           'char3', 'char2', 'cudaTextureAddressMode',
-           'cudaErrorInvalidFilterSetting', 'cudaErrorInvalidTexture',
-           'cudaErrorSynchronizationError', 'cudaEventQuery',
-           'cudaErrorInitializationError',
+           'uint4', 'uint1', 'uint3', 'uint2',
+           'cudaErrorInvalidFilterSetting', 'textureReference',
+           'int4', 'cudaEventDestroy', 'int1', 'int3', 'int2',
+           'cudaMallocHost', 'cudaMemcpy2DArrayToArray',
+           'cudaEventElapsedTime', 'longlong1', 'cudaGetSymbolSize',
+           'longlong2', 'cudaErrorInvalidValue', 'dim3',
+           'cudaTextureReadMode', 'cudaGetDeviceCount',
+           'cudaErrorMissingConfiguration', 'cudaMemcpy2DAsync',
+           'cudaFilterModeLinear', 'cudaSetDevice',
+           'cudaReadModeElementType', 'cudaErrorInvalidDevicePointer',
+           'cudaEventRecord', 'ulonglong1', 'ulonglong2',
+           'cudaSuccess', 'char1', 'char3', 'char2',
+           'cudaTextureAddressMode', 'char4',
+           'cudaErrorInvalidTexture', 'cudaErrorSynchronizationError',
+           'cudaEventQuery', 'cudaErrorInitializationError',
            'cudaErrorInvalidPitchValue', 'cudaMemcpyToArrayAsync',
            'cudaFreeArray', 'cudaMemcpyDeviceToDevice',
            'cudaMemcpyArrayToArray', 'cudaRoundZero',
