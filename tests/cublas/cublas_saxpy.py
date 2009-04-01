@@ -7,7 +7,7 @@ from numpy.random import randn
 
 from cuda.cublas import *
 from cuda.cuda import cudaThreadSynchronize
-from cuda.array import CudaArrayFromArray
+from cuda.memory import Linear
 
 def embed_ipython():
     from IPython.Shell import IPShellEmbed
@@ -28,8 +28,8 @@ h_X = randn(1,vlength).astype('float32')
 h_Y = randn(1,vlength).astype('float32')
 
 # allocate device vectors from host
-d_X = CudaArrayFromArray(h_X)
-d_Y = CudaArrayFromArray(h_Y)
+d_X = Linear(h_X.shape).from_numpy(h_X)
+d_Y = Linear(h_Y.shape).from_numpy(h_Y)
 
 print "-"*80
 print 'h_X:'
@@ -53,5 +53,5 @@ cudaThreadSynchronize()
 
 print "-"*80
 print 'GPU RESULT:'
-print d_Y.toArray()
+print d_Y.to_numpy()
 print "-"*80

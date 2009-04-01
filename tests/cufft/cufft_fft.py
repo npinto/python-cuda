@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import sys
+import numpy
 from ctypes import *
 
 from numpy import zeros,complex,allclose
@@ -88,6 +89,10 @@ def main():
         size = 10
     print "size = %s" % size
     numpy_array = randn(1,size).astype(complex)
+    numpy_array -= numpy_array.mean()
+    numpy_array /= numpy_array.std()
+    print numpy_array.mean()
+    print numpy_array.std()
     print numpy_array
 
     print
@@ -104,6 +109,10 @@ def main():
     forward_ref = fft(numpy_array)
     print "[*] Inverse fft"
     inverse_ref = ifft(forward_ref)
+    
+    print "l2norm fft: ", numpy.linalg.norm(fft_res - forward_ref)
+
+    print "l2norm ifft: ", numpy.linalg.norm(ifft_res - inverse_ref)
 
     print
     print ">>> Forward transform:"
