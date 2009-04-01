@@ -4,7 +4,7 @@ from ctypes import *
 from time import time
 
 from cuda.cublas import *
-from cuda.array import CudaArrayFromArray
+from cuda.memory import Linear
 from cuda.cuda import cudaThreadSynchronize
 
 from numpy import dot
@@ -21,8 +21,8 @@ cublasFree(0)
 h_X = randn(1,n2).astype('float32')
 h_Y = randn(1,n2).astype('float32')
 
-d_X = CudaArrayFromArray(h_X)
-d_Y = CudaArrayFromArray(h_Y)
+d_X = Linear(h_X.shape).from_numpy(h_X)
+d_Y = Linear(h_Y.shape).from_numpy(h_Y)
 
 gpu_result = cublasSdot(n2, d_X.ref, 1, d_Y.ref, 1)
 cudaThreadSynchronize()

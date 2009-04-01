@@ -6,7 +6,7 @@ import cu
 import cublas
 import cufft
 
-import array
+import memory
 import kernel
 
 import utils
