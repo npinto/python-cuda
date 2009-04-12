@@ -8,7 +8,7 @@ from IPython.Shell import IPShellEmbed
 ipshell = IPShellEmbed(argv=[])
 
 
-from cuda.array import *#CudaArrayFromArray#CudaArray
+from cuda.memory import Linear #CudaArrayFromArray#CudaArray
 from kget import KernelGetter
 from cuda.cuda import dim3
 
@@ -25,7 +25,7 @@ HC = HA  # Matrix C height
 
 
 assert os.system("nvcc -Xcompiler='-fPIC' -c -o matrixMul_kernels.cu_o matrixMul_kernel.cu") == 0
-assert os.system("g++ -shared -L/usr/local/cuda/lib -lcudart -lcuda -o libmatrixMul.so matrixMul_kernels.cu_o") == 0
+assert os.system("g++ -shared -L/opt/cuda/lib -lcudart -lcuda -o libmatrixMul.so matrixMul_kernels.cu_o") == 0
 
 print 'Loading kernel'
 dll = ctypes.cdll.LoadLibrary("./libmatrixMul.so")
@@ -34,17 +34,16 @@ dll = ctypes.cdll.LoadLibrary("./libmatrixMul.so")
 # I've been seeing.
 #atexit.register(dll._fini)
 
-
-
 matrixMul = KernelGetter(dll)
 
 nA = np.random.random(size=(HA, WA)).astype(np.float32)
 nB = np.random.random(size=(HB, WB)).astype(np.float32)
+nC = np.zeros((HC,WC)).astype(np.float32)
 
 print 'Allocating arrays'
-dA = CudaArrayFromArray(nA)
-dB = CudaArrayFromArray(nB)
-dC = RawCudaArray(HC*WC, dtype=np.float32)
+dA = Linear(nA.shape).from_numpy(nA)
+dB = Linear(nB.shape).from_numpy(nB)
+dC = Linear(nC.shape)
 
 #threads = (BLOCK_SIZE, BLOCK_SIZE)
 #grid = 
@@ -53,16 +52,16 @@ print 'Calling kernel'
 grid = dim3(WC // BLOCK_SIZE, HC // BLOCK_SIZE, 1)
 block = dim3(BLOCK_SIZE, BLOCK_SIZE, 1)
 Mul = matrixMul.matrixMul(grid, block)
-Mul(dC.data, dA.data, dB.data, WA, WB)
+Mul(dC.ref, dA.ref, dB.ref, WA, WB)
 
 print 'Collecting results'
-nC = dC.toArray()
-nC.shape = (HC, WC)
+nC = dC.to_numpy()
+nC.reshape((HC, WC))
 
 print 'Freeing data'
-dA.free()
-dB.free()
-dC.free()
+dA._free()
+dB._free()
+dC._free()
 
 print 'Calculating error'
 print
