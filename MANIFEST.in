@@ -1,4 +1,0 @@
-include *.py
-include MANIFEST.in README
-recursive-include examples *
-recursive-include utils *
