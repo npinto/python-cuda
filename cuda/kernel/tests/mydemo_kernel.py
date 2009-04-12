@@ -6,7 +6,7 @@ import os, sys
 #from IPython.Shell import IPShellEmbed
 #ipshell = IPShellEmbed(argv=[])
 
-from cuda.array import CudaArray, CudaArrayFromArray, RawCudaArray
+from cuda.memory import Linear
 from cuda.kernel import RuntimeKernelFactory
 from cuda.cuda import dim3
 
@@ -39,24 +39,24 @@ nA = np.random.random(size=(HA, WA)).astype(np.float32)
 nB = np.random.random(size=(HB, WB)).astype(np.float32)
 
 print 'Allocating arrays'
-dA = CudaArrayFromArray(nA)
-dB = CudaArrayFromArray(nB)
-dC = RawCudaArray(HC*WC, dtype=np.float32)
+dA = Linear(nA.shape).from_numpy(nA)
+dB = Linear(nB.shape).from_numpy(nB)
+dC = Linear((HC,WC))
 
 print 'Calling kernel'
 grid = dim3(WC // BLOCK_SIZE, HC // BLOCK_SIZE, 1)
 block = dim3(BLOCK_SIZE, BLOCK_SIZE, 1)
 Mul = matrixMul.matrixMul(grid, block)
-Mul(dC.data, dA.data, dB.data, WA, WB)
+Mul(dC.ref, dA.ref, dB.ref, WA, WB)
 
 print 'Collecting results'
-nC = dC.toArray()
-nC.shape = (HC, WC)
+nC = dC.to_numpy()
+nC.reshape((HC, WC))
 
 print 'Freeing data'
-dA.free()
-dB.free()
-dC.free()
+dA._free()
+dB._free()
+dC._free()
 
 print 'Calculating error'
 print
