@@ -1,4 +1,4 @@
-import atexit
+#import atexit
 import ctypes
 
 import numpy as np
@@ -7,13 +7,11 @@ import os, sys
 from IPython.Shell import IPShellEmbed
 ipshell = IPShellEmbed(argv=[])
 
-
-from cuda.memory import Linear #CudaArrayFromArray#CudaArray
+from cuda.memory import Linear
 from kget import KernelGetter
 from cuda.cuda import dim3
 
 #from pystream import cudaarray, cudart, kernels
-
 
 BLOCK_SIZE = 16
 WA = (3 * BLOCK_SIZE) # Matrix A width
@@ -24,8 +22,7 @@ WC = WB  # Matrix C width
 HC = HA  # Matrix C height
 
 
-assert os.system("nvcc -Xcompiler='-fPIC' -c -o matrixMul_kernels.cu_o matrixMul_kernel.cu") == 0
-assert os.system("g++ -shared -L/opt/cuda/lib -lcudart -lcuda -o libmatrixMul.so matrixMul_kernels.cu_o") == 0
+assert os.system("nvcc -Xcompiler='-fPIC' -o libmatrixMul.so -shared matrixMul_kernel.cu") == 0
 
 print 'Loading kernel'
 dll = ctypes.cdll.LoadLibrary("./libmatrixMul.so")
@@ -45,9 +42,6 @@ dA = Linear(nA.shape).from_numpy(nA)
 dB = Linear(nB.shape).from_numpy(nB)
 dC = Linear(nC.shape)
 
-#threads = (BLOCK_SIZE, BLOCK_SIZE)
-#grid = 
-
 print 'Calling kernel'
 grid = dim3(WC // BLOCK_SIZE, HC // BLOCK_SIZE, 1)
 block = dim3(BLOCK_SIZE, BLOCK_SIZE, 1)
@@ -64,9 +58,9 @@ dB._free()
 dC._free()
 
 print 'Calculating error'
-print
 goldC = np.dot(nA, nB)
 err = nC - goldC
+print
 print 'L2 err: %r' % np.linalg.norm(err, 2)
 print 'L1 err: %r' % np.linalg.norm(err, 1)
 print 'Linf err: %r' % np.linalg.norm(err, np.inf)
