@@ -162,19 +162,8 @@ def main():
     KERNEL_SIZE = KERNEL_W * KERNEL_H * sizeof(Complex)
     DATA_SIZE = DATA_W * DATA_H * sizeof(Complex)
 
-    #cudaArray      *a_Kernel,
-    #               *a_Data
-
     e = sizeof(c_float) * 8;
     float2tex = cudaCreateChannelDesc(e, e, 0, 0, cudaChannelFormatKindFloat);
-
-    #Complex        *d_PaddedKernel,
-    #               *d_PaddedData
-
-    #cufftHandle     FFTplan
-
-    #Complex         rCPU,
-    #                rGPU
 
     print "Input data size           : %i x %i" % (DATA_W, DATA_H)
     print "Convolution kernel size   : %i x %i" % (KERNEL_W, KERNEL_H)
@@ -192,9 +181,11 @@ def main():
     h_ResultCPU = numpy.zeros((DATA_W, DATA_H)).astype(numpy.complex)
     h_ResultGPU = numpy.zeros((FFT_W,FFT_H)).astype(numpy.complex)
 
-    #device data (linear memory)
+    #device data (linear memory (Complex))
     d_PaddedKernel = _get_cufft_2dsignal(numpy.zeros((FFT_W,FFT_H)).astype(numpy.complex))
     d_PaddedData = _get_cufft_2dsignal(numpy.zeros((FFT_W,FFT_H)).astype(numpy.complex))
+    #rCPU
+    #rGPU
 
     #device data (texture memory --> cudaarrays)
     a_Kernel = _get_cuda_array(h_Kernel,float2tex)
@@ -202,7 +193,8 @@ def main():
 
     print "Allocating memory..."
 
-    texKernel = None # todo get from kernel and bind texture there
+    texKernel = None # todo get reference from kernel shared library
+    texData = None # todo get reference from kernel shared library
     cudaBindTextureToArray(texKernel, a_Kernel)
     cudaBindTextureToArray(texData, a_Data)
 
