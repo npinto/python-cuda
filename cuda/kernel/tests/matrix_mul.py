@@ -1,14 +1,11 @@
-import ctypes
-
 import numpy as np
-import os, sys
+
+from cuda.memory import Linear
+from cuda.kernel.kernelfactoryrt import SourceModule
+from cuda.cuda import dim3
 
 #from IPython.Shell import IPShellEmbed
 #ipshell = IPShellEmbed(argv=[])
-
-from cuda.memory import Linear
-from cuda.kernel import RuntimeKernelFactory
-from cuda.cuda import dim3
 
 
 BLOCK_SIZE = 16
@@ -25,15 +22,7 @@ WC = WB
 # Matrix C height
 HC = HA
 
-# compile
-print "Compiling"
-assert os.system("nvcc -Xcompiler='-fPIC' -c -o matrixMul_kernels.cu_o matrixMul_kernel.cu") == 0
-assert os.system("g++ -shared -L/usr/local/cuda/lib -lcudart -lcuda -o libmatrixMul.so matrixMul_kernels.cu_o") == 0
-
-print 'Loading kernel'
-dll = ctypes.cdll.LoadLibrary("./libmatrixMul.so")
-
-matrixMul = RuntimeKernelFactory(dll)
+matrixMul = SourceModule(open('matrix_mul_kernel.cu','r').read())
 
 nA = np.random.random(size=(HA, WA)).astype(np.float32)
 nB = np.random.random(size=(HB, WB)).astype(np.float32)

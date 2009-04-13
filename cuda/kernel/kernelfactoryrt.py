@@ -1,9 +1,8 @@
 import ctypes
 from cuda.cuda import *
+from cuda.kernel.compiler import compile
 
-
-# TODO: change name!
-class RuntimeKernelFactory(object):
+class SourceModule(object):
     """ Wraps a ctypes CDLL instance for accessing CUDA kernels.
 
     Example
@@ -14,9 +13,12 @@ class RuntimeKernelFactory(object):
     # Equivalent CUDA call:
     #   FastKernel<<<grid, block>>>(x, y)
     """
+    def __init__(self, source, nvcc="nvcc", options=[], keep=False,
+            no_extern_c=False, arch=None, code=None, cache_dir=None,
+            include_dirs=[]):
 
-    def __init__(self, dll):
-        self.dll = dll
+        self.dll = compile(source, nvcc, options, keep, no_extern_c, 
+                arch, code, cache_dir, include_dirs)
 
     def __getattr__(self, name):
         mangled_name = '__device_stub_%s' % name
@@ -29,7 +31,6 @@ class RuntimeKernelFactory(object):
         factory = lambda *args, **kwds: Kernel(funcptr, *args, **kwds)
 
         return factory
-
 
 class Kernel(object):
     """ Configure a CUDA kernel.

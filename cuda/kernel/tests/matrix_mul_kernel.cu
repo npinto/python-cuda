@@ -1,5 +1,3 @@
-extern "C" {
-extern "C" {
 /*
  * Copyright 1993-2007 NVIDIA Corporation.  All rights reserved.
  *
@@ -39,11 +37,7 @@ extern "C" {
  * Device code.
  */
 
-#ifndef _MATRIXMUL_KERNEL_H_
-#define _MATRIXMUL_KERNEL_H_
-
 #include <stdio.h>
-#include "matrixMul.h"
 
 #define CHECK_BANK_CONFLICTS 0
 #if CHECK_BANK_CONFLICTS
@@ -53,6 +47,18 @@ extern "C" {
 #define AS(i, j) As[i][j]
 #define BS(i, j) Bs[i][j]
 #endif
+
+// Thread block size
+#define BLOCK_SIZE 16
+
+// Matrix dimensions
+// (chosen as multiples of the thread block size for simplicity)
+#define WA (3 * BLOCK_SIZE) // Matrix A width
+#define HA (5 * BLOCK_SIZE) // Matrix A height
+#define WB (8 * BLOCK_SIZE) // Matrix B width
+#define HB WA  // Matrix B height
+#define WC WB  // Matrix C width 
+#define HC HA  // Matrix C height
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Matrix multiplication on the device: C = A * B
@@ -127,8 +133,4 @@ matrixMul( float* C, float* A, float* B, int wA, int wB)
     // each thread writes one element
     int c = wB * BLOCK_SIZE * by + BLOCK_SIZE * bx;
     C[c + wB * ty + tx] = Csub;
-}
-
-#endif // #ifndef _MATRIXMUL_KERNEL_H_
-}
 }

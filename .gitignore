@@ -3,4 +3,5 @@ junk
 build
 *egg*
 *testbed*
-
+*.so
+*.linkinfo
