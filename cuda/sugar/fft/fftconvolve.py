@@ -1,7 +1,8 @@
 import random, math
 import sys
-from ctypes import sizeof
-from cuda.cuda import float2
+import numpy
+from ctypes import sizeof,c_float
+from cuda.cuda import * 
 
 
 # //////////////////////////////////////////////////////////////////////////////
@@ -88,16 +89,85 @@ FFT_SIZE = FFT_W * FFT_H * sizeof(Complex)
 KERNEL_SIZE = KERNEL_W * KERNEL_H * sizeof(Complex)
 DATA_SIZE = DATA_W * DATA_H * sizeof(Complex)
 
+def _get_cufft_signal(numpy_array):
+    ndims = len(numpy_array.shape)
+    if ndims == 1:
+        return _get_cufft_1dsignal(numpy_array)
+    elif ndims == 2:
+        return _get_cufft_2dsignal(numpy_array)
+    elif ndims == 3:
+        return _get_cufft_3dsignal(numpy_array)
+    else:
+        print '_get_cufft_signal: invalid size (todo: throw exception)'
 
+def _get_cufft_1dsignal(numpy_array):
+    #print "[*] Creating 1d device signal..."
+    size = numpy_array.size
+    hsignal = (float2*size)()
+    for i in range(size): 
+        hsignal[i].x = numpy_array[i].real
+        hsignal[i].y = numpy_array[i].imag
+    dsignal = c_void_p()
+    cudaMalloc(byref(dsignal), sizeof(hsignal))
+    cudaMemcpy(dsignal, hsignal, sizeof(hsignal), cudaMemcpyHostToDevice)
+    return cast(dsignal,POINTER(cufftComplex))
+    
+def _get_cufft_2dsignal(numpy_array):
+    #print "[*] Creating 2d device signal..."
+    size = numpy_array.size
+    height = numpy_array.shape[0]
+    width = numpy_array.shape[1]
+    hsignal = (float2*size)()
+    for i in range(height): 
+        for j in range(width): 
+            hsignal[i*width+j].x = numpy_array[i,j].real
+            hsignal[i*width+j].y = numpy_array[i,j].imag
+    dsignal = c_void_p()
+    cudaMalloc(byref(dsignal), sizeof(hsignal))
+    cudaMemcpy(dsignal, hsignal, sizeof(hsignal), cudaMemcpyHostToDevice)
+    return cast(dsignal,POINTER(cufftComplex))
+
+def _get_cufft_3dsignal(numpy_array):
+    #print "[*] Creating 2d device signal..."
+    size = numpy_array.size
+    height = numpy_array.shape[0]
+    width = numpy_array.shape[1]
+    length = numpy_array.shape[2]
+    hsignal = (float2*size)()
+    for i in range(height): 
+        for j in range(width): 
+            for k in range(length):
+                hsignal[i*length*width + j*width + k].x = numpy_array[i,j,k].real
+                hsignal[i*length*width + j*width + k].y = numpy_array[i,j,k].imag
+    dsignal = c_void_p()
+    cudaMalloc(byref(dsignal), sizeof(hsignal))
+    cudaMemcpy(dsignal, hsignal, sizeof(hsignal), cudaMemcpyHostToDevice)
+    return cast(dsignal,POINTER(cufftComplex))
+
+def _get_cuda_array(numpy_array, float2tex):
+    size = numpy_array.size
+    hsignal = (float2*size)()
+    height = numpy_array.shape[0]
+    width = numpy_array.shape[1]
+    for i in range(height): 
+        for j in range(width): 
+            hsignal[i*width + j].x = numpy_array[i,j].real
+            hsignal[i*width + j].y = numpy_array[i,j].imag
+    dsignal = c_void_p()
+    #cudaMallocArray(&a_Kernel, &float2tex, KERNEL_W, KERNEL_H)
+    cudaMallocArray(byref(dsignal),byref(float2tex), numpy_array.shape[0],numpy_array.shape[1])
+    cudaMemcpyToArray(dsignal, 0,0, hsignal, sizeof(hsignal), cudaMemcpyHostToDevice)
+    return cast(dsignal,POINTER(cudaArray))
 
 # //////////////////////////////////////////////////////////////////////////////
 # Main program
-# //////////////////////////////////////////////////////////////////////////////
+e //////////////////////////////////////////////////////////////////////////////
 def main():
     #cudaArray      *a_Kernel,
     #               *a_Data
 
-    #cudaChannelFormatDesc float2tex = cudaCreateChannelDesc < float2 > ()
+    e = sizeof(c_float) * 8;
+    float2tex = cudaCreateChannelDesc(e, e, 0, 0, cudaChannelFormatKindFloat);
 
     #Complex        *d_PaddedKernel,
     #               *d_PaddedData
@@ -107,67 +177,50 @@ def main():
     #Complex         rCPU,
     #                rGPU
 
-
-
-    #unsigned hTimer
-
-
-    # use command-line specified CUDA device, otherwise use device with
-    # highest Gflops/s
-
-    #if cutCheckCmdLineFlag(argc, (const : argv, "device"))
-	#cutilDeviceInit(argc, argv)
-    #else:
-	#cudaSetDevice(cutGetMaxGflopsDeviceId())
-
-    #cutilCheckError(cutCreateTimer(&hTimer))
-
     print "Input data size           : %i x %i" % (DATA_W, DATA_H)
     print "Convolution kernel size   : %i x %i" % (KERNEL_W, KERNEL_H)
     print "Padded image size         : %i x %i" % (DATA_W + PADDING_W, DATA_H + PADDING_H)
     print "Aligned padded image size : %i x %i" % (FFT_W, FFT_H)
 
-    print "Allocating memory..."
     print "KERNEL_SIZE = ", KERNEL_SIZE
-    #h_Kernel = (Complex *) malloc(KERNEL_SIZE)
-    #h_Data = (Complex *) malloc(DATA_SIZE)
-    #h_ResultCPU = (Complex *) malloc(DATA_SIZE)
-    #h_ResultGPU = (Complex *) malloc(FFT_SIZE)
-    #cutilSafeCall(cudaMallocArray
-	#	  (&a_Kernel, &float2tex, KERNEL_W, KERNEL_H))
-    #cutilSafeCall(cudaMallocArray(&a_Data, &float2tex, DATA_W, DATA_H))
-    #cutilSafeCall(cudaMalloc(() &d_PaddedKernel, FFT_SIZE))
-    #cutilSafeCall(cudaMalloc(() &d_PaddedData, FFT_SIZE))
+    print "Generating random input data..."
+    h_Kernel = numpy.random.randn(KERNEL_W,KERNEL_H).astype(numpy.complex)
+    h_Data = numpy.random.randn(DATA_W,DATA_H).astype(numpy.complex)
+    h_ResultCPU = numpy.zeros(DATA_W, DATA_H).astype(numpy.complex)
+    h_ResultGPU = numpy.zeros(FFT_W,FFT_H).astype(numpy.complex)
 
-    #printf("Generating random input data...\n")
-    #random.seed(2007)
-    #for i in range((KERNEL_W * KERNEL_H)):
-	#h_Kernel[i].x = (float) rand() / (float) RAND_MAX
-	#h_Kernel[i].y = 0
-    #for i in range((DATA_W * DATA_H)):
-	#h_Data[i].x = (float) rand() / (float) RAND_MAX
-	#h_Data[i].y = 0
+    d_PaddedKernel = numpy.zeros(FFT_W,FFT_H).astype(numpy.complex) 
+    d_PaddedData = numpy.zeros(FFT_W,FFT_H).astype(numpy.complex) 
 
-    #printf("Creating FFT plan for %i x %i...\n" % (FFT_W, FFT_H))
-    #cufftSafeCall(cufftPlan2d(&FFTplan, FFT_H, FFT_W, CUFFT_C2C))
+    a_Kernel = 
+    a_Data = 
+
+    print "Allocating memory..."
+    #cudaMallocArray(&a_Kernel, &float2tex, KERNEL_W, KERNEL_H)
+    #cudaMallocArray(&a_Data, &float2tex, DATA_W, DATA_H)
+    #cudaMalloc(() &d_PaddedKernel, FFT_SIZE)
+    #cudaMalloc(() &d_PaddedData, FFT_SIZE)
+
+    print "Creating FFT plan for %i x %i...\n" % (FFT_W, FFT_H))
+    #cufftPlan2d(&FFTplan, FFT_H, FFT_W, CUFFT_C2C))
 
     #printf
 	#("Uploading to GPU and padding convolution kernel and input data...\n")
     #printf
 	#("...initializing padded kernel and data storage with zeroes...\n")
-    #cutilSafeCall(cudaMemset(d_PaddedKernel, 0, FFT_SIZE))
-    #cutilSafeCall(cudaMemset(d_PaddedData, 0, FFT_SIZE))
+    #cudaMemset(d_PaddedKernel, 0, FFT_SIZE))
+    #cudaMemset(d_PaddedData, 0, FFT_SIZE))
     #printf
 	#("...copying input data and convolution kernel from host to CUDA arrays\n")
-    #cutilSafeCall(cudaMemcpyToArray
+    #cudaMemcpyToArray
 	#	  (a_Kernel, 0, 0, h_Kernel, KERNEL_SIZE,
 	#	   cudaMemcpyHostToDevice))
-    #cutilSafeCall(cudaMemcpyToArray
+    #cudaMemcpyToArray
 	#	  (a_Data, 0, 0, h_Data, DATA_SIZE,
 	#	   cudaMemcpyHostToDevice))
     #printf("...binding CUDA arrays to texture references\n")
-    #cutilSafeCall(cudaBindTextureToArray(texKernel, a_Kernel))
-    #cutilSafeCall(cudaBindTextureToArray(texData, a_Data))
+    #cudaBindTextureToArray(texKernel, a_Kernel))
+    #cudaBindTextureToArray(texData, a_Data))
 
     ## Block width should be a multiple of maximum coalesced write size 
     ## for coalesced memory writes in padKernel() and padData()
@@ -184,7 +237,6 @@ def main():
 	#					    KERNEL_W,
 	#					    KERNEL_H,
 	#					    KERNEL_X, KERNEL_Y)
-    #cutilCheckMsg("padKernel() execution failed\n")
 
     #printf("...padding input data array\n")
     #padData <<< dataBlockGrid, threadBlock >>> (d_PaddedData,
@@ -195,36 +247,34 @@ def main():
 	#					KERNEL_W,
 	#					KERNEL_H,
 	#					KERNEL_X, KERNEL_Y)
-    #cutilCheckMsg("padData() execution failed\n")
 
     ## Not including kernel transformation into time measurement,
     ## since convolution kernel is not changed very frequently
     #printf("Transforming convolution kernel...\n")
-    #cufftSafeCall(cufftExecC2C
+    #cufftExecC2C
 	#	  (FFTplan, (cufftComplex *) d_PaddedKernel,
 	#	   (cufftComplex *) d_PaddedKernel, CUFFT_FORWARD))
 
     #printf("Running GPU FFT convolution...\n")
-    #cutilSafeCall(cudaThreadSynchronize())
+    #cudaThreadSynchronize())
     #cutilCheckError(cutResetTimer(hTimer))
     #cutilCheckError(cutStartTimer(hTimer))
-    #cufftSafeCall(cufftExecC2C
+    #cufftExecC2C
 	#	  (FFTplan, (cufftComplex *) d_PaddedData,
 	#	   (cufftComplex *) d_PaddedData, CUFFT_FORWARD))
     #modulateAndNormalize <<< 16, 128 >>> (d_PaddedData, d_PaddedKernel,
 	#				  FFT_W * FFT_H)
-    #cutilCheckMsg("modulateAndNormalize() execution failed\n")
-    #cufftSafeCall(cufftExecC2C
+    #cufftExecC2C
 	#	  (FFTplan, (cufftComplex *) d_PaddedData,
 	#	   (cufftComplex *) d_PaddedData, CUFFT_INVERSE))
-    #cutilSafeCall(cudaThreadSynchronize())
+    #cudaThreadSynchronize())
     #cutilCheckError(cutStopTimer(hTimer))
     #gpuTime = cutGetTimerValue(hTimer)
     #printf("GPU time: %f msecs. //%f MPix/s\n" % (gpuTime,
 	#   DATA_W * DATA_H * 1e-6 / (gpuTime * 0.001)))
 
     #printf("Reading back GPU FFT results...\n")
-    #cutilSafeCall(cudaMemcpy
+    #cudaMemcpy
 	#	  (h_ResultGPU, d_PaddedData, FFT_SIZE,
 	#	   cudaMemcpyDeviceToHost))
 
@@ -260,13 +310,13 @@ def main():
 
 
     #printf("Shutting down...\n")
-    #cutilSafeCall(cudaUnbindTexture(texData))
-    #cutilSafeCall(cudaUnbindTexture(texKernel))
-    #cufftSafeCall(cufftDestroy(FFTplan))
-    #cutilSafeCall(cudaFree(d_PaddedData))
-    #cutilSafeCall(cudaFree(d_PaddedKernel))
-    #cutilSafeCall(cudaFreeArray(a_Data))
-    #cutilSafeCall(cudaFreeArray(a_Kernel))
+    #cudaUnbindTexture(texData))
+    #cudaUnbindTexture(texKernel))
+    #cufftDestroy(FFTplan))
+    #cudaFree(d_PaddedData))
+    #cudaFree(d_PaddedKernel))
+    #cudaFreeArray(a_Data))
+    #cudaFreeArray(a_Kernel))
     #free(h_ResultGPU)
     #free(h_ResultCPU)
     #free(h_Data)
