@@ -1,8 +1,12 @@
 import sys
 import numpy
 from ctypes import *
+
 from cuda.cuda import * 
 from cuda.cufft import *
+from cuda.cuda import dim3
+from cuda.sugar.fft import *
+from cuda.kernel.kernelfactoryrt import SourceModule
 
 # //////////////////////////////////////////////////////////////////////////////
 # Helper functions
@@ -177,6 +181,8 @@ def main():
     h_Kernel = numpy.random.randn(KERNEL_W,KERNEL_H).astype(numpy.complex)
     h_Data = numpy.random.randn(DATA_W,DATA_H).astype(numpy.complex)
 
+    print "Allocating memory..."
+
     #container for results on host
     h_ResultCPU = numpy.zeros((DATA_W, DATA_H)).astype(numpy.complex)
     h_ResultGPU = numpy.zeros((FFT_W,FFT_H)).astype(numpy.complex)
@@ -184,49 +190,55 @@ def main():
     #device data (linear memory (Complex))
     d_PaddedKernel = _get_cufft_2dsignal(numpy.zeros((FFT_W,FFT_H)).astype(numpy.complex))
     d_PaddedData = _get_cufft_2dsignal(numpy.zeros((FFT_W,FFT_H)).astype(numpy.complex))
-    #rCPU
-    #rGPU
 
     #device data (texture memory --> cudaarrays)
     a_Kernel = _get_cuda_array(h_Kernel,float2tex)
     a_Data = _get_cuda_array(h_Data, float2tex)
 
-    print "Allocating memory..."
-
-    texKernel = None # todo get reference from kernel shared library
-    texData = None # todo get reference from kernel shared library
-    cudaBindTextureToArray(texKernel, a_Kernel)
-    cudaBindTextureToArray(texData, a_Data)
-
-    FFTplan = _get_cufft_plan(h_ResultGPU)
-
     ## Block width should be a multiple of maximum coalesced write size 
     ## for coalesced memory writes in padKernel() and padData()
-    #dim3            threadBlock(16, 12)
-    #dim3            kernelBlockGrid(iDivUp(KERNEL_W, threadBlock.x),
-	#iDivUp(KERNEL_H, threadBlock.y))
-    #dim3            dataBlockGrid(iDivUp(FFT_W, threadBlock.x),iDivUp(FFT_H, threadBlock.y))
+    threadBlock = dim3(16, 12, 1)
+    kernelBlockGrid = dim3(iDivUp(KERNEL_W, threadBlock.x), iDivUp(KERNEL_H, threadBlock.y),1)
+    dataBlockGrid = dim3(iDivUp(FFT_W, threadBlock.x),iDivUp(FFT_H, threadBlock.y),1)
+    sixteen = dim3(16,1,1)
+    onetwentyeight = dim3(128,1,1)
 
+    # Extract kernel functions from SourceModule
+    fftconvolve2d = SourceModule(open('fftconvolve2d_kernel.cu','r').read(), no_extern_c=True)
+    padKernel = fftconvolve2d.padKernel(kernelBlockGrid, threadBlock)
+    padData = fftconvolve2d.padData(dataBlockGrid, threadBlock)
+    modulateAndNormalize = fftconvolve2d.modulateAndNormalize(sixteen, onetwentyeight)
+
+    texKernel = cast(c_void_p(), POINTER(textureReference))
+    assert cudaGetTextureReference(texKernel,'texKernel') == 0
+    texData = cast(c_void_p(), POINTER(textureReference))
+    assert cudaGetTextureReference(texData,'texData') == 0
+
+    cudaBindTextureToArray(texKernel, a_Kernel, cudaChannelFormatDesc())
+    cudaBindTextureToArray(texData, a_Data, cudaChannelFormatDesc())
+
+    print '>>> Calling kernel'
     print "...padding convolution kernel"
-    #padKernel <<< kernelBlockGrid, threadBlock >>> (d_PaddedKernel, FFT_W, FFT_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
+    padKernel(d_PaddedKernel, FFT_W, FFT_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
 
     print "...padding input data array"
-    #padData <<< dataBlockGrid, threadBlock >>> (d_PaddedData, FFT_W, FFT_H, DATA_W, DATA_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
+    padData(d_PaddedData, FFT_W, FFT_H, DATA_W, DATA_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
 
     ## Not including kernel transformation into time measurement,
     ## since convolution kernel is not changed very frequently
     print "Transforming convolution kernel..."
-    #cufftExecC2C(FFTplan, (cufftComplex *) d_PaddedKernel, (cufftComplex *) d_PaddedKernel, CUFFT_FORWARD)
+    FFTplan = _get_cufft_plan(h_ResultGPU)
+    cufftExecC2C(FFTplan, d_PaddedKernel, d_PaddedKernel, CUFFT_FORWARD)
 
     print "Running GPU FFT convolution..."
-    #cudaThreadSynchronize())
-    #cufftExecC2C(FFTplan, (cufftComplex *) d_PaddedData, (cufftComplex *) d_PaddedData, CUFFT_FORWARD)
-    #modulateAndNormalize <<< 16, 128 >>> (d_PaddedData, d_PaddedKernel, FFT_W * FFT_H)
-    #cufftExecC2C (FFTplan, (cufftComplex *) d_PaddedData, (cufftComplex *) d_PaddedData, CUFFT_INVERSE) 
-    #cudaThreadSynchronize()
+    cudaThreadSynchronize()
+    cufftExecC2C(FFTplan, d_PaddedData, d_PaddedData, CUFFT_FORWARD)
+    modulateAndNormalize(d_PaddedData, d_PaddedKernel, FFT_W * FFT_H)
+    cufftExecC2C(FFTplan, d_PaddedData, d_PaddedData, CUFFT_INVERSE) 
+    cudaThreadSynchronize()
 
     print "Reading back GPU FFT results..."
-    #cudaMemcpy(h_ResultGPU, d_PaddedData, FFT_SIZE, cudaMemcpyDeviceToHost)
+    cudaMemcpy(h_ResultGPU.ctypes.data, d_PaddedData, FFT_SIZE, cudaMemcpyDeviceToHost)
 
     print "Checking GPU results..."
     print "...running reference CPU convolution"
@@ -235,8 +247,8 @@ def main():
     #todo
 
     print "Shutting down..."
-    #cudaUnbindTexture(texData)
-    #cudaUnbindTexture(texKernel)
+    cudaUnbindTexture(texData)
+    cudaUnbindTexture(texKernel)
     cufftDestroy(FFTplan)
     cudaFree(d_PaddedData)
     cudaFree(d_PaddedKernel)

@@ -1,11 +1,15 @@
 from ctypes import cdll
 import commands
+from subprocess import Popen, PIPE
 from pytools import memoize
+
+class CompileError(Exception):
+    pass
 
 @memoize
 def get_nvcc_version(nvcc):
     try:
-        return commands.getoutput(' '.join([nvcc, "--version"]))
+        return Popen([nvcc, "--version"], stdout=PIPE).communicate()[0]
     except OSError, e:
         raise OSError, "%s was not found (is it on the PATH?) [%s]" % (
                 nvcc, str(e))
@@ -47,7 +51,8 @@ def compile_plain(source, options, keep, nvcc, cache_dir):
     cu_file_name = file_root + ".cu"
     cu_file_path = join(file_dir, cu_file_name)
 
-    options.append("-o %s.so" % join(file_dir,file_root))
+    options.append("-o")
+    options.append("%s.so" % join(file_dir,file_root))
 
     outf = open(cu_file_path, "w")
     outf.write(str(source))
@@ -65,9 +70,10 @@ def compile_plain(source, options, keep, nvcc, cache_dir):
         print "Compiling kernel using the following options: " 
         print ' '.join([nvcc, "--shared"] + options + [cu_file_name])
 
-        result, output = commands.getstatusoutput(' '.join([nvcc, "--shared"]
-                                            + options
-                                            + [cu_file_path]))
+        process = Popen([nvcc, "--shared"] + options + [cu_file_path], stdout=PIPE, cwd=file_dir)
+        output = process.communicate()[0]
+        result = process.returncode
+
         if output:
             print 'Compiler output below:'
             print output
@@ -77,8 +83,7 @@ def compile_plain(source, options, keep, nvcc, cache_dir):
                 nvcc, str(e))
 
     if result != 0:
-        #raise CompileError, "nvcc compilation of %s failed" % cu_file_path
-        print "nvcc compilation of %s failed" % cu_file_path
+        raise CompileError, "nvcc compilation of %s failed" % cu_file_path
 
     kdll = open(join(file_dir, file_root + ".so"), "r").read()
 
@@ -132,10 +137,6 @@ def compile(source, nvcc="nvcc", options=[], keep=False,
         options.extend(["-code", code])
 
     include_dirs = include_dirs[:]
-    #from imp import find_module
-    #file, pathname, descr = find_module("pycuda")
-    #from os.path import join
-    #include_dirs.append(join(pathname, "..", "include/cuda"))
 
     for i in include_dirs:
         options.append("-I"+i)
