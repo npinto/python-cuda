@@ -68,6 +68,8 @@ def _cuda_fft(numpy_array, leave_on_device=False):
         #result = result.reshape(numpy_array.shape)
         cudaFree(dsignal)
         return result
+    else:
+        return dsignal
 
 def _cuda_ifft(numpy_array, leave_on_device=False):
     dsignal = _get_cufft_signal(numpy_array)
@@ -81,6 +83,8 @@ def _cuda_ifft(numpy_array, leave_on_device=False):
         #result = result.reshape(numpy_array.shape)
         cudaFree(dsignal)
         return result
+    else:
+        return dsignal
 
 def fft(numpy_array, leave_on_device=False):
     if numpy_array.ndim == 1:

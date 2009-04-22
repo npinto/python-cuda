@@ -160,12 +160,18 @@ def main():
     assert cudaGetTextureReference(texKernel,'texKernel') == 0
     texData = cast(c_void_p(), POINTER(textureReference))
     assert cudaGetTextureReference(texData,'texData') == 0
-    cudaBindTextureToArray(texKernel, a_Kernel, cudaChannelFormatDesc())
-    cudaBindTextureToArray(texData, a_Data, cudaChannelFormatDesc())
+
+    fdesc = cudaChannelFormatDesc()
+    print cudaGetChannelDesc(fdesc, a_Kernel)
+    print cudaBindTextureToArray(texKernel, a_Kernel, fdesc)
+
+    fdesc2 = cudaChannelFormatDesc()
+    print cudaGetChannelDesc(fdesc2, a_Data)
+    print cudaBindTextureToArray(texData, a_Data, fdesc2)
 
     print ">>> Configuring Block/Grid dimensions..."
-    ## Block width should be a multiple of maximum coalesced write size 
-    ## for coalesced memory writes in padKernel() and padData()
+    # Block width should be a multiple of maximum coalesced write size 
+    # for coalesced memory writes in padKernel() and padData()
     threadBlock = dim3(16, 12, 1)
     kernelBlockGrid = dim3(iDivUp(KERNEL_W, threadBlock.x), iDivUp(KERNEL_H, threadBlock.y),1)
     dataBlockGrid = dim3(iDivUp(FFT_W, threadBlock.x),iDivUp(FFT_H, threadBlock.y),1)
@@ -189,8 +195,8 @@ def main():
     print "[*] Padding input data array"
     print padData(d_PaddedData, FFT_W, FFT_H, DATA_W, DATA_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
 
-    ## Not including kernel transformation into time measurement,
-    ## since convolution kernel is not changed very frequently
+    # Not including kernel transformation into time measurement,
+    # since convolution kernel is not changed very frequently
     print ">>> Transforming convolution kernel (CUFFT)..."
     FFTplan = _get_plan(h_ResultGPU.shape)
     print cufftExecC2C(FFTplan, d_PaddedKernel, d_PaddedKernel, CUFFT_FORWARD)
