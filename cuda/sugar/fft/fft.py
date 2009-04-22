@@ -3,7 +3,7 @@ import sys
 import numpy
 from ctypes import *
 
-from numpy import zeros,complex,allclose
+from numpy import zeros,complex64, allclose
 from numpy.random import randn,random_integers
 import numpy.fft
 
@@ -11,58 +11,9 @@ from cuda.cuda import *
 from cuda.cufft import *
 
 def _get_cufft_signal(numpy_array):
-    ndims = len(numpy_array.shape)
-    if ndims == 1:
-        return _get_cufft_1dsignal(numpy_array)
-    elif ndims == 2:
-        return _get_cufft_2dsignal(numpy_array)
-    elif ndims == 3:
-        return _get_cufft_3dsignal(numpy_array)
-    else:
-        print '_get_cufft_signal: invalid size (todo: throw exception)'
-
-def _get_cufft_1dsignal(numpy_array):
-    #print "[*] Creating 1d device signal..."
-    size = numpy_array.size
-    hsignal = (float2*size)()
-    for i in range(size): 
-        hsignal[i].x = numpy_array[i].real
-        hsignal[i].y = numpy_array[i].imag
     dsignal = c_void_p()
-    cudaMalloc(byref(dsignal), sizeof(hsignal))
-    cudaMemcpy(dsignal, hsignal, sizeof(hsignal), cudaMemcpyHostToDevice)
-    return cast(dsignal,POINTER(cufftComplex))
-    
-def _get_cufft_2dsignal(numpy_array):
-    #print "[*] Creating 2d device signal..."
-    size = numpy_array.size
-    height = numpy_array.shape[0]
-    width = numpy_array.shape[1]
-    hsignal = (float2*size)()
-    for i in range(height): 
-        for j in range(width): 
-            hsignal[i*width+j].x = numpy_array[i,j].real
-            hsignal[i*width+j].y = numpy_array[i,j].imag
-    dsignal = c_void_p()
-    cudaMalloc(byref(dsignal), sizeof(hsignal))
-    cudaMemcpy(dsignal, hsignal, sizeof(hsignal), cudaMemcpyHostToDevice)
-    return cast(dsignal,POINTER(cufftComplex))
-
-def _get_cufft_3dsignal(numpy_array):
-    #print "[*] Creating 2d device signal..."
-    size = numpy_array.size
-    height = numpy_array.shape[0]
-    width = numpy_array.shape[1]
-    length = numpy_array.shape[2]
-    hsignal = (float2*size)()
-    for i in range(height): 
-        for j in range(width): 
-            for k in range(length):
-                hsignal[i*length*width + j*width + k].x = numpy_array[i,j,k].real
-                hsignal[i*length*width + j*width + k].y = numpy_array[i,j,k].imag
-    dsignal = c_void_p()
-    cudaMalloc(byref(dsignal), sizeof(hsignal))
-    cudaMemcpy(dsignal, hsignal, sizeof(hsignal), cudaMemcpyHostToDevice)
+    cudaMalloc(byref(dsignal), numpy_array.nbytes)
+    cudaMemcpy(dsignal, numpy_array.ctypes.data, numpy_array.nbytes, cudaMemcpyHostToDevice)
     return cast(dsignal,POINTER(cufftComplex))
 
 def _get_plan(shape):
@@ -94,22 +45,14 @@ def _get_3dplan(shape):
     cufftPlan3d(plan, shape[0], shape[1], shape[2], CUFFT_C2C)
     return plan
 
-def _get_data(device_ptr,size):
-    data = (cufftComplex*size)()
-    cudaMemcpy(data, device_ptr, sizeof(data), cudaMemcpyDeviceToHost)
-    result = zeros((1,size)).astype(complex)
-    for i in range(size):
-        result[0,i] = complex(data[i].x,data[i].y)
+def _get_data(device_ptr,numpy_array):
+    result = numpy.empty_like(numpy_array)
+    cudaMemcpy(result.ctypes.data, device_ptr, numpy_array.nbytes, cudaMemcpyDeviceToHost)
     return result
 
-def _get_inverse_data(device_ptr,size):
-    data = (cufftComplex*size)()
-    cudaMemcpy(data, device_ptr, sizeof(data), cudaMemcpyDeviceToHost)
-    result = zeros((1,size)).astype(complex)
-    #print "(*) Dividing by num of signal elements to get back original data"
-    for i in range(size):
-        result[0,i] = complex(data[i].x/float(size),data[i].y/float(size))
-    return result
+def _get_inverse_data(device_ptr,numpy_array):
+    result = _get_data(device_ptr, numpy_array)
+    return result/float(numpy_array.size)
 
 def _cuda_fft(numpy_array, leave_on_device=False):
     dsignal = _get_cufft_signal(numpy_array)
@@ -121,8 +64,8 @@ def _cuda_fft(numpy_array, leave_on_device=False):
     #print "[*] Destroying CUFFT plan..."
     cufftDestroy(plan)
     if not leave_on_device:
-        result = _get_data(dsignal, numpy_array.size)
-        result = result.reshape(numpy_array.shape)
+        result = _get_data(dsignal, numpy_array)
+        #result = result.reshape(numpy_array.shape)
         cudaFree(dsignal)
         return result
 
@@ -134,8 +77,8 @@ def _cuda_ifft(numpy_array, leave_on_device=False):
     #print "[*] Destroying CUFFT plan..."
     cufftDestroy(plan)
     if not leave_on_device:
-        result = _get_inverse_data(dsignal, numpy_array.size)
-        result = result.reshape(numpy_array.shape)
+        result = _get_inverse_data(dsignal, numpy_array)
+        #result = result.reshape(numpy_array.shape)
         cudaFree(dsignal)
         return result
 
@@ -191,13 +134,13 @@ def main():
 
     print "size = %s" % size
 
-    numpy_array = randn(size).astype(complex)
+    numpy_array = randn(size).astype(complex64)
     numpy_array -= numpy_array.mean()
     numpy_array /= numpy_array.std()
 
     print numpy_array.mean()
     print numpy_array.std()
-    print numpy_array
+    #print numpy_array
 
     print
     print ">>> Forward fft on gpu ..."
@@ -213,22 +156,21 @@ def main():
     forward_ref = numpy.fft.fft(numpy_array)
     print "[*] Inverse fft"
     inverse_ref = numpy.fft.ifft(forward_ref)
-    
+
     print "l2norm fft: ", numpy.linalg.norm(fft_res - forward_ref)
 
     print "l2norm ifft: ", numpy.linalg.norm(ifft_res - inverse_ref)
 
-    print
-    print ">>> Forward transform:"
+    #print print ">>> Forward transform:"
     #print "[*] GPU: \n%s" % fft_res
     #print "[*] CPU: \n%s" % forward_ref
-    print "(*) GPU/CPU close? ", allclose(fft_res,forward_ref)
+    #print "(*) GPU/CPU close? ", allclose(fft_res,forward_ref)
 
-    print
-    print ">>> Inverse transform:"
+    #print
+    #print ">>> Inverse transform:"
     #print "[*] GPU: \n%s" % ifft_res
     #print "[*] CPU: \n%s" % inverse_ref
-    print "(*) GPU/CPU close? ",allclose(ifft_res,inverse_ref)
+    #print "(*) GPU/CPU close? ",allclose(ifft_res,inverse_ref)
 
 if __name__ == "__main__":
     main()
