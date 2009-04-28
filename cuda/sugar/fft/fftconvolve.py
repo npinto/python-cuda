@@ -1,6 +1,7 @@
-import numpy
 import sys
 from ctypes import *
+import numpy
+from scipy.signal import fftconvolve
 
 from cuda.cufft import *
 from cuda.cuda import * 
@@ -19,6 +20,12 @@ def iAlignUp(a, b):
         return (a - a % b + b)
     else:
         return a
+
+def cudaCheckError(status):
+    try:
+        assert status == 0 
+    except AssertionError,e:
+        print 'ERROR: status = %s' % status
 
 def calculateFFTsize(dataSize):
     # Highest non-zero bit position of dataSize
@@ -94,6 +101,9 @@ def _get_3dplan(shape):
     cufftPlan3d(plan, shape[0], shape[1], shape[2], CUFFT_C2C)
     return plan
 
+def get_float2_ptr(numpy_array):
+    return numpy_array.ctypes.data_as(POINTER(float2))
+
 # //////////////////////////////////////////////////////////////////////////////
 # Main program
 # //////////////////////////////////////////////////////////////////////////////
@@ -132,14 +142,31 @@ def main():
     print "Padded image size         : %i x %i" % (DATA_W + PADDING_W, DATA_H + PADDING_H)
     print "Aligned padded image size : %i x %i" % (FFT_W, FFT_H)
 
-    print "KERNEL_SIZE = ", KERNEL_SIZE
-
-    print ">>> Loading Kernel..."
+    print ">>> Loading Kernels..."
     fftconvolve2d = SourceModule(open('fftconvolve2d_kernel.cu','r').read(), no_extern_c=True)
+
+    print ">>> Extracting functions from Kernel..."
+    print "[*] Configuring Block/Grid dimensions..."
+    # Block width should be a multiple of maximum coalesced write size 
+    # for coalesced memory writes in padKernel() and padData()
+    threadBlock = dim3(16, 12, 1)
+    kernelBlockGrid = dim3(iDivUp(KERNEL_W, threadBlock.x), iDivUp(KERNEL_H, threadBlock.y),1)
+    dataBlockGrid = dim3(iDivUp(FFT_W, threadBlock.x),iDivUp(FFT_H, threadBlock.y),1)
+    sixteen = dim3(16,1,1)
+    onetwentyeight = dim3(128,1,1)
+    # Extract kernel functions from SourceModule
+    print "[*] Loading padKernel..."
+    padKernel = fftconvolve2d.padKernel(kernelBlockGrid, threadBlock)
+    print "[*] Loading padData..."
+    padData = fftconvolve2d.padData(dataBlockGrid, threadBlock)
+    print "[*] Loading modulateAndNormalize..."
+    modulateAndNormalize = fftconvolve2d.modulateAndNormalize(sixteen, onetwentyeight)
 
     print ">>> Allocating memory..."
 
     print "[*] Generating random input data..."
+    #h_Kernel = numpy.ones((KERNEL_W,KERNEL_H)).astype(numpy.complex64)
+    #h_Data = numpy.ones((DATA_W,DATA_H)).astype(numpy.complex64)
     h_Kernel = numpy.random.randn(KERNEL_W,KERNEL_H).astype(numpy.complex64)
     h_Data = numpy.random.randn(DATA_W,DATA_H).astype(numpy.complex64)
 
@@ -157,90 +184,76 @@ def main():
 
     print "[*] Binding textures..." 
     texKernel = cast(c_void_p(), POINTER(textureReference))
-    assert cudaGetTextureReference(texKernel,'texKernel') == 0
+    cudaCheckError(cudaGetTextureReference(texKernel,'texKernel')) 
     texData = cast(c_void_p(), POINTER(textureReference))
-    assert cudaGetTextureReference(texData,'texData') == 0
+    cudaCheckError(cudaGetTextureReference(texData,'texData'))
 
     fdesc = cudaChannelFormatDesc()
-    print cudaGetChannelDesc(fdesc, a_Kernel)
-    print cudaBindTextureToArray(texKernel, a_Kernel, fdesc)
+    cudaCheckError(cudaGetChannelDesc(fdesc, a_Kernel))
+    cudaCheckError(cudaBindTextureToArray(texKernel, a_Kernel, fdesc))
 
     fdesc2 = cudaChannelFormatDesc()
-    print cudaGetChannelDesc(fdesc2, a_Data)
-    print cudaBindTextureToArray(texData, a_Data, fdesc2)
-
-    print ">>> Configuring Block/Grid dimensions..."
-    # Block width should be a multiple of maximum coalesced write size 
-    # for coalesced memory writes in padKernel() and padData()
-    threadBlock = dim3(16, 12, 1)
-    kernelBlockGrid = dim3(iDivUp(KERNEL_W, threadBlock.x), iDivUp(KERNEL_H, threadBlock.y),1)
-    dataBlockGrid = dim3(iDivUp(FFT_W, threadBlock.x),iDivUp(FFT_H, threadBlock.y),1)
-    sixteen = dim3(16,1,1)
-    onetwentyeight = dim3(128,1,1)
-
-    print ">>> Extracting functions from Kernel..."
-    # Extract kernel functions from SourceModule
-    print "[*] Loading padKernel..."
-    padKernel = fftconvolve2d.padKernel(kernelBlockGrid, threadBlock)
-    print "[*] Loading padData..."
-    padData = fftconvolve2d.padData(dataBlockGrid, threadBlock)
-    print "[*] Loading modulateAndNormalize..."
-    modulateAndNormalize = fftconvolve2d.modulateAndNormalize(sixteen, onetwentyeight)
-
+    cudaCheckError(cudaGetChannelDesc(fdesc2, a_Data))
+    cudaCheckError(cudaBindTextureToArray(texData, a_Data, fdesc2))
 
     print '>>> Calling kernels'
     print "[*] Padding convolution kernel"
-    print padKernel(d_PaddedKernel, FFT_W, FFT_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
+    padKernel(d_PaddedKernel, FFT_W, FFT_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
 
     print "[*] Padding input data array"
-    print padData(d_PaddedData, FFT_W, FFT_H, DATA_W, DATA_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
+    padData(d_PaddedData, FFT_W, FFT_H, DATA_W, DATA_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
 
     # Not including kernel transformation into time measurement,
     # since convolution kernel is not changed very frequently
-    print ">>> Transforming convolution kernel (CUFFT)..."
+    print '>>> Calling CUFFT'
+    print "[*] Transforming convolution kernel (CUFFT)..."
     FFTplan = _get_plan(h_ResultGPU.shape)
-    print cufftExecC2C(FFTplan, d_PaddedKernel, d_PaddedKernel, CUFFT_FORWARD)
+    cudaCheckError(cufftExecC2C(FFTplan, d_PaddedKernel, d_PaddedKernel, CUFFT_FORWARD))
+    print "[*] Transforming data (CUFFT)..."
+    cudaCheckError(cudaThreadSynchronize())
+    cudaCheckError(cufftExecC2C(FFTplan, d_PaddedData, d_PaddedData, CUFFT_FORWARD))
 
-    print ">>> Running GPU FFT convolution (CUFFT)..."
-    print cudaThreadSynchronize()
-    print cufftExecC2C(FFTplan, d_PaddedData, d_PaddedData, CUFFT_FORWARD)
     print '>>> Calling kernel'
     print "[*] modulateAndNormalize()"
-    print modulateAndNormalize(d_PaddedData, d_PaddedKernel, FFT_W * FFT_H)
-    print ">>> Running GPU FFT convolution (CUFFT)..."
-    print cufftExecC2C(FFTplan, d_PaddedData, d_PaddedData, CUFFT_INVERSE) 
-    print cudaThreadSynchronize()
+    modulateAndNormalize(d_PaddedData, d_PaddedKernel, FFT_W * FFT_H)
+    print '>>> Calling CUFFT'
+    print "[*] Inverse transforming data (CUFFT)..."
+    cudaCheckError(cufftExecC2C(FFTplan, d_PaddedData, d_PaddedData, CUFFT_INVERSE))
+    cudaCheckError(cudaThreadSynchronize())
 
-    print ">>> Reading back GPU FFT results..."
-    print cudaMemcpy(h_ResultGPU.ctypes.data, d_PaddedData, FFT_SIZE, cudaMemcpyDeviceToHost)
-    print h_ResultGPU
+    print ">>> Copying results from GPU..."
+    cudaCheckError(cudaMemcpy(h_ResultGPU.ctypes.data, d_PaddedData, FFT_SIZE, cudaMemcpyDeviceToHost))
+    #print h_ResultGPU
 
     print ">>> Checking GPU results..."
     print "[*] running reference CPU convolution..."
-    #scipy.signal.fftconvolve(h_ResultCPU)
+    conv_gold = cdll.LoadLibrary('/tmp/convolutionFFT2D/conv_gold.so').convolutionCPU
+    check_results = cdll.LoadLibrary('/tmp/convolutionFFT2D/conv_gold.so').checkResults
+    result = numpy.zeros_like(h_Data)
+    conv_gold(get_float2_ptr(result), get_float2_ptr(h_Data), get_float2_ptr(h_Kernel), DATA_W, DATA_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
+    result =  result.astype('complex64')
+    #print result
+
     print "[*] comparing the results..."
-    #todo
+    check_results(get_float2_ptr(result), get_float2_ptr(h_ResultGPU), DATA_W, DATA_H, FFT_W)
+    #print "[*] l2norm = %s" % numpy.linalg.norm(result-h_ResultGPU)
 
     print ">>> Shutting down..."
 
-    print "[*] Unbinding textures..."
-    print cudaUnbindTexture(texData)
-    print cudaUnbindTexture(texKernel)
-
     print "[*] Destroying FFT plans..."
-    print cufftDestroy(FFTplan)
+    cudaCheckError(cufftDestroy(FFTplan))
+
+    print "[*] Unbinding textures..."
+    cudaCheckError(cudaUnbindTexture(texData))
+    cudaCheckError(cudaUnbindTexture(texKernel))
 
     print "[*] Freeing device memory..."
-    print cudaFree(d_PaddedData)
-    print cudaFree(d_PaddedKernel)
-    print cudaFreeArray(a_Data)
-    print cudaFreeArray(a_Kernel)
-    #free(h_ResultGPU)
-    #free(h_ResultCPU)
-    #free(h_Data)
-    #free(h_Kernel)
+    cudaCheckError(cudaFree(d_PaddedData))
+    cudaCheckError(cudaFree(d_PaddedKernel))
+    cudaCheckError(cudaFreeArray(a_Data))
+    cudaCheckError(cudaFreeArray(a_Kernel))
 
-    print "[*] cudaThreadExit()"
+    print "[*] CUDA Thread Exit"
     cudaThreadExit()
 
 if __name__ == "__main__":
