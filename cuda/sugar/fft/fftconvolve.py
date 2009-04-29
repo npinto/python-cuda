@@ -2,6 +2,7 @@ import sys
 from ctypes import *
 import numpy
 from scipy.signal import fftconvolve
+from conv_gold import get_convolution_cpu, get_check_results
 
 from cuda.cufft import *
 from cuda.cuda import * 
@@ -227,8 +228,8 @@ def main():
 
     print ">>> Checking GPU results..."
     print "[*] running reference CPU convolution..."
-    conv_gold = cdll.LoadLibrary('/tmp/convolutionFFT2D/conv_gold.so').convolutionCPU
-    check_results = cdll.LoadLibrary('/tmp/convolutionFFT2D/conv_gold.so').checkResults
+    conv_gold = get_convolution_cpu() 
+    check_results = get_check_results()
     result = numpy.zeros_like(h_Data)
     conv_gold(get_float2_ptr(result), get_float2_ptr(h_Data), get_float2_ptr(h_Kernel), DATA_W, DATA_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
     result =  result.astype('complex64')
