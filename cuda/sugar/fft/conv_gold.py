@@ -3,6 +3,7 @@ import ctypes
 import numpy as np
 from scipy.signal import convolve2d, fftconvolve
 
+
 source = '''
 #include <stdio.h>
 #include <math.h>
@@ -67,8 +68,17 @@ extern "C" void convolutionCPU(
     int kernelX,
     int kernelY
 ){
+    //for(int y=0; y < kernelH; y++) {
+    //    for(int x=0; x < kernelW; x++) {
+    //        printf("k[%d,%d] = %f + %fj\\n", x,y,h_Kernel[y*kernelW+x].x,h_Kernel[y*kernelW+x].y);
+    //    }
+    //}
+    printf("\\n");
     for(int y = 0; y < dataH; y++)
         for(int x = 0; x < dataW; x++){
+            //printf("[%d,%d] = %f + %fj\\n", x,y,h_Data[x*dataW+y].x,h_Data[x*dataW+y].y);
+     //       printf("d[%d,%d] = %f + %fj\\n", x,y,h_Data[y*dataW+x].x,h_Data[y*dataW+x].y);
+
             Complex sum = CPLX_ZERO;
 
             for(int ky = -(kernelH - kernelY - 1); ky <= kernelY; ky++)
@@ -92,23 +102,7 @@ extern "C" void convolutionCPU(
 }
 '''
 
-file = open('conv_gold.cpp','w')
-file.write(source)
-file.close()
 
-os.system('rm -f conv_gold.so')
-os.system('g++ -fPIC -shared -o conv_gold.so conv_gold.cpp')
-conv_gold = ctypes.cdll.LoadLibrary('./conv_gold.so')
-
-print_complex = conv_gold.printComplexArray
-convolutionCPU = conv_gold.convolutionCPU
-check_results = conv_gold.checkResults
-
-#data = np.ones((3,3)).astype('complex64')
-data = np.random.randn(3,3).astype('complex64')
-#kernel = np.ones((3,3)).astype('complex64')
-kernel = np.random.randn(3,3).astype('complex64')
-result = np.zeros_like(data)
 
 class float2(ctypes.Structure):
     pass
@@ -117,19 +111,72 @@ float2._fields_ = [
     ('y', ctypes.c_float),
 ]
 
-def get_float2_ptr(numpy_array):
+def _centered(arr, newsize):
+    # Return the center newsize portion of the array.
+    newsize = np.asarray(newsize)
+    currsize = np.array(arr.shape)
+    startind = (currsize - newsize) / 2
+    endind = startind + newsize
+    myslice = [slice(startind[k], endind[k]) for k in range(len(endind))]
+    return arr[tuple(myslice)]
+
+def _get_float2_ptr(numpy_array):
     return numpy_array.ctypes.data_as(ctypes.POINTER(float2))
 
+
+def _load_dll():
+    file = open('conv_gold.cpp','w')
+    file.write(source)
+    file.close()
+
+    os.system('rm -f conv_gold.so')
+    os.system('g++ -fPIC -shared -o /tmp/conv_gold.so conv_gold.cpp')
+    os.system('rm conv_gold.cpp')
+    return ctypes.cdll.LoadLibrary('/tmp/conv_gold.so')
+
+DLL = _load_dll()
+
+def get_dll():
+    return DLL
+
+def get_convolution_cpu():
+    conv_gold = get_dll()
+    return conv_gold.convolutionCPU
+
+def get_check_results():
+    conv_gold = get_dll()
+    return conv_gold.checkResults
+
+def get_print_complex():
+    conv_gold = get_dll()
+    return conv_gold.printComplexArray
+
 def run():
-    convolutionCPU(get_float2_ptr(result), get_float2_ptr(data), get_float2_ptr(kernel), data.shape[1], data.shape[0], kernel.shape[1], kernel.shape[0], 1, 6)
+    print_complex = get_print_complex()
+    convolutionCPU = get_convolution_cpu()
+    check_results = get_check_results()
+
+    #data = np.ones((3,3)).astype('complex64')
+    data = np.asfortranarray(np.random.randn(3,3).astype('complex64'))
+    #kernel = np.ones((3,3)).astype('complex64')
+    kernel = np.asfortranarray(np.random.randn(3,3).astype('complex64'))
+    result = np.asfortranarray(np.zeros_like(data).astype('complex64'))
+
+    convolutionCPU(_get_float2_ptr(result), _get_float2_ptr(data), _get_float2_ptr(kernel), data.shape[1], data.shape[0], kernel.shape[1], kernel.shape[0], 1, 6)
+
+    print
+    print kernel
+    print
+    print data
+    print
+
+    s1 = np.array(data.shape)
+    s2 = np.array(kernel.shape)
+
+    #print _centered(result, np.abs(s2-s1)+1)
     print result
-    print
-    print fftconvolve(data.real, kernel.real, mode='same').astype('complex64')
-    print
-    print result[kernel.shape[0]/2:-(kernel.shape[0]/2),kernel.shape[1]/2:-(kernel.shape[1]/2)].astype('complex64')
     print 
-    print fftconvolve(data.real, kernel.real, mode='valid').astype('complex64')
-    print
-    #print convolve2d(data, kernel, mode='full').astype('complex64')
- 
-run()
+    print fftconvolve(data.real, kernel.real, mode='full').astype('complex64')
+
+if __name__ == "__main__":
+    run()
