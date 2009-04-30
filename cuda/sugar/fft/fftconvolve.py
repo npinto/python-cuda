@@ -166,10 +166,8 @@ def main():
     print ">>> Allocating memory..."
 
     print "[*] Generating random input data..."
-    #h_Kernel = numpy.ones((KERNEL_W,KERNEL_H)).astype(numpy.complex64)
-    #h_Data = numpy.ones((DATA_W,DATA_H)).astype(numpy.complex64)
-    h_Kernel = numpy.random.randn(KERNEL_W,KERNEL_H).astype(numpy.complex64)
-    h_Data = numpy.random.randn(DATA_W,DATA_H).astype(numpy.complex64)
+    h_Kernel = numpy.random.uniform(0,1,(KERNEL_W,KERNEL_H)).astype(numpy.complex64)
+    h_Data = numpy.random.uniform(0,1,(DATA_W,DATA_H)).astype(numpy.complex64)
 
     print "[*] Allocating host memory for results..."
     h_ResultCPU = numpy.zeros((DATA_W, DATA_H)).astype(numpy.complex64)
