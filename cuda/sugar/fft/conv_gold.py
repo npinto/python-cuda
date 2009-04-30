@@ -73,7 +73,6 @@ extern "C" void convolutionCPU(
     //        printf("k[%d,%d] = %f + %fj\\n", x,y,h_Kernel[y*kernelW+x].x,h_Kernel[y*kernelW+x].y);
     //    }
     //}
-    printf("\\n");
     for(int y = 0; y < dataH; y++)
         for(int x = 0; x < dataW; x++){
             //printf("[%d,%d] = %f + %fj\\n", x,y,h_Data[x*dataW+y].x,h_Data[x*dataW+y].y);
