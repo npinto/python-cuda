@@ -16,10 +16,11 @@ setup(
     packages = ['cuda',
                 'cuda.cu',
                 'cuda.cuda', 
+                'cuda.kernel', 
+                'cuda.memory', 
                 'cuda.cublas', 
                 'cuda.cufft', 
-                'cuda.kernel', 
-                'cuda.array', 
+                'cuda.sugar',
                 'cuda.utils'],
 
     package_dir = {'cuda':'cuda'},
