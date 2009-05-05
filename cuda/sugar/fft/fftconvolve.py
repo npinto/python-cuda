@@ -1,12 +1,82 @@
 import sys
+import os
 from ctypes import *
 import numpy
-from scipy.signal import fftconvolve
-from conv_gold import get_convolution_cpu, get_check_results
+from scipy.signal import fftconvolve, convolve2d
+from conv_gold import get_convolution_cpu, get_check_results,centered
 
 from cuda.cufft import *
 from cuda.cuda import * 
 from cuda.kernel.kernelfactoryrt import SourceModule
+
+def convolutionCPU(h_Data, h_Kernel, dataW, dataH, kernelW, kernelH, kernelX, kernelY):
+    h_Result = numpy.zeros_like(h_Data).astype('complex64')
+    for y in range(0,dataH):
+        for x in range(0,dataW):
+            sum = 0j
+            for ky in range(-(kernelH-kernelY-1), kernelY+1):
+                for kx in range(-(kernelW-kernelX-1), kernelX+1):
+                    dx = x + kx
+                    dy = y + ky
+                    if dx < 0: dx = 0
+                    if dy < 0: dy = 0
+                    if dx >= dataW: dx = dataW - 1
+                    if dy >= dataH: dy = dataH - 1
+                    sum += h_Data[dx,dy]*h_Kernel[(kernelX-kx),(kernelY-ky)]
+            h_Result[x,y] = sum
+    return h_Result
+
+def convolve(image1, image2, MinPad=True, pad=True):
+    from numpy.fft import fft2, ifft2 
+    from numpy import log, max
+    """ Not so simple convolution """
+
+    #Just for comfort:
+    FFt = fft2
+    iFFt = ifft2
+
+    #The size of the images:
+    r1,c1 = image1.shape
+    r2,c2 = image2.shape
+
+    #MinPad results simpler padding,smaller images:
+    if MinPad:
+        r = r1+r2
+        c = c1+c2
+    else:
+    #if the Numerical Recipies says so:
+        r = 2*max(r1,r2)
+        c = 2*max(c1,c2)
+
+    #For nice FFT, we need the power of 2:
+    if pad:
+        pr2 = int(log(r)/log(2.0) + 1.0 )
+        pc2 = int(log(c)/log(2.0) + 1.0 )
+        rOrig = r
+        cOrig = c
+        r = 2**pr2
+        c = 2**pc2
+
+    #numpy fft has the padding built in, which can save us some steps
+    #here. The thing is the s(hape) parameter:
+    fftimage = FFt(image1,s=(r,c)) * FFt(image2,s=(r,c))
+    #fftimage = FFt(image1, s=(r,c))*FFt(image2[::-1,::-1],s=(r,c))
+
+    if pad:
+        return (iFFt(fftimage))[:rOrig,:cOrig].real
+    else:
+        return (iFFt(fftimage)).real
+
+def check_results(h_ResultCPU, h_ResultGPU, DATA_W, DATA_H, FFT_W):
+    ResultGPU = h_ResultGPU[0:DATA_W,0:DATA_H]
+    max_delta_ref = numpy.sqrt(numpy.abs(h_ResultCPU-ResultGPU)**2/numpy.abs(h_ResultCPU)**2).max()
+    L2norm = numpy.linalg.norm(h_ResultCPU - ResultGPU)/numpy.linalg.norm(h_ResultCPU)
+    print "Max delta / CPU value ", max_delta_ref
+    print 'L2 norm: ', L2norm
+    if L2norm < 1e-6:
+        print "TEST PASSED"
+    else:
+        print "TEST FAILED"
 
 def iDivUp(a, b):
     """ Round a / b to nearest higher integer value """
@@ -108,7 +178,8 @@ def get_float2_ptr(numpy_array):
 # //////////////////////////////////////////////////////////////////////////////
 # Main program
 # //////////////////////////////////////////////////////////////////////////////
-def main():
+def fftconvolve2d(data, kernel):
+
     # alias Complex type to float2
     Complex = float2
 
@@ -125,8 +196,8 @@ def main():
     PADDING_H = KERNEL_H - 1
 
     # Input data dimension
-    DATA_W = 1000 
-    DATA_H = 1000
+    DATA_W = 512 
+    DATA_H = 512
 
     # Derive FFT size from data and kernel dimensions
     FFT_W = calculateFFTsize(DATA_W + PADDING_W)
@@ -144,7 +215,8 @@ def main():
     print "Aligned padded image size : %i x %i" % (FFT_W, FFT_H)
 
     print ">>> Loading Kernels..."
-    fftconvolve2d = SourceModule(open('fftconvolve2d_kernel.cu','r').read(), no_extern_c=True)
+    kernel_src = os.path.join(os.path.dirname(__file__), 'fftconvolve2d_kernel.cu')
+    fftconvolve2d = SourceModule(open(kernel_src,'r').read(), no_extern_c=True)
 
     print ">>> Extracting functions from Kernel..."
     print "[*] Configuring Block/Grid dimensions..."
@@ -166,11 +238,13 @@ def main():
     print ">>> Allocating memory..."
 
     print "[*] Generating random input data..."
-    h_Kernel = numpy.random.uniform(0,1,(KERNEL_W,KERNEL_H)).astype(numpy.complex64)
-    h_Data = numpy.random.uniform(0,1,(DATA_W,DATA_H)).astype(numpy.complex64)
+    h_Kernel = kernel
+    h_Data = data
+    #h_Kernel = numpy.random.uniform(0,1,(KERNEL_W,KERNEL_H)).astype(numpy.complex64)
+    #h_Data = numpy.random.uniform(0,1,(DATA_W,DATA_H)).astype(numpy.complex64)
 
     print "[*] Allocating host memory for results..."
-    h_ResultCPU = numpy.zeros((DATA_W, DATA_H)).astype(numpy.complex64)
+    h_ResultCPU = numpy.zeros((DATA_W,DATA_H)).astype(numpy.complex64)
     h_ResultGPU = numpy.zeros((FFT_W,FFT_H)).astype(numpy.complex64)
 
     print "[*] Allocating linear device memory (Complex)..."
@@ -222,20 +296,21 @@ def main():
 
     print ">>> Copying results from GPU..."
     cudaCheckError(cudaMemcpy(h_ResultGPU.ctypes.data, d_PaddedData, FFT_SIZE, cudaMemcpyDeviceToHost))
-    #print h_ResultGPU
 
     print ">>> Checking GPU results..."
     print "[*] running reference CPU convolution..."
     conv_gold = get_convolution_cpu() 
-    check_results = get_check_results()
-    result = numpy.zeros_like(h_Data)
-    conv_gold(get_float2_ptr(result), get_float2_ptr(h_Data), get_float2_ptr(h_Kernel), DATA_W, DATA_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
-    result =  result.astype('complex64')
-    #print result
+    #check_results = get_check_results()
+
+    
+    conv_gold(get_float2_ptr(h_ResultCPU), get_float2_ptr(h_Data), get_float2_ptr(h_Kernel), DATA_W, DATA_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
+    #h_ResultCPU = fftconvolve(h_Data.real, h_Kernel.real, mode="valid")
+    #print h_ResultCPU.real
 
     print "[*] comparing the results..."
-    check_results(get_float2_ptr(result), get_float2_ptr(h_ResultGPU), DATA_W, DATA_H, FFT_W)
-    #print "[*] l2norm = %s" % numpy.linalg.norm(result-h_ResultGPU)
+    
+    #get_check_results()(get_float2_ptr(h_ResultCPU), get_float2_ptr(h_ResultGPU), DATA_W, DATA_H, FFT_W)
+    check_results(h_ResultCPU.real, h_ResultGPU.real, h_ResultCPU.shape[0], h_ResultCPU.shape[1], FFT_W)
 
     print ">>> Shutting down..."
 
@@ -254,6 +329,9 @@ def main():
 
     print "[*] CUDA Thread Exit"
     cudaThreadExit()
+    return h_ResultGPU.real
 
 if __name__ == "__main__":
-    main()
+    kernel = numpy.random.uniform(0,1,(7,7)).astype(numpy.complex64)
+    data = numpy.random.uniform(0,1,(512,512)).astype(numpy.complex64)
+    fftconvolve2d(data, kernel)
