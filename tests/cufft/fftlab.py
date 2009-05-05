@@ -12,8 +12,9 @@ app = QApplication(sys.argv)
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
+from cuda.sugar.fft import fftconvolve2d, centered
 from scipy import *
-from scipy import signal
+from scipy.signal import fftconvolve
 from pylab import fftshift
 import numpy as np
 
@@ -77,16 +78,39 @@ class FFTLab(QMainWindow):
 
         self.main_widget = QWidget(self, "Main widget")
 
-        lena_orig = ImageCanvas(lena()/255.,self.main_widget)
-        lena_fft = ImageCanvas(signal.fft2(lena()/255.).real,self.main_widget)
-        lena_power = ImageCanvas(fftshift(log(abs(signal.fftn(lena()/255.)))),self.main_widget)
-        lena_convolved = ImageCanvas(signal.fftconvolve(lena()/255., np.ones((11,11))), self.main_widget)
+        data = (lena()/255.).astype("complex64")
+        #kernel = np.random.uniform(0,1,(7,7)).astype("complex64")
+        kernel = np.ones((7,7)).astype("complex64")
+
+        #s1 = np.array(data.shape)
+        #s2 = np.array(kernel.shape)
+
+        gpu_conv = fftconvolve2d(data,kernel).real[0:512,0:512] 
+        cpu_conv = fftconvolve(data.real, kernel.real, mode="valid")
+
+        data_c = ImageCanvas(data.real, self.main_widget)
+        kernel_c = ImageCanvas(kernel.real, self.main_widget)
+        gpu_conv_c = ImageCanvas(gpu_conv, self.main_widget)
+        cpu_conv_c = ImageCanvas(cpu_conv, self.main_widget)
+        #power_spec = ImageCanvas(fftshift(log(abs(signal.fftn(lena()/255.)))),self.main_widget)
+        data_label = QLabel("Input Data (lena)", self.main_widget)
+        data_label.setAlignment(QLabel.AlignCenter)
+        kernel_label = QLabel("Convolution Kernel", self.main_widget)
+        kernel_label.setAlignment(QLabel.AlignCenter)
+        gpu_conv_label = QLabel("GPU fftconvolve (CUDA)", self.main_widget)
+        gpu_conv_label.setAlignment(QLabel.AlignCenter)
+        cpu_conv_label = QLabel("CPU fftconvolve (NumPy)", self.main_widget)
+        cpu_conv_label.setAlignment(QLabel.AlignCenter)
 
         g = QGridLayout(self.main_widget)
-        g.addWidget(lena_orig,0,0)
-        g.addWidget(lena_convolved,0,1)
-        g.addWidget(lena_fft,1,0)
-        g.addWidget(lena_power,1,1)
+        g.addWidget(data_label,0,0)
+        g.addWidget(kernel_label,0,1)
+        g.addWidget(data_c,1,0)
+        g.addWidget(kernel_c,1,1)
+        g.addWidget(gpu_conv_label,2,0)
+        g.addWidget(cpu_conv_label,2,1)
+        g.addWidget(gpu_conv_c,3,0)
+        g.addWidget(cpu_conv_c,3,1)
 
         self.main_widget.setFocus()
         self.setCentralWidget(self.main_widget)

@@ -110,7 +110,7 @@ float2._fields_ = [
     ('y', ctypes.c_float),
 ]
 
-def _centered(arr, newsize):
+def centered(arr, newsize):
     # Return the center newsize portion of the array.
     newsize = np.asarray(newsize)
     currsize = np.array(arr.shape)
@@ -172,7 +172,7 @@ def run():
     s1 = np.array(data.shape)
     s2 = np.array(kernel.shape)
 
-    #print _centered(result, np.abs(s2-s1)+1)
+    #print centered(result, np.abs(s2-s1)+1)
     print result
     print 
     print fftconvolve(data.real, kernel.real, mode='full').astype('complex64')
