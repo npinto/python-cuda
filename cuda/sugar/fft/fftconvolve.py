@@ -196,8 +196,8 @@ def fftconvolve2d(data, kernel):
     PADDING_H = KERNEL_H - 1
 
     # Input data dimension
-    DATA_W = 512 
-    DATA_H = 512
+    DATA_W = data.shape[0] 
+    DATA_H = data.shape[1]
 
     # Derive FFT size from data and kernel dimensions
     FFT_W = calculateFFTsize(DATA_W + PADDING_W)
