@@ -12,15 +12,12 @@ app = QApplication(sys.argv)
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
-<<<<<<< HEAD:tests/cufft/fftlab.py
 from cuda.sugar.fft import fftconvolve2d, centered, check_results, get_convolution_cpu, get_float2_ptr
 from scipy import *
 from scipy.signal import fftconvolve, convolve2d
-=======
 from cuda.sugar.fft import fftconvolve2d, centered
 from scipy import *
 from scipy.signal import fftconvolve
->>>>>>> 0f090d8cc2ada9949809f38bca555ba2b2a79382:tests/cufft/fftlab.py
 from pylab import fftshift
 import numpy as np
 
@@ -84,11 +81,10 @@ class FFTLab(QMainWindow):
 
         self.main_widget = QWidget(self, "Main widget")
 
-<<<<<<< HEAD:tests/cufft/fftlab.py
-        #data = ((lena()/255.)[0:8,0:8]).astype("complex64")
-        data = np.random.uniform(0,1,(8,8)).astype("complex64")
-        #kernel = np.random.uniform(0,1,(7,7)).astype("complex64")
+        data = ((lena()/255.)[0:8,0:8]).astype("complex64")
         kernel = np.ones((7,7)).astype("complex64")
+        #data = np.random.uniform(0,1,(8,8)).astype("complex64")
+        #kernel = np.random.uniform(0,1,(7,7)).astype("complex64")
 
         s1 = np.array(data.shape)
         s2 = np.array(kernel.shape)
@@ -101,11 +97,6 @@ class FFTLab(QMainWindow):
 
         conv_gold = get_convolution_cpu() 
         conv_gold(get_float2_ptr(cpu_conv_sdk), get_float2_ptr(data), get_float2_ptr(kernel), data.shape[0], data.shape[1], kernel.shape[0], kernel.shape[1], 1,6)
-
-        print gpu_conv
-        print cpu_conv
-        print cpu_conv_sdk[3:-3,3:-3]
-
 
         print "GPU shape = ", gpu_conv.shape
         print "CPU shape = ", cpu_conv.shape
@@ -122,31 +113,11 @@ class FFTLab(QMainWindow):
         gpu_conv_c = ImageCanvas(gpu_conv, self.main_widget)
         cpu_conv_c = ImageCanvas(cpu_conv, self.main_widget)
         ##power_spec = ImageCanvas(fftshift(log(abs(signal.fftn(lena()/255.)))),self.main_widget)
+
         data_label = QLabel("Input Data (lena)", self.main_widget)
         data_label.setAlignment(QLabel.AlignCenter)
         cpu_conv_sdk_label = QLabel("CPU fftconvolve (CUDA)", self.main_widget)
         cpu_conv_sdk_label.setAlignment(QLabel.AlignCenter)
-=======
-        data = (lena()/255.).astype("complex64")
-        #kernel = np.random.uniform(0,1,(7,7)).astype("complex64")
-        kernel = np.ones((7,7)).astype("complex64")
-
-        #s1 = np.array(data.shape)
-        #s2 = np.array(kernel.shape)
-
-        gpu_conv = fftconvolve2d(data,kernel).real[0:512,0:512] 
-        cpu_conv = fftconvolve(data.real, kernel.real, mode="valid")
-
-        data_c = ImageCanvas(data.real, self.main_widget)
-        kernel_c = ImageCanvas(kernel.real, self.main_widget)
-        gpu_conv_c = ImageCanvas(gpu_conv, self.main_widget)
-        cpu_conv_c = ImageCanvas(cpu_conv, self.main_widget)
-        #power_spec = ImageCanvas(fftshift(log(abs(signal.fftn(lena()/255.)))),self.main_widget)
-        data_label = QLabel("Input Data (lena)", self.main_widget)
-        data_label.setAlignment(QLabel.AlignCenter)
-        kernel_label = QLabel("Convolution Kernel", self.main_widget)
-        kernel_label.setAlignment(QLabel.AlignCenter)
->>>>>>> 0f090d8cc2ada9949809f38bca555ba2b2a79382:tests/cufft/fftlab.py
         gpu_conv_label = QLabel("GPU fftconvolve (CUDA)", self.main_widget)
         gpu_conv_label.setAlignment(QLabel.AlignCenter)
         cpu_conv_label = QLabel("CPU fftconvolve (NumPy)", self.main_widget)
@@ -154,15 +125,9 @@ class FFTLab(QMainWindow):
 
         g = QGridLayout(self.main_widget)
         g.addWidget(data_label,0,0)
-<<<<<<< HEAD:tests/cufft/fftlab.py
         g.addWidget(cpu_conv_sdk_label,0,1)
         g.addWidget(data_c,1,0)
         g.addWidget(cpu_conv_sdk_c,1,1)
-=======
-        g.addWidget(kernel_label,0,1)
-        g.addWidget(data_c,1,0)
-        g.addWidget(kernel_c,1,1)
->>>>>>> 0f090d8cc2ada9949809f38bca555ba2b2a79382:tests/cufft/fftlab.py
         g.addWidget(gpu_conv_label,2,0)
         g.addWidget(cpu_conv_label,2,1)
         g.addWidget(gpu_conv_c,3,0)
