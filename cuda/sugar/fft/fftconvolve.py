@@ -196,8 +196,13 @@ def fftconvolve2d(data, kernel):
     PADDING_H = KERNEL_H - 1
 
     # Input data dimension
+<<<<<<< HEAD:cuda/sugar/fft/fftconvolve.py
     DATA_W = data.shape[0] 
     DATA_H = data.shape[1]
+=======
+    DATA_W = 512 
+    DATA_H = 512
+>>>>>>> 0f090d8cc2ada9949809f38bca555ba2b2a79382:cuda/sugar/fft/fftconvolve.py
 
     # Derive FFT size from data and kernel dimensions
     FFT_W = calculateFFTsize(DATA_W + PADDING_W)
