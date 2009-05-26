@@ -188,8 +188,8 @@ def fftconvolve2d(data, kernel):
     KERNEL_H = 7
 
     # Kernel center position
-    KERNEL_X = 3
-    KERNEL_Y = 3
+    KERNEL_X = KERNEL_W/2
+    KERNEL_Y = KERNEL_H/2
 
     # Width and height of padding for "clamp to border" addressing mode
     PADDING_W = KERNEL_W - 1

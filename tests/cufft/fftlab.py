@@ -81,7 +81,8 @@ class FFTLab(QMainWindow):
 
         self.main_widget = QWidget(self, "Main widget")
 
-        data = ((lena()/255.)[0:8,0:8]).astype("complex64")
+        #data = ((lena()/255.)[0:8,0:8]).astype("complex64"4
+        data = ((lena()/255.)).astype("complex64")
         kernel = np.ones((7,7)).astype("complex64")
         #data = np.random.uniform(0,1,(8,8)).astype("complex64")
         #kernel = np.random.uniform(0,1,(7,7)).astype("complex64")
@@ -89,21 +90,27 @@ class FFTLab(QMainWindow):
         s1 = np.array(data.shape)
         s2 = np.array(kernel.shape)
 
-        gpu_conv = fftconvolve2d(data,kernel).real[0:14,0:14] 
-        gpu_conv = gpu_conv[6:-6, 6:-6]
-        cpu_conv = convolve2d(data.real, kernel.real, boundary="wrap", mode="valid")
-        #cpu_conv = fftconvolve(data.real, kernel.real, mode="valid")
+        dh, dw = data.shape
+        kh, kw = kernel.shape        
+        print kh/2, kw/2
+        gpu_conv = fftconvolve2d(data,kernel).real[0:dh,0:dw][kh/2:-(kh/2), kw/2:-(kw/2)]
+
+        #cpu_conv = convolve2d(data.real, kernel.real, boundary="wrap", mode="valid")
+        cpu_conv = fftconvolve(data.real, kernel.real, mode="valid")
         cpu_conv_sdk = np.zeros_like(data)
 
         conv_gold = get_convolution_cpu() 
         conv_gold(get_float2_ptr(cpu_conv_sdk), get_float2_ptr(data), get_float2_ptr(kernel), data.shape[0], data.shape[1], kernel.shape[0], kernel.shape[1], 1,6)
+
+
+        cpu_conv_sdk = cpu_conv_sdk[kh/2:-(kh/2), kw/2:-(kw/2)]
 
         print "GPU shape = ", gpu_conv.shape
         print "CPU shape = ", cpu_conv.shape
         print "CPU SDK shape =", cpu_conv_sdk.shape
         
         check_results(cpu_conv, gpu_conv, cpu_conv.shape[0], cpu_conv.shape[1],0)
-        check_results(cpu_conv, cpu_conv_sdk[3:-3,3:-3], cpu_conv.shape[0], cpu_conv.shape[1],0)
+        #check_results(cpu_conv, cpu_conv_sdk, cpu_conv.shape[0], cpu_conv.shape[1],0)
 
         #check_results(cpu_conv, gpu_conv, cpu_conv.shape[0], cpu_conv.shape[1], 0)
         #check_results(cpu_conv, cpu_conv_sdk, cpu_conv.shape[0], cpu_conv.shape[1], 0)
