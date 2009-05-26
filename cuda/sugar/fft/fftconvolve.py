@@ -188,16 +188,16 @@ def fftconvolve2d(data, kernel):
     KERNEL_H = 7
 
     # Kernel center position
-    KERNEL_X = 1
-    KERNEL_Y = 6
+    KERNEL_X = 3
+    KERNEL_Y = 3
 
     # Width and height of padding for "clamp to border" addressing mode
     PADDING_W = KERNEL_W - 1
     PADDING_H = KERNEL_H - 1
 
     # Input data dimension
-    DATA_W = 512 
-    DATA_H = 512
+    DATA_W = data.shape[0] 
+    DATA_H = data.shape[1]
 
     # Derive FFT size from data and kernel dimensions
     FFT_W = calculateFFTsize(DATA_W + PADDING_W)
