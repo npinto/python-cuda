@@ -9,32 +9,32 @@ _libraries['cufft'] = get_lib('cufft')
 STRING = c_char_p
 
 
-FP_INFINITE = 1
-CUFFT_INTERNAL_ERROR = 5
-CUFFT_SETUP_FAILED = 7
-CUFFT_INVALID_TYPE = 3
-CUFFT_ALLOC_FAILED = 2
-__codecvt_partial = 1
-CUFFT_INVALID_VALUE = 4
-FP_NORMAL = 4
-CUFFT_R2C = 42
 CUFFT_EXEC_FAILED = 6
 _IEEE_ = -1
 CUFFT_C2R = 44
+__codecvt_ok = 0
+FP_NAN = 0
+_SVID_ = 0
 CUFFT_C2C = 41
 _XOPEN_ = 1
+CUFFT_R2C = 42
 __codecvt_error = 2
 _POSIX_ = 2
-FP_NAN = 0
 _ISOC_ = 3
-_SVID_ = 0
-__codecvt_noconv = 3
-__codecvt_ok = 0
-CUFFT_INVALID_PLAN = 1
-FP_ZERO = 2
-FP_SUBNORMAL = 3
-CUFFT_SUCCESS = 0
 CUFFT_INVALID_SIZE = 8
+FP_INFINITE = 1
+FP_SUBNORMAL = 3
+CUFFT_INTERNAL_ERROR = 5
+CUFFT_ALLOC_FAILED = 2
+__codecvt_partial = 1
+CUFFT_SUCCESS = 0
+CUFFT_INVALID_PLAN = 1
+__codecvt_noconv = 3
+FP_NORMAL = 4
+CUFFT_INVALID_TYPE = 3
+CUFFT_SETUP_FAILED = 7
+FP_ZERO = 2
+CUFFT_INVALID_VALUE = 4
 # ./my_CUDA2100_vector_types.h 55
 class char1(Structure):
     pass
@@ -476,14 +476,6 @@ atanl.__doc__ = \
 """long double atanl(long double __x)
 /usr/include/bits/mathcalls.h:59"""
 # /usr/include/bits/mathcalls.h 59
-atan = _libraries['cufft'].atan
-atan.restype = c_double
-# atan(__x)
-atan.argtypes = [c_double]
-atan.__doc__ = \
-"""double atan(double __x)
-/usr/include/bits/mathcalls.h:59"""
-# /usr/include/bits/mathcalls.h 59
 atanf = _libraries['cufft'].atanf
 atanf.restype = c_float
 # atanf(__x)
@@ -491,13 +483,21 @@ atanf.argtypes = [c_float]
 atanf.__doc__ = \
 """float atanf(float __x)
 /usr/include/bits/mathcalls.h:59"""
+# /usr/include/bits/mathcalls.h 59
+atan = _libraries['cufft'].atan
+atan.restype = c_double
+# atan(__x)
+atan.argtypes = [c_double]
+atan.__doc__ = \
+"""double atan(double __x)
+/usr/include/bits/mathcalls.h:59"""
 # /usr/include/bits/mathcalls.h 61
-atan2f = _libraries['cufft'].atan2f
-atan2f.restype = c_float
-# atan2f(__y, __x)
-atan2f.argtypes = [c_float, c_float]
-atan2f.__doc__ = \
-"""float atan2f(float __y, float __x)
+atan2l = _libraries['cufft'].atan2l
+atan2l.restype = c_longdouble
+# atan2l(__y, __x)
+atan2l.argtypes = [c_longdouble, c_longdouble]
+atan2l.__doc__ = \
+"""long double atan2l(long double __y, long double __x)
 /usr/include/bits/mathcalls.h:61"""
 # /usr/include/bits/mathcalls.h 61
 atan2 = _libraries['cufft'].atan2
@@ -508,13 +508,21 @@ atan2.__doc__ = \
 """double atan2(double __y, double __x)
 /usr/include/bits/mathcalls.h:61"""
 # /usr/include/bits/mathcalls.h 61
-atan2l = _libraries['cufft'].atan2l
-atan2l.restype = c_longdouble
-# atan2l(__y, __x)
-atan2l.argtypes = [c_longdouble, c_longdouble]
-atan2l.__doc__ = \
-"""long double atan2l(long double __y, long double __x)
+atan2f = _libraries['cufft'].atan2f
+atan2f.restype = c_float
+# atan2f(__y, __x)
+atan2f.argtypes = [c_float, c_float]
+atan2f.__doc__ = \
+"""float atan2f(float __y, float __x)
 /usr/include/bits/mathcalls.h:61"""
+# /usr/include/bits/mathcalls.h 64
+cos = _libraries['cufft'].cos
+cos.restype = c_double
+# cos(__x)
+cos.argtypes = [c_double]
+cos.__doc__ = \
+"""double cos(double __x)
+/usr/include/bits/mathcalls.h:64"""
 # /usr/include/bits/mathcalls.h 64
 cosl = _libraries['cufft'].cosl
 cosl.restype = c_longdouble
@@ -530,14 +538,6 @@ cosf.restype = c_float
 cosf.argtypes = [c_float]
 cosf.__doc__ = \
 """float cosf(float __x)
-/usr/include/bits/mathcalls.h:64"""
-# /usr/include/bits/mathcalls.h 64
-cos = _libraries['cufft'].cos
-cos.restype = c_double
-# cos(__x)
-cos.argtypes = [c_double]
-cos.__doc__ = \
-"""double cos(double __x)
 /usr/include/bits/mathcalls.h:64"""
 # /usr/include/bits/mathcalls.h 66
 sinl = _libraries['cufft'].sinl
@@ -596,20 +596,20 @@ coshl.__doc__ = \
 """long double coshl(long double __x)
 /usr/include/bits/mathcalls.h:73"""
 # /usr/include/bits/mathcalls.h 73
-coshf = _libraries['cufft'].coshf
-coshf.restype = c_float
-# coshf(__x)
-coshf.argtypes = [c_float]
-coshf.__doc__ = \
-"""float coshf(float __x)
-/usr/include/bits/mathcalls.h:73"""
-# /usr/include/bits/mathcalls.h 73
 cosh = _libraries['cufft'].cosh
 cosh.restype = c_double
 # cosh(__x)
 cosh.argtypes = [c_double]
 cosh.__doc__ = \
 """double cosh(double __x)
+/usr/include/bits/mathcalls.h:73"""
+# /usr/include/bits/mathcalls.h 73
+coshf = _libraries['cufft'].coshf
+coshf.restype = c_float
+# coshf(__x)
+coshf.argtypes = [c_float]
+coshf.__doc__ = \
+"""float coshf(float __x)
 /usr/include/bits/mathcalls.h:73"""
 # /usr/include/bits/mathcalls.h 75
 sinh = _libraries['cufft'].sinh
@@ -620,14 +620,6 @@ sinh.__doc__ = \
 """double sinh(double __x)
 /usr/include/bits/mathcalls.h:75"""
 # /usr/include/bits/mathcalls.h 75
-sinhl = _libraries['cufft'].sinhl
-sinhl.restype = c_longdouble
-# sinhl(__x)
-sinhl.argtypes = [c_longdouble]
-sinhl.__doc__ = \
-"""long double sinhl(long double __x)
-/usr/include/bits/mathcalls.h:75"""
-# /usr/include/bits/mathcalls.h 75
 sinhf = _libraries['cufft'].sinhf
 sinhf.restype = c_float
 # sinhf(__x)
@@ -635,6 +627,22 @@ sinhf.argtypes = [c_float]
 sinhf.__doc__ = \
 """float sinhf(float __x)
 /usr/include/bits/mathcalls.h:75"""
+# /usr/include/bits/mathcalls.h 75
+sinhl = _libraries['cufft'].sinhl
+sinhl.restype = c_longdouble
+# sinhl(__x)
+sinhl.argtypes = [c_longdouble]
+sinhl.__doc__ = \
+"""long double sinhl(long double __x)
+/usr/include/bits/mathcalls.h:75"""
+# /usr/include/bits/mathcalls.h 77
+tanhf = _libraries['cufft'].tanhf
+tanhf.restype = c_float
+# tanhf(__x)
+tanhf.argtypes = [c_float]
+tanhf.__doc__ = \
+"""float tanhf(float __x)
+/usr/include/bits/mathcalls.h:77"""
 # /usr/include/bits/mathcalls.h 77
 tanh = _libraries['cufft'].tanh
 tanh.restype = c_double
@@ -651,21 +659,13 @@ tanhl.argtypes = [c_longdouble]
 tanhl.__doc__ = \
 """long double tanhl(long double __x)
 /usr/include/bits/mathcalls.h:77"""
-# /usr/include/bits/mathcalls.h 77
-tanhf = _libraries['cufft'].tanhf
-tanhf.restype = c_float
-# tanhf(__x)
-tanhf.argtypes = [c_float]
-tanhf.__doc__ = \
-"""float tanhf(float __x)
-/usr/include/bits/mathcalls.h:77"""
 # /usr/include/bits/mathcalls.h 82
-sincosf = _libraries['cufft'].sincosf
-sincosf.restype = None
-# sincosf(__x, __sinx, __cosx)
-sincosf.argtypes = [c_float, POINTER(c_float), POINTER(c_float)]
-sincosf.__doc__ = \
-"""void sincosf(float __x, float * __sinx, float * __cosx)
+sincosl = _libraries['cufft'].sincosl
+sincosl.restype = None
+# sincosl(__x, __sinx, __cosx)
+sincosl.argtypes = [c_longdouble, POINTER(c_longdouble), POINTER(c_longdouble)]
+sincosl.__doc__ = \
+"""void sincosl(long double __x, long double * __sinx, long double * __cosx)
 /usr/include/bits/mathcalls.h:82"""
 # /usr/include/bits/mathcalls.h 82
 sincos = _libraries['cufft'].sincos
@@ -676,13 +676,21 @@ sincos.__doc__ = \
 """void sincos(double __x, double * __sinx, double * __cosx)
 /usr/include/bits/mathcalls.h:82"""
 # /usr/include/bits/mathcalls.h 82
-sincosl = _libraries['cufft'].sincosl
-sincosl.restype = None
-# sincosl(__x, __sinx, __cosx)
-sincosl.argtypes = [c_longdouble, POINTER(c_longdouble), POINTER(c_longdouble)]
-sincosl.__doc__ = \
-"""void sincosl(long double __x, long double * __sinx, long double * __cosx)
+sincosf = _libraries['cufft'].sincosf
+sincosf.restype = None
+# sincosf(__x, __sinx, __cosx)
+sincosf.argtypes = [c_float, POINTER(c_float), POINTER(c_float)]
+sincosf.__doc__ = \
+"""void sincosf(float __x, float * __sinx, float * __cosx)
 /usr/include/bits/mathcalls.h:82"""
+# /usr/include/bits/mathcalls.h 89
+acosh = _libraries['cufft'].acosh
+acosh.restype = c_double
+# acosh(__x)
+acosh.argtypes = [c_double]
+acosh.__doc__ = \
+"""double acosh(double __x)
+/usr/include/bits/mathcalls.h:89"""
 # /usr/include/bits/mathcalls.h 89
 acoshf = _libraries['cufft'].acoshf
 acoshf.restype = c_float
@@ -699,14 +707,14 @@ acoshl.argtypes = [c_longdouble]
 acoshl.__doc__ = \
 """long double acoshl(long double __x)
 /usr/include/bits/mathcalls.h:89"""
-# /usr/include/bits/mathcalls.h 89
-acosh = _libraries['cufft'].acosh
-acosh.restype = c_double
-# acosh(__x)
-acosh.argtypes = [c_double]
-acosh.__doc__ = \
-"""double acosh(double __x)
-/usr/include/bits/mathcalls.h:89"""
+# /usr/include/bits/mathcalls.h 91
+asinhl = _libraries['cufft'].asinhl
+asinhl.restype = c_longdouble
+# asinhl(__x)
+asinhl.argtypes = [c_longdouble]
+asinhl.__doc__ = \
+"""long double asinhl(long double __x)
+/usr/include/bits/mathcalls.h:91"""
 # /usr/include/bits/mathcalls.h 91
 asinh = _libraries['cufft'].asinh
 asinh.restype = c_double
@@ -723,14 +731,6 @@ asinhf.argtypes = [c_float]
 asinhf.__doc__ = \
 """float asinhf(float __x)
 /usr/include/bits/mathcalls.h:91"""
-# /usr/include/bits/mathcalls.h 91
-asinhl = _libraries['cufft'].asinhl
-asinhl.restype = c_longdouble
-# asinhl(__x)
-asinhl.argtypes = [c_longdouble]
-asinhl.__doc__ = \
-"""long double asinhl(long double __x)
-/usr/include/bits/mathcalls.h:91"""
 # /usr/include/bits/mathcalls.h 93
 atanhl = _libraries['cufft'].atanhl
 atanhl.restype = c_longdouble
@@ -740,14 +740,6 @@ atanhl.__doc__ = \
 """long double atanhl(long double __x)
 /usr/include/bits/mathcalls.h:93"""
 # /usr/include/bits/mathcalls.h 93
-atanhf = _libraries['cufft'].atanhf
-atanhf.restype = c_float
-# atanhf(__x)
-atanhf.argtypes = [c_float]
-atanhf.__doc__ = \
-"""float atanhf(float __x)
-/usr/include/bits/mathcalls.h:93"""
-# /usr/include/bits/mathcalls.h 93
 atanh = _libraries['cufft'].atanh
 atanh.restype = c_double
 # atanh(__x)
@@ -755,6 +747,22 @@ atanh.argtypes = [c_double]
 atanh.__doc__ = \
 """double atanh(double __x)
 /usr/include/bits/mathcalls.h:93"""
+# /usr/include/bits/mathcalls.h 93
+atanhf = _libraries['cufft'].atanhf
+atanhf.restype = c_float
+# atanhf(__x)
+atanhf.argtypes = [c_float]
+atanhf.__doc__ = \
+"""float atanhf(float __x)
+/usr/include/bits/mathcalls.h:93"""
+# /usr/include/bits/mathcalls.h 101
+expf = _libraries['cufft'].expf
+expf.restype = c_float
+# expf(__x)
+expf.argtypes = [c_float]
+expf.__doc__ = \
+"""float expf(float __x)
+/usr/include/bits/mathcalls.h:101"""
 # /usr/include/bits/mathcalls.h 101
 exp = _libraries['cufft'].exp
 exp.restype = c_double
@@ -771,14 +779,14 @@ expl.argtypes = [c_longdouble]
 expl.__doc__ = \
 """long double expl(long double __x)
 /usr/include/bits/mathcalls.h:101"""
-# /usr/include/bits/mathcalls.h 101
-expf = _libraries['cufft'].expf
-expf.restype = c_float
-# expf(__x)
-expf.argtypes = [c_float]
-expf.__doc__ = \
-"""float expf(float __x)
-/usr/include/bits/mathcalls.h:101"""
+# /usr/include/bits/mathcalls.h 104
+frexp = _libraries['cufft'].frexp
+frexp.restype = c_double
+# frexp(__x, __exponent)
+frexp.argtypes = [c_double, POINTER(c_int)]
+frexp.__doc__ = \
+"""double frexp(double __x, int * __exponent)
+/usr/include/bits/mathcalls.h:104"""
 # /usr/include/bits/mathcalls.h 104
 frexpl = _libraries['cufft'].frexpl
 frexpl.restype = c_longdouble
@@ -794,14 +802,6 @@ frexpf.restype = c_float
 frexpf.argtypes = [c_float, POINTER(c_int)]
 frexpf.__doc__ = \
 """float frexpf(float __x, int * __exponent)
-/usr/include/bits/mathcalls.h:104"""
-# /usr/include/bits/mathcalls.h 104
-frexp = _libraries['cufft'].frexp
-frexp.restype = c_double
-# frexp(__x, __exponent)
-frexp.argtypes = [c_double, POINTER(c_int)]
-frexp.__doc__ = \
-"""double frexp(double __x, int * __exponent)
 /usr/include/bits/mathcalls.h:104"""
 # /usr/include/bits/mathcalls.h 107
 ldexpf = _libraries['cufft'].ldexpf
@@ -828,20 +828,20 @@ ldexp.__doc__ = \
 """double ldexp(double __x, int __exponent)
 /usr/include/bits/mathcalls.h:107"""
 # /usr/include/bits/mathcalls.h 110
-logl = _libraries['cufft'].logl
-logl.restype = c_longdouble
-# logl(__x)
-logl.argtypes = [c_longdouble]
-logl.__doc__ = \
-"""long double logl(long double __x)
-/usr/include/bits/mathcalls.h:110"""
-# /usr/include/bits/mathcalls.h 110
 log = _libraries['cufft'].log
 log.restype = c_double
 # log(__x)
 log.argtypes = [c_double]
 log.__doc__ = \
 """double log(double __x)
+/usr/include/bits/mathcalls.h:110"""
+# /usr/include/bits/mathcalls.h 110
+logl = _libraries['cufft'].logl
+logl.restype = c_longdouble
+# logl(__x)
+logl.argtypes = [c_longdouble]
+logl.__doc__ = \
+"""long double logl(long double __x)
 /usr/include/bits/mathcalls.h:110"""
 # /usr/include/bits/mathcalls.h 110
 logf = _libraries['cufft'].logf
@@ -852,12 +852,12 @@ logf.__doc__ = \
 """float logf(float __x)
 /usr/include/bits/mathcalls.h:110"""
 # /usr/include/bits/mathcalls.h 113
-log10l = _libraries['cufft'].log10l
-log10l.restype = c_longdouble
-# log10l(__x)
-log10l.argtypes = [c_longdouble]
-log10l.__doc__ = \
-"""long double log10l(long double __x)
+log10 = _libraries['cufft'].log10
+log10.restype = c_double
+# log10(__x)
+log10.argtypes = [c_double]
+log10.__doc__ = \
+"""double log10(double __x)
 /usr/include/bits/mathcalls.h:113"""
 # /usr/include/bits/mathcalls.h 113
 log10f = _libraries['cufft'].log10f
@@ -868,12 +868,12 @@ log10f.__doc__ = \
 """float log10f(float __x)
 /usr/include/bits/mathcalls.h:113"""
 # /usr/include/bits/mathcalls.h 113
-log10 = _libraries['cufft'].log10
-log10.restype = c_double
-# log10(__x)
-log10.argtypes = [c_double]
-log10.__doc__ = \
-"""double log10(double __x)
+log10l = _libraries['cufft'].log10l
+log10l.restype = c_longdouble
+# log10l(__x)
+log10l.argtypes = [c_longdouble]
+log10l.__doc__ = \
+"""long double log10l(long double __x)
 /usr/include/bits/mathcalls.h:113"""
 # /usr/include/bits/mathcalls.h 116
 modf = _libraries['cufft'].modf
@@ -900,6 +900,14 @@ modfl.__doc__ = \
 """long double modfl(long double __x, long double * __iptr)
 /usr/include/bits/mathcalls.h:116"""
 # /usr/include/bits/mathcalls.h 121
+exp10l = _libraries['cufft'].exp10l
+exp10l.restype = c_longdouble
+# exp10l(__x)
+exp10l.argtypes = [c_longdouble]
+exp10l.__doc__ = \
+"""long double exp10l(long double __x)
+/usr/include/bits/mathcalls.h:121"""
+# /usr/include/bits/mathcalls.h 121
 exp10 = _libraries['cufft'].exp10
 exp10.restype = c_double
 # exp10(__x)
@@ -915,22 +923,6 @@ exp10f.argtypes = [c_float]
 exp10f.__doc__ = \
 """float exp10f(float __x)
 /usr/include/bits/mathcalls.h:121"""
-# /usr/include/bits/mathcalls.h 121
-exp10l = _libraries['cufft'].exp10l
-exp10l.restype = c_longdouble
-# exp10l(__x)
-exp10l.argtypes = [c_longdouble]
-exp10l.__doc__ = \
-"""long double exp10l(long double __x)
-/usr/include/bits/mathcalls.h:121"""
-# /usr/include/bits/mathcalls.h 123
-pow10l = _libraries['cufft'].pow10l
-pow10l.restype = c_longdouble
-# pow10l(__x)
-pow10l.argtypes = [c_longdouble]
-pow10l.__doc__ = \
-"""long double pow10l(long double __x)
-/usr/include/bits/mathcalls.h:123"""
 # /usr/include/bits/mathcalls.h 123
 pow10 = _libraries['cufft'].pow10
 pow10.restype = c_double
@@ -940,6 +932,14 @@ pow10.__doc__ = \
 """double pow10(double __x)
 /usr/include/bits/mathcalls.h:123"""
 # /usr/include/bits/mathcalls.h 123
+pow10l = _libraries['cufft'].pow10l
+pow10l.restype = c_longdouble
+# pow10l(__x)
+pow10l.argtypes = [c_longdouble]
+pow10l.__doc__ = \
+"""long double pow10l(long double __x)
+/usr/include/bits/mathcalls.h:123"""
+# /usr/include/bits/mathcalls.h 123
 pow10f = _libraries['cufft'].pow10f
 pow10f.restype = c_float
 # pow10f(__x)
@@ -947,14 +947,6 @@ pow10f.argtypes = [c_float]
 pow10f.__doc__ = \
 """float pow10f(float __x)
 /usr/include/bits/mathcalls.h:123"""
-# /usr/include/bits/mathcalls.h 129
-expm1f = _libraries['cufft'].expm1f
-expm1f.restype = c_float
-# expm1f(__x)
-expm1f.argtypes = [c_float]
-expm1f.__doc__ = \
-"""float expm1f(float __x)
-/usr/include/bits/mathcalls.h:129"""
 # /usr/include/bits/mathcalls.h 129
 expm1l = _libraries['cufft'].expm1l
 expm1l.restype = c_longdouble
@@ -971,13 +963,21 @@ expm1.argtypes = [c_double]
 expm1.__doc__ = \
 """double expm1(double __x)
 /usr/include/bits/mathcalls.h:129"""
+# /usr/include/bits/mathcalls.h 129
+expm1f = _libraries['cufft'].expm1f
+expm1f.restype = c_float
+# expm1f(__x)
+expm1f.argtypes = [c_float]
+expm1f.__doc__ = \
+"""float expm1f(float __x)
+/usr/include/bits/mathcalls.h:129"""
 # /usr/include/bits/mathcalls.h 132
-log1pf = _libraries['cufft'].log1pf
-log1pf.restype = c_float
-# log1pf(__x)
-log1pf.argtypes = [c_float]
-log1pf.__doc__ = \
-"""float log1pf(float __x)
+log1pl = _libraries['cufft'].log1pl
+log1pl.restype = c_longdouble
+# log1pl(__x)
+log1pl.argtypes = [c_longdouble]
+log1pl.__doc__ = \
+"""long double log1pl(long double __x)
 /usr/include/bits/mathcalls.h:132"""
 # /usr/include/bits/mathcalls.h 132
 log1p = _libraries['cufft'].log1p
@@ -988,21 +988,13 @@ log1p.__doc__ = \
 """double log1p(double __x)
 /usr/include/bits/mathcalls.h:132"""
 # /usr/include/bits/mathcalls.h 132
-log1pl = _libraries['cufft'].log1pl
-log1pl.restype = c_longdouble
-# log1pl(__x)
-log1pl.argtypes = [c_longdouble]
-log1pl.__doc__ = \
-"""long double log1pl(long double __x)
+log1pf = _libraries['cufft'].log1pf
+log1pf.restype = c_float
+# log1pf(__x)
+log1pf.argtypes = [c_float]
+log1pf.__doc__ = \
+"""float log1pf(float __x)
 /usr/include/bits/mathcalls.h:132"""
-# /usr/include/bits/mathcalls.h 135
-logbf = _libraries['cufft'].logbf
-logbf.restype = c_float
-# logbf(__x)
-logbf.argtypes = [c_float]
-logbf.__doc__ = \
-"""float logbf(float __x)
-/usr/include/bits/mathcalls.h:135"""
 # /usr/include/bits/mathcalls.h 135
 logb = _libraries['cufft'].logb
 logb.restype = c_double
@@ -1019,6 +1011,22 @@ logbl.argtypes = [c_longdouble]
 logbl.__doc__ = \
 """long double logbl(long double __x)
 /usr/include/bits/mathcalls.h:135"""
+# /usr/include/bits/mathcalls.h 135
+logbf = _libraries['cufft'].logbf
+logbf.restype = c_float
+# logbf(__x)
+logbf.argtypes = [c_float]
+logbf.__doc__ = \
+"""float logbf(float __x)
+/usr/include/bits/mathcalls.h:135"""
+# /usr/include/bits/mathcalls.h 142
+exp2 = _libraries['cufft'].exp2
+exp2.restype = c_double
+# exp2(__x)
+exp2.argtypes = [c_double]
+exp2.__doc__ = \
+"""double exp2(double __x)
+/usr/include/bits/mathcalls.h:142"""
 # /usr/include/bits/mathcalls.h 142
 exp2l = _libraries['cufft'].exp2l
 exp2l.restype = c_longdouble
@@ -1035,14 +1043,6 @@ exp2f.argtypes = [c_float]
 exp2f.__doc__ = \
 """float exp2f(float __x)
 /usr/include/bits/mathcalls.h:142"""
-# /usr/include/bits/mathcalls.h 142
-exp2 = _libraries['cufft'].exp2
-exp2.restype = c_double
-# exp2(__x)
-exp2.argtypes = [c_double]
-exp2.__doc__ = \
-"""double exp2(double __x)
-/usr/include/bits/mathcalls.h:142"""
 # /usr/include/bits/mathcalls.h 145
 log2 = _libraries['cufft'].log2
 log2.restype = c_double
@@ -1052,14 +1052,6 @@ log2.__doc__ = \
 """double log2(double __x)
 /usr/include/bits/mathcalls.h:145"""
 # /usr/include/bits/mathcalls.h 145
-log2l = _libraries['cufft'].log2l
-log2l.restype = c_longdouble
-# log2l(__x)
-log2l.argtypes = [c_longdouble]
-log2l.__doc__ = \
-"""long double log2l(long double __x)
-/usr/include/bits/mathcalls.h:145"""
-# /usr/include/bits/mathcalls.h 145
 log2f = _libraries['cufft'].log2f
 log2f.restype = c_float
 # log2f(__x)
@@ -1067,14 +1059,14 @@ log2f.argtypes = [c_float]
 log2f.__doc__ = \
 """float log2f(float __x)
 /usr/include/bits/mathcalls.h:145"""
-# /usr/include/bits/mathcalls.h 154
-pow = _libraries['cufft'].pow
-pow.restype = c_double
-# pow(__x, __y)
-pow.argtypes = [c_double, c_double]
-pow.__doc__ = \
-"""double pow(double __x, double __y)
-/usr/include/bits/mathcalls.h:154"""
+# /usr/include/bits/mathcalls.h 145
+log2l = _libraries['cufft'].log2l
+log2l.restype = c_longdouble
+# log2l(__x)
+log2l.argtypes = [c_longdouble]
+log2l.__doc__ = \
+"""long double log2l(long double __x)
+/usr/include/bits/mathcalls.h:145"""
 # /usr/include/bits/mathcalls.h 154
 powf = _libraries['cufft'].powf
 powf.restype = c_float
@@ -1090,6 +1082,14 @@ powl.restype = c_longdouble
 powl.argtypes = [c_longdouble, c_longdouble]
 powl.__doc__ = \
 """long double powl(long double __x, long double __y)
+/usr/include/bits/mathcalls.h:154"""
+# /usr/include/bits/mathcalls.h 154
+pow = _libraries['cufft'].pow
+pow.restype = c_double
+# pow(__x, __y)
+pow.argtypes = [c_double, c_double]
+pow.__doc__ = \
+"""double pow(double __x, double __y)
 /usr/include/bits/mathcalls.h:154"""
 # /usr/include/bits/mathcalls.h 157
 sqrtl = _libraries['cufft'].sqrtl
@@ -1140,6 +1140,14 @@ hypotf.__doc__ = \
 """float hypotf(float __x, float __y)
 /usr/include/bits/mathcalls.h:163"""
 # /usr/include/bits/mathcalls.h 170
+cbrtf = _libraries['cufft'].cbrtf
+cbrtf.restype = c_float
+# cbrtf(__x)
+cbrtf.argtypes = [c_float]
+cbrtf.__doc__ = \
+"""float cbrtf(float __x)
+/usr/include/bits/mathcalls.h:170"""
+# /usr/include/bits/mathcalls.h 170
 cbrtl = _libraries['cufft'].cbrtl
 cbrtl.restype = c_longdouble
 # cbrtl(__x)
@@ -1154,14 +1162,6 @@ cbrt.restype = c_double
 cbrt.argtypes = [c_double]
 cbrt.__doc__ = \
 """double cbrt(double __x)
-/usr/include/bits/mathcalls.h:170"""
-# /usr/include/bits/mathcalls.h 170
-cbrtf = _libraries['cufft'].cbrtf
-cbrtf.restype = c_float
-# cbrtf(__x)
-cbrtf.argtypes = [c_float]
-cbrtf.__doc__ = \
-"""float cbrtf(float __x)
 /usr/include/bits/mathcalls.h:170"""
 # /usr/include/bits/mathcalls.h 179
 ceill = _libraries['cufft'].ceill
@@ -1212,20 +1212,20 @@ fabs.__doc__ = \
 """double fabs(double __x)
 /usr/include/bits/mathcalls.h:182"""
 # /usr/include/bits/mathcalls.h 185
-floorf = _libraries['cufft'].floorf
-floorf.restype = c_float
-# floorf(__x)
-floorf.argtypes = [c_float]
-floorf.__doc__ = \
-"""float floorf(float __x)
-/usr/include/bits/mathcalls.h:185"""
-# /usr/include/bits/mathcalls.h 185
 floor = _libraries['cufft'].floor
 floor.restype = c_double
 # floor(__x)
 floor.argtypes = [c_double]
 floor.__doc__ = \
 """double floor(double __x)
+/usr/include/bits/mathcalls.h:185"""
+# /usr/include/bits/mathcalls.h 185
+floorf = _libraries['cufft'].floorf
+floorf.restype = c_float
+# floorf(__x)
+floorf.argtypes = [c_float]
+floorf.__doc__ = \
+"""float floorf(float __x)
 /usr/include/bits/mathcalls.h:185"""
 # /usr/include/bits/mathcalls.h 185
 floorl = _libraries['cufft'].floorl
@@ -1236,20 +1236,20 @@ floorl.__doc__ = \
 """long double floorl(long double __x)
 /usr/include/bits/mathcalls.h:185"""
 # /usr/include/bits/mathcalls.h 188
-fmodl = _libraries['cufft'].fmodl
-fmodl.restype = c_longdouble
-# fmodl(__x, __y)
-fmodl.argtypes = [c_longdouble, c_longdouble]
-fmodl.__doc__ = \
-"""long double fmodl(long double __x, long double __y)
-/usr/include/bits/mathcalls.h:188"""
-# /usr/include/bits/mathcalls.h 188
 fmod = _libraries['cufft'].fmod
 fmod.restype = c_double
 # fmod(__x, __y)
 fmod.argtypes = [c_double, c_double]
 fmod.__doc__ = \
 """double fmod(double __x, double __y)
+/usr/include/bits/mathcalls.h:188"""
+# /usr/include/bits/mathcalls.h 188
+fmodl = _libraries['cufft'].fmodl
+fmodl.restype = c_longdouble
+# fmodl(__x, __y)
+fmodl.argtypes = [c_longdouble, c_longdouble]
+fmodl.__doc__ = \
+"""long double fmodl(long double __x, long double __y)
 /usr/include/bits/mathcalls.h:188"""
 # /usr/include/bits/mathcalls.h 188
 fmodf = _libraries['cufft'].fmodf
@@ -1284,6 +1284,14 @@ __isinff.__doc__ = \
 """int __isinff(float __value)
 /usr/include/bits/mathcalls.h:193"""
 # /usr/include/bits/mathcalls.h 196
+__finitel = _libraries['cufft'].__finitel
+__finitel.restype = c_int
+# __finitel(__value)
+__finitel.argtypes = [c_longdouble]
+__finitel.__doc__ = \
+"""int __finitel(long double __value)
+/usr/include/bits/mathcalls.h:196"""
+# /usr/include/bits/mathcalls.h 196
 __finite = _libraries['cufft'].__finite
 __finite.restype = c_int
 # __finite(__value)
@@ -1299,14 +1307,6 @@ __finitef.argtypes = [c_float]
 __finitef.__doc__ = \
 """int __finitef(float __value)
 /usr/include/bits/mathcalls.h:196"""
-# /usr/include/bits/mathcalls.h 196
-__finitel = _libraries['cufft'].__finitel
-__finitel.restype = c_int
-# __finitel(__value)
-__finitel.argtypes = [c_longdouble]
-__finitel.__doc__ = \
-"""int __finitel(long double __value)
-/usr/include/bits/mathcalls.h:196"""
 # /usr/include/bits/mathcalls.h 202
 isinff = _libraries['cufft'].isinff
 isinff.restype = c_int
@@ -1316,20 +1316,20 @@ isinff.__doc__ = \
 """int isinff(float __value)
 /usr/include/bits/mathcalls.h:202"""
 # /usr/include/bits/mathcalls.h 202
-isinfl = _libraries['cufft'].isinfl
-isinfl.restype = c_int
-# isinfl(__value)
-isinfl.argtypes = [c_longdouble]
-isinfl.__doc__ = \
-"""int isinfl(long double __value)
-/usr/include/bits/mathcalls.h:202"""
-# /usr/include/bits/mathcalls.h 202
 isinf = _libraries['cufft'].isinf
 isinf.restype = c_int
 # isinf(__value)
 isinf.argtypes = [c_double]
 isinf.__doc__ = \
 """int isinf(double __value)
+/usr/include/bits/mathcalls.h:202"""
+# /usr/include/bits/mathcalls.h 202
+isinfl = _libraries['cufft'].isinfl
+isinfl.restype = c_int
+# isinfl(__value)
+isinfl.argtypes = [c_longdouble]
+isinfl.__doc__ = \
+"""int isinfl(long double __value)
 /usr/include/bits/mathcalls.h:202"""
 # /usr/include/bits/mathcalls.h 205
 finite = _libraries['cufft'].finite
@@ -1356,6 +1356,14 @@ finitef.__doc__ = \
 """int finitef(float __value)
 /usr/include/bits/mathcalls.h:205"""
 # /usr/include/bits/mathcalls.h 208
+dreml = _libraries['cufft'].dreml
+dreml.restype = c_longdouble
+# dreml(__x, __y)
+dreml.argtypes = [c_longdouble, c_longdouble]
+dreml.__doc__ = \
+"""long double dreml(long double __x, long double __y)
+/usr/include/bits/mathcalls.h:208"""
+# /usr/include/bits/mathcalls.h 208
 drem = _libraries['cufft'].drem
 drem.restype = c_double
 # drem(__x, __y)
@@ -1371,21 +1379,13 @@ dremf.argtypes = [c_float, c_float]
 dremf.__doc__ = \
 """float dremf(float __x, float __y)
 /usr/include/bits/mathcalls.h:208"""
-# /usr/include/bits/mathcalls.h 208
-dreml = _libraries['cufft'].dreml
-dreml.restype = c_longdouble
-# dreml(__x, __y)
-dreml.argtypes = [c_longdouble, c_longdouble]
-dreml.__doc__ = \
-"""long double dreml(long double __x, long double __y)
-/usr/include/bits/mathcalls.h:208"""
 # /usr/include/bits/mathcalls.h 212
-significandl = _libraries['cufft'].significandl
-significandl.restype = c_longdouble
-# significandl(__x)
-significandl.argtypes = [c_longdouble]
-significandl.__doc__ = \
-"""long double significandl(long double __x)
+significandf = _libraries['cufft'].significandf
+significandf.restype = c_float
+# significandf(__x)
+significandf.argtypes = [c_float]
+significandf.__doc__ = \
+"""float significandf(float __x)
 /usr/include/bits/mathcalls.h:212"""
 # /usr/include/bits/mathcalls.h 212
 significand = _libraries['cufft'].significand
@@ -1396,20 +1396,20 @@ significand.__doc__ = \
 """double significand(double __x)
 /usr/include/bits/mathcalls.h:212"""
 # /usr/include/bits/mathcalls.h 212
-significandf = _libraries['cufft'].significandf
-significandf.restype = c_float
-# significandf(__x)
-significandf.argtypes = [c_float]
-significandf.__doc__ = \
-"""float significandf(float __x)
+significandl = _libraries['cufft'].significandl
+significandl.restype = c_longdouble
+# significandl(__x)
+significandl.argtypes = [c_longdouble]
+significandl.__doc__ = \
+"""long double significandl(long double __x)
 /usr/include/bits/mathcalls.h:212"""
 # /usr/include/bits/mathcalls.h 218
-copysignf = _libraries['cufft'].copysignf
-copysignf.restype = c_float
-# copysignf(__x, __y)
-copysignf.argtypes = [c_float, c_float]
-copysignf.__doc__ = \
-"""float copysignf(float __x, float __y)
+copysign = _libraries['cufft'].copysign
+copysign.restype = c_double
+# copysign(__x, __y)
+copysign.argtypes = [c_double, c_double]
+copysign.__doc__ = \
+"""double copysign(double __x, double __y)
 /usr/include/bits/mathcalls.h:218"""
 # /usr/include/bits/mathcalls.h 218
 copysignl = _libraries['cufft'].copysignl
@@ -1420,21 +1420,13 @@ copysignl.__doc__ = \
 """long double copysignl(long double __x, long double __y)
 /usr/include/bits/mathcalls.h:218"""
 # /usr/include/bits/mathcalls.h 218
-copysign = _libraries['cufft'].copysign
-copysign.restype = c_double
-# copysign(__x, __y)
-copysign.argtypes = [c_double, c_double]
-copysign.__doc__ = \
-"""double copysign(double __x, double __y)
+copysignf = _libraries['cufft'].copysignf
+copysignf.restype = c_float
+# copysignf(__x, __y)
+copysignf.argtypes = [c_float, c_float]
+copysignf.__doc__ = \
+"""float copysignf(float __x, float __y)
 /usr/include/bits/mathcalls.h:218"""
-# /usr/include/bits/mathcalls.h 225
-nan = _libraries['cufft'].nan
-nan.restype = c_double
-# nan(__tagb)
-nan.argtypes = [STRING]
-nan.__doc__ = \
-"""double nan(unknown * __tagb)
-/usr/include/bits/mathcalls.h:225"""
 # /usr/include/bits/mathcalls.h 225
 nanl = _libraries['cufft'].nanl
 nanl.restype = c_longdouble
@@ -1444,6 +1436,14 @@ nanl.__doc__ = \
 """long double nanl(unknown * __tagb)
 /usr/include/bits/mathcalls.h:225"""
 # /usr/include/bits/mathcalls.h 225
+nan = _libraries['cufft'].nan
+nan.restype = c_double
+# nan(__tagb)
+nan.argtypes = [STRING]
+nan.__doc__ = \
+"""double nan(unknown * __tagb)
+/usr/include/bits/mathcalls.h:225"""
+# /usr/include/bits/mathcalls.h 225
 nanf = _libraries['cufft'].nanf
 nanf.restype = c_float
 # nanf(__tagb)
@@ -1451,6 +1451,14 @@ nanf.argtypes = [STRING]
 nanf.__doc__ = \
 """float nanf(unknown * __tagb)
 /usr/include/bits/mathcalls.h:225"""
+# /usr/include/bits/mathcalls.h 231
+__isnan = _libraries['cufft'].__isnan
+__isnan.restype = c_int
+# __isnan(__value)
+__isnan.argtypes = [c_double]
+__isnan.__doc__ = \
+"""int __isnan(double __value)
+/usr/include/bits/mathcalls.h:231"""
 # /usr/include/bits/mathcalls.h 231
 __isnanl = _libraries['cufft'].__isnanl
 __isnanl.restype = c_int
@@ -1467,21 +1475,13 @@ __isnanf.argtypes = [c_float]
 __isnanf.__doc__ = \
 """int __isnanf(float __value)
 /usr/include/bits/mathcalls.h:231"""
-# /usr/include/bits/mathcalls.h 231
-__isnan = _libraries['cufft'].__isnan
-__isnan.restype = c_int
-# __isnan(__value)
-__isnan.argtypes = [c_double]
-__isnan.__doc__ = \
-"""int __isnan(double __value)
-/usr/include/bits/mathcalls.h:231"""
 # /usr/include/bits/mathcalls.h 235
-isnanf = _libraries['cufft'].isnanf
-isnanf.restype = c_int
-# isnanf(__value)
-isnanf.argtypes = [c_float]
-isnanf.__doc__ = \
-"""int isnanf(float __value)
+isnan = _libraries['cufft'].isnan
+isnan.restype = c_int
+# isnan(__value)
+isnan.argtypes = [c_double]
+isnan.__doc__ = \
+"""int isnan(double __value)
 /usr/include/bits/mathcalls.h:235"""
 # /usr/include/bits/mathcalls.h 235
 isnanl = _libraries['cufft'].isnanl
@@ -1492,12 +1492,12 @@ isnanl.__doc__ = \
 """int isnanl(long double __value)
 /usr/include/bits/mathcalls.h:235"""
 # /usr/include/bits/mathcalls.h 235
-isnan = _libraries['cufft'].isnan
-isnan.restype = c_int
-# isnan(__value)
-isnan.argtypes = [c_double]
-isnan.__doc__ = \
-"""int isnan(double __value)
+isnanf = _libraries['cufft'].isnanf
+isnanf.restype = c_int
+# isnanf(__value)
+isnanf.argtypes = [c_float]
+isnanf.__doc__ = \
+"""int isnanf(float __value)
 /usr/include/bits/mathcalls.h:235"""
 # /usr/include/bits/mathcalls.h 238
 j0f = _libraries['cufft'].j0f
@@ -1524,12 +1524,12 @@ j0.__doc__ = \
 """double j0(double p1)
 /usr/include/bits/mathcalls.h:238"""
 # /usr/include/bits/mathcalls.h 239
-j1f = _libraries['cufft'].j1f
-j1f.restype = c_float
-# j1f(p1)
-j1f.argtypes = [c_float]
-j1f.__doc__ = \
-"""float j1f(float p1)
+j1l = _libraries['cufft'].j1l
+j1l.restype = c_longdouble
+# j1l(p1)
+j1l.argtypes = [c_longdouble]
+j1l.__doc__ = \
+"""long double j1l(long double p1)
 /usr/include/bits/mathcalls.h:239"""
 # /usr/include/bits/mathcalls.h 239
 j1 = _libraries['cufft'].j1
@@ -1540,20 +1540,20 @@ j1.__doc__ = \
 """double j1(double p1)
 /usr/include/bits/mathcalls.h:239"""
 # /usr/include/bits/mathcalls.h 239
-j1l = _libraries['cufft'].j1l
-j1l.restype = c_longdouble
-# j1l(p1)
-j1l.argtypes = [c_longdouble]
-j1l.__doc__ = \
-"""long double j1l(long double p1)
+j1f = _libraries['cufft'].j1f
+j1f.restype = c_float
+# j1f(p1)
+j1f.argtypes = [c_float]
+j1f.__doc__ = \
+"""float j1f(float p1)
 /usr/include/bits/mathcalls.h:239"""
 # /usr/include/bits/mathcalls.h 240
-jn = _libraries['cufft'].jn
-jn.restype = c_double
-# jn(p1, p2)
-jn.argtypes = [c_int, c_double]
-jn.__doc__ = \
-"""double jn(int p1, double p2)
+jnf = _libraries['cufft'].jnf
+jnf.restype = c_float
+# jnf(p1, p2)
+jnf.argtypes = [c_int, c_float]
+jnf.__doc__ = \
+"""float jnf(int p1, float p2)
 /usr/include/bits/mathcalls.h:240"""
 # /usr/include/bits/mathcalls.h 240
 jnl = _libraries['cufft'].jnl
@@ -1564,13 +1564,21 @@ jnl.__doc__ = \
 """long double jnl(int p1, long double p2)
 /usr/include/bits/mathcalls.h:240"""
 # /usr/include/bits/mathcalls.h 240
-jnf = _libraries['cufft'].jnf
-jnf.restype = c_float
-# jnf(p1, p2)
-jnf.argtypes = [c_int, c_float]
-jnf.__doc__ = \
-"""float jnf(int p1, float p2)
+jn = _libraries['cufft'].jn
+jn.restype = c_double
+# jn(p1, p2)
+jn.argtypes = [c_int, c_double]
+jn.__doc__ = \
+"""double jn(int p1, double p2)
 /usr/include/bits/mathcalls.h:240"""
+# /usr/include/bits/mathcalls.h 241
+y0 = _libraries['cufft'].y0
+y0.restype = c_double
+# y0(p1)
+y0.argtypes = [c_double]
+y0.__doc__ = \
+"""double y0(double p1)
+/usr/include/bits/mathcalls.h:241"""
 # /usr/include/bits/mathcalls.h 241
 y0l = _libraries['cufft'].y0l
 y0l.restype = c_longdouble
@@ -1587,22 +1595,6 @@ y0f.argtypes = [c_float]
 y0f.__doc__ = \
 """float y0f(float p1)
 /usr/include/bits/mathcalls.h:241"""
-# /usr/include/bits/mathcalls.h 241
-y0 = _libraries['cufft'].y0
-y0.restype = c_double
-# y0(p1)
-y0.argtypes = [c_double]
-y0.__doc__ = \
-"""double y0(double p1)
-/usr/include/bits/mathcalls.h:241"""
-# /usr/include/bits/mathcalls.h 242
-y1 = _libraries['cufft'].y1
-y1.restype = c_double
-# y1(p1)
-y1.argtypes = [c_double]
-y1.__doc__ = \
-"""double y1(double p1)
-/usr/include/bits/mathcalls.h:242"""
 # /usr/include/bits/mathcalls.h 242
 y1l = _libraries['cufft'].y1l
 y1l.restype = c_longdouble
@@ -1610,6 +1602,14 @@ y1l.restype = c_longdouble
 y1l.argtypes = [c_longdouble]
 y1l.__doc__ = \
 """long double y1l(long double p1)
+/usr/include/bits/mathcalls.h:242"""
+# /usr/include/bits/mathcalls.h 242
+y1 = _libraries['cufft'].y1
+y1.restype = c_double
+# y1(p1)
+y1.argtypes = [c_double]
+y1.__doc__ = \
+"""double y1(double p1)
 /usr/include/bits/mathcalls.h:242"""
 # /usr/include/bits/mathcalls.h 242
 y1f = _libraries['cufft'].y1f
@@ -1644,6 +1644,14 @@ yn.__doc__ = \
 """double yn(int p1, double p2)
 /usr/include/bits/mathcalls.h:243"""
 # /usr/include/bits/mathcalls.h 250
+erff = _libraries['cufft'].erff
+erff.restype = c_float
+# erff(p1)
+erff.argtypes = [c_float]
+erff.__doc__ = \
+"""float erff(float p1)
+/usr/include/bits/mathcalls.h:250"""
+# /usr/include/bits/mathcalls.h 250
 erf = _libraries['cufft'].erf
 erf.restype = c_double
 # erf(p1)
@@ -1659,22 +1667,6 @@ erfl.argtypes = [c_longdouble]
 erfl.__doc__ = \
 """long double erfl(long double p1)
 /usr/include/bits/mathcalls.h:250"""
-# /usr/include/bits/mathcalls.h 250
-erff = _libraries['cufft'].erff
-erff.restype = c_float
-# erff(p1)
-erff.argtypes = [c_float]
-erff.__doc__ = \
-"""float erff(float p1)
-/usr/include/bits/mathcalls.h:250"""
-# /usr/include/bits/mathcalls.h 251
-erfcf = _libraries['cufft'].erfcf
-erfcf.restype = c_float
-# erfcf(p1)
-erfcf.argtypes = [c_float]
-erfcf.__doc__ = \
-"""float erfcf(float p1)
-/usr/include/bits/mathcalls.h:251"""
 # /usr/include/bits/mathcalls.h 251
 erfc = _libraries['cufft'].erfc
 erfc.restype = c_double
@@ -1690,6 +1682,14 @@ erfcl.restype = c_longdouble
 erfcl.argtypes = [c_longdouble]
 erfcl.__doc__ = \
 """long double erfcl(long double p1)
+/usr/include/bits/mathcalls.h:251"""
+# /usr/include/bits/mathcalls.h 251
+erfcf = _libraries['cufft'].erfcf
+erfcf.restype = c_float
+# erfcf(p1)
+erfcf.argtypes = [c_float]
+erfcf.__doc__ = \
+"""float erfcf(float p1)
 /usr/include/bits/mathcalls.h:251"""
 # /usr/include/bits/mathcalls.h 252
 lgammal = _libraries['cufft'].lgammal
@@ -1740,20 +1740,20 @@ tgammaf.__doc__ = \
 """float tgammaf(float p1)
 /usr/include/bits/mathcalls.h:259"""
 # /usr/include/bits/mathcalls.h 265
-gammaf = _libraries['cufft'].gammaf
-gammaf.restype = c_float
-# gammaf(p1)
-gammaf.argtypes = [c_float]
-gammaf.__doc__ = \
-"""float gammaf(float p1)
-/usr/include/bits/mathcalls.h:265"""
-# /usr/include/bits/mathcalls.h 265
 gamma = _libraries['cufft'].gamma
 gamma.restype = c_double
 # gamma(p1)
 gamma.argtypes = [c_double]
 gamma.__doc__ = \
 """double gamma(double p1)
+/usr/include/bits/mathcalls.h:265"""
+# /usr/include/bits/mathcalls.h 265
+gammaf = _libraries['cufft'].gammaf
+gammaf.restype = c_float
+# gammaf(p1)
+gammaf.argtypes = [c_float]
+gammaf.__doc__ = \
+"""float gammaf(float p1)
 /usr/include/bits/mathcalls.h:265"""
 # /usr/include/bits/mathcalls.h 265
 gammal = _libraries['cufft'].gammal
@@ -1763,6 +1763,14 @@ gammal.argtypes = [c_longdouble]
 gammal.__doc__ = \
 """long double gammal(long double p1)
 /usr/include/bits/mathcalls.h:265"""
+# /usr/include/bits/mathcalls.h 272
+lgamma_r = _libraries['cufft'].lgamma_r
+lgamma_r.restype = c_double
+# lgamma_r(p1, __signgamp)
+lgamma_r.argtypes = [c_double, POINTER(c_int)]
+lgamma_r.__doc__ = \
+"""double lgamma_r(double p1, int * __signgamp)
+/usr/include/bits/mathcalls.h:272"""
 # /usr/include/bits/mathcalls.h 272
 lgammal_r = _libraries['cufft'].lgammal_r
 lgammal_r.restype = c_longdouble
@@ -1779,14 +1787,6 @@ lgammaf_r.argtypes = [c_float, POINTER(c_int)]
 lgammaf_r.__doc__ = \
 """float lgammaf_r(float p1, int * __signgamp)
 /usr/include/bits/mathcalls.h:272"""
-# /usr/include/bits/mathcalls.h 272
-lgamma_r = _libraries['cufft'].lgamma_r
-lgamma_r.restype = c_double
-# lgamma_r(p1, __signgamp)
-lgamma_r.argtypes = [c_double, POINTER(c_int)]
-lgamma_r.__doc__ = \
-"""double lgamma_r(double p1, int * __signgamp)
-/usr/include/bits/mathcalls.h:272"""
 # /usr/include/bits/mathcalls.h 280
 rintf = _libraries['cufft'].rintf
 rintf.restype = c_float
@@ -1796,14 +1796,6 @@ rintf.__doc__ = \
 """float rintf(float __x)
 /usr/include/bits/mathcalls.h:280"""
 # /usr/include/bits/mathcalls.h 280
-rintl = _libraries['cufft'].rintl
-rintl.restype = c_longdouble
-# rintl(__x)
-rintl.argtypes = [c_longdouble]
-rintl.__doc__ = \
-"""long double rintl(long double __x)
-/usr/include/bits/mathcalls.h:280"""
-# /usr/include/bits/mathcalls.h 280
 rint = _libraries['cufft'].rint
 rint.restype = c_double
 # rint(__x)
@@ -1811,14 +1803,14 @@ rint.argtypes = [c_double]
 rint.__doc__ = \
 """double rint(double __x)
 /usr/include/bits/mathcalls.h:280"""
-# /usr/include/bits/mathcalls.h 283
-nextafterf = _libraries['cufft'].nextafterf
-nextafterf.restype = c_float
-# nextafterf(__x, __y)
-nextafterf.argtypes = [c_float, c_float]
-nextafterf.__doc__ = \
-"""float nextafterf(float __x, float __y)
-/usr/include/bits/mathcalls.h:283"""
+# /usr/include/bits/mathcalls.h 280
+rintl = _libraries['cufft'].rintl
+rintl.restype = c_longdouble
+# rintl(__x)
+rintl.argtypes = [c_longdouble]
+rintl.__doc__ = \
+"""long double rintl(long double __x)
+/usr/include/bits/mathcalls.h:280"""
 # /usr/include/bits/mathcalls.h 283
 nextafter = _libraries['cufft'].nextafter
 nextafter.restype = c_double
@@ -1826,6 +1818,14 @@ nextafter.restype = c_double
 nextafter.argtypes = [c_double, c_double]
 nextafter.__doc__ = \
 """double nextafter(double __x, double __y)
+/usr/include/bits/mathcalls.h:283"""
+# /usr/include/bits/mathcalls.h 283
+nextafterf = _libraries['cufft'].nextafterf
+nextafterf.restype = c_float
+# nextafterf(__x, __y)
+nextafterf.argtypes = [c_float, c_float]
+nextafterf.__doc__ = \
+"""float nextafterf(float __x, float __y)
 /usr/include/bits/mathcalls.h:283"""
 # /usr/include/bits/mathcalls.h 283
 nextafterl = _libraries['cufft'].nextafterl
@@ -1884,12 +1884,12 @@ remainderf.__doc__ = \
 """float remainderf(float __x, float __y)
 /usr/include/bits/mathcalls.h:289"""
 # /usr/include/bits/mathcalls.h 293
-scalbn = _libraries['cufft'].scalbn
-scalbn.restype = c_double
-# scalbn(__x, __n)
-scalbn.argtypes = [c_double, c_int]
-scalbn.__doc__ = \
-"""double scalbn(double __x, int __n)
+scalbnl = _libraries['cufft'].scalbnl
+scalbnl.restype = c_longdouble
+# scalbnl(__x, __n)
+scalbnl.argtypes = [c_longdouble, c_int]
+scalbnl.__doc__ = \
+"""long double scalbnl(long double __x, int __n)
 /usr/include/bits/mathcalls.h:293"""
 # /usr/include/bits/mathcalls.h 293
 scalbnf = _libraries['cufft'].scalbnf
@@ -1900,13 +1900,21 @@ scalbnf.__doc__ = \
 """float scalbnf(float __x, int __n)
 /usr/include/bits/mathcalls.h:293"""
 # /usr/include/bits/mathcalls.h 293
-scalbnl = _libraries['cufft'].scalbnl
-scalbnl.restype = c_longdouble
-# scalbnl(__x, __n)
-scalbnl.argtypes = [c_longdouble, c_int]
-scalbnl.__doc__ = \
-"""long double scalbnl(long double __x, int __n)
+scalbn = _libraries['cufft'].scalbn
+scalbn.restype = c_double
+# scalbn(__x, __n)
+scalbn.argtypes = [c_double, c_int]
+scalbn.__doc__ = \
+"""double scalbn(double __x, int __n)
 /usr/include/bits/mathcalls.h:293"""
+# /usr/include/bits/mathcalls.h 297
+ilogbf = _libraries['cufft'].ilogbf
+ilogbf.restype = c_int
+# ilogbf(__x)
+ilogbf.argtypes = [c_float]
+ilogbf.__doc__ = \
+"""int ilogbf(float __x)
+/usr/include/bits/mathcalls.h:297"""
 # /usr/include/bits/mathcalls.h 297
 ilogbl = _libraries['cufft'].ilogbl
 ilogbl.restype = c_int
@@ -1923,14 +1931,6 @@ ilogb.argtypes = [c_double]
 ilogb.__doc__ = \
 """int ilogb(double __x)
 /usr/include/bits/mathcalls.h:297"""
-# /usr/include/bits/mathcalls.h 297
-ilogbf = _libraries['cufft'].ilogbf
-ilogbf.restype = c_int
-# ilogbf(__x)
-ilogbf.argtypes = [c_float]
-ilogbf.__doc__ = \
-"""int ilogbf(float __x)
-/usr/include/bits/mathcalls.h:297"""
 # /usr/include/bits/mathcalls.h 302
 scalblnl = _libraries['cufft'].scalblnl
 scalblnl.restype = c_longdouble
@@ -1940,14 +1940,6 @@ scalblnl.__doc__ = \
 """long double scalblnl(long double __x, long int __n)
 /usr/include/bits/mathcalls.h:302"""
 # /usr/include/bits/mathcalls.h 302
-scalblnf = _libraries['cufft'].scalblnf
-scalblnf.restype = c_float
-# scalblnf(__x, __n)
-scalblnf.argtypes = [c_float, c_long]
-scalblnf.__doc__ = \
-"""float scalblnf(float __x, long int __n)
-/usr/include/bits/mathcalls.h:302"""
-# /usr/include/bits/mathcalls.h 302
 scalbln = _libraries['cufft'].scalbln
 scalbln.restype = c_double
 # scalbln(__x, __n)
@@ -1955,14 +1947,14 @@ scalbln.argtypes = [c_double, c_long]
 scalbln.__doc__ = \
 """double scalbln(double __x, long int __n)
 /usr/include/bits/mathcalls.h:302"""
-# /usr/include/bits/mathcalls.h 306
-nearbyintl = _libraries['cufft'].nearbyintl
-nearbyintl.restype = c_longdouble
-# nearbyintl(__x)
-nearbyintl.argtypes = [c_longdouble]
-nearbyintl.__doc__ = \
-"""long double nearbyintl(long double __x)
-/usr/include/bits/mathcalls.h:306"""
+# /usr/include/bits/mathcalls.h 302
+scalblnf = _libraries['cufft'].scalblnf
+scalblnf.restype = c_float
+# scalblnf(__x, __n)
+scalblnf.argtypes = [c_float, c_long]
+scalblnf.__doc__ = \
+"""float scalblnf(float __x, long int __n)
+/usr/include/bits/mathcalls.h:302"""
 # /usr/include/bits/mathcalls.h 306
 nearbyintf = _libraries['cufft'].nearbyintf
 nearbyintf.restype = c_float
@@ -1970,6 +1962,14 @@ nearbyintf.restype = c_float
 nearbyintf.argtypes = [c_float]
 nearbyintf.__doc__ = \
 """float nearbyintf(float __x)
+/usr/include/bits/mathcalls.h:306"""
+# /usr/include/bits/mathcalls.h 306
+nearbyintl = _libraries['cufft'].nearbyintl
+nearbyintl.restype = c_longdouble
+# nearbyintl(__x)
+nearbyintl.argtypes = [c_longdouble]
+nearbyintl.__doc__ = \
+"""long double nearbyintl(long double __x)
 /usr/include/bits/mathcalls.h:306"""
 # /usr/include/bits/mathcalls.h 306
 nearbyint = _libraries['cufft'].nearbyint
@@ -1980,12 +1980,12 @@ nearbyint.__doc__ = \
 """double nearbyint(double __x)
 /usr/include/bits/mathcalls.h:306"""
 # /usr/include/bits/mathcalls.h 310
-roundl = _libraries['cufft'].roundl
-roundl.restype = c_longdouble
-# roundl(__x)
-roundl.argtypes = [c_longdouble]
-roundl.__doc__ = \
-"""long double roundl(long double __x)
+roundf = _libraries['cufft'].roundf
+roundf.restype = c_float
+# roundf(__x)
+roundf.argtypes = [c_float]
+roundf.__doc__ = \
+"""float roundf(float __x)
 /usr/include/bits/mathcalls.h:310"""
 # /usr/include/bits/mathcalls.h 310
 round = _libraries['cufft'].round
@@ -1996,13 +1996,21 @@ round.__doc__ = \
 """double round(double __x)
 /usr/include/bits/mathcalls.h:310"""
 # /usr/include/bits/mathcalls.h 310
-roundf = _libraries['cufft'].roundf
-roundf.restype = c_float
-# roundf(__x)
-roundf.argtypes = [c_float]
-roundf.__doc__ = \
-"""float roundf(float __x)
+roundl = _libraries['cufft'].roundl
+roundl.restype = c_longdouble
+# roundl(__x)
+roundl.argtypes = [c_longdouble]
+roundl.__doc__ = \
+"""long double roundl(long double __x)
 /usr/include/bits/mathcalls.h:310"""
+# /usr/include/bits/mathcalls.h 314
+trunc = _libraries['cufft'].trunc
+trunc.restype = c_double
+# trunc(__x)
+trunc.argtypes = [c_double]
+trunc.__doc__ = \
+"""double trunc(double __x)
+/usr/include/bits/mathcalls.h:314"""
 # /usr/include/bits/mathcalls.h 314
 truncl = _libraries['cufft'].truncl
 truncl.restype = c_longdouble
@@ -2018,14 +2026,6 @@ truncf.restype = c_float
 truncf.argtypes = [c_float]
 truncf.__doc__ = \
 """float truncf(float __x)
-/usr/include/bits/mathcalls.h:314"""
-# /usr/include/bits/mathcalls.h 314
-trunc = _libraries['cufft'].trunc
-trunc.restype = c_double
-# trunc(__x)
-trunc.argtypes = [c_double]
-trunc.__doc__ = \
-"""double trunc(double __x)
 /usr/include/bits/mathcalls.h:314"""
 # /usr/include/bits/mathcalls.h 319
 remquo = _libraries['cufft'].remquo
@@ -2052,6 +2052,14 @@ remquof.__doc__ = \
 """float remquof(float __x, float __y, int * __quo)
 /usr/include/bits/mathcalls.h:319"""
 # /usr/include/bits/mathcalls.h 326
+lrintf = _libraries['cufft'].lrintf
+lrintf.restype = c_long
+# lrintf(__x)
+lrintf.argtypes = [c_float]
+lrintf.__doc__ = \
+"""long int lrintf(float __x)
+/usr/include/bits/mathcalls.h:326"""
+# /usr/include/bits/mathcalls.h 326
 lrintl = _libraries['cufft'].lrintl
 lrintl.restype = c_long
 # lrintl(__x)
@@ -2067,14 +2075,14 @@ lrint.argtypes = [c_double]
 lrint.__doc__ = \
 """long int lrint(double __x)
 /usr/include/bits/mathcalls.h:326"""
-# /usr/include/bits/mathcalls.h 326
-lrintf = _libraries['cufft'].lrintf
-lrintf.restype = c_long
-# lrintf(__x)
-lrintf.argtypes = [c_float]
-lrintf.__doc__ = \
-"""long int lrintf(float __x)
-/usr/include/bits/mathcalls.h:326"""
+# /usr/include/bits/mathcalls.h 327
+llrintf = _libraries['cufft'].llrintf
+llrintf.restype = c_longlong
+# llrintf(__x)
+llrintf.argtypes = [c_float]
+llrintf.__doc__ = \
+"""long long int llrintf(float __x)
+/usr/include/bits/mathcalls.h:327"""
 # /usr/include/bits/mathcalls.h 327
 llrint = _libraries['cufft'].llrint
 llrint.restype = c_longlong
@@ -2091,21 +2099,13 @@ llrintl.argtypes = [c_longdouble]
 llrintl.__doc__ = \
 """long long int llrintl(long double __x)
 /usr/include/bits/mathcalls.h:327"""
-# /usr/include/bits/mathcalls.h 327
-llrintf = _libraries['cufft'].llrintf
-llrintf.restype = c_longlong
-# llrintf(__x)
-llrintf.argtypes = [c_float]
-llrintf.__doc__ = \
-"""long long int llrintf(float __x)
-/usr/include/bits/mathcalls.h:327"""
 # /usr/include/bits/mathcalls.h 331
-lroundf = _libraries['cufft'].lroundf
-lroundf.restype = c_long
-# lroundf(__x)
-lroundf.argtypes = [c_float]
-lroundf.__doc__ = \
-"""long int lroundf(float __x)
+lround = _libraries['cufft'].lround
+lround.restype = c_long
+# lround(__x)
+lround.argtypes = [c_double]
+lround.__doc__ = \
+"""long int lround(double __x)
 /usr/include/bits/mathcalls.h:331"""
 # /usr/include/bits/mathcalls.h 331
 lroundl = _libraries['cufft'].lroundl
@@ -2116,12 +2116,12 @@ lroundl.__doc__ = \
 """long int lroundl(long double __x)
 /usr/include/bits/mathcalls.h:331"""
 # /usr/include/bits/mathcalls.h 331
-lround = _libraries['cufft'].lround
-lround.restype = c_long
-# lround(__x)
-lround.argtypes = [c_double]
-lround.__doc__ = \
-"""long int lround(double __x)
+lroundf = _libraries['cufft'].lroundf
+lroundf.restype = c_long
+# lroundf(__x)
+lroundf.argtypes = [c_float]
+lroundf.__doc__ = \
+"""long int lroundf(float __x)
 /usr/include/bits/mathcalls.h:331"""
 # /usr/include/bits/mathcalls.h 332
 llroundf = _libraries['cufft'].llroundf
@@ -2156,14 +2156,6 @@ fdim.__doc__ = \
 """double fdim(double __x, double __y)
 /usr/include/bits/mathcalls.h:336"""
 # /usr/include/bits/mathcalls.h 336
-fdiml = _libraries['cufft'].fdiml
-fdiml.restype = c_longdouble
-# fdiml(__x, __y)
-fdiml.argtypes = [c_longdouble, c_longdouble]
-fdiml.__doc__ = \
-"""long double fdiml(long double __x, long double __y)
-/usr/include/bits/mathcalls.h:336"""
-# /usr/include/bits/mathcalls.h 336
 fdimf = _libraries['cufft'].fdimf
 fdimf.restype = c_float
 # fdimf(__x, __y)
@@ -2171,14 +2163,14 @@ fdimf.argtypes = [c_float, c_float]
 fdimf.__doc__ = \
 """float fdimf(float __x, float __y)
 /usr/include/bits/mathcalls.h:336"""
-# /usr/include/bits/mathcalls.h 339
-fmaxl = _libraries['cufft'].fmaxl
-fmaxl.restype = c_longdouble
-# fmaxl(__x, __y)
-fmaxl.argtypes = [c_longdouble, c_longdouble]
-fmaxl.__doc__ = \
-"""long double fmaxl(long double __x, long double __y)
-/usr/include/bits/mathcalls.h:339"""
+# /usr/include/bits/mathcalls.h 336
+fdiml = _libraries['cufft'].fdiml
+fdiml.restype = c_longdouble
+# fdiml(__x, __y)
+fdiml.argtypes = [c_longdouble, c_longdouble]
+fdiml.__doc__ = \
+"""long double fdiml(long double __x, long double __y)
+/usr/include/bits/mathcalls.h:336"""
 # /usr/include/bits/mathcalls.h 339
 fmax = _libraries['cufft'].fmax
 fmax.restype = c_double
@@ -2194,6 +2186,14 @@ fmaxf.restype = c_float
 fmaxf.argtypes = [c_float, c_float]
 fmaxf.__doc__ = \
 """float fmaxf(float __x, float __y)
+/usr/include/bits/mathcalls.h:339"""
+# /usr/include/bits/mathcalls.h 339
+fmaxl = _libraries['cufft'].fmaxl
+fmaxl.restype = c_longdouble
+# fmaxl(__x, __y)
+fmaxl.argtypes = [c_longdouble, c_longdouble]
+fmaxl.__doc__ = \
+"""long double fmaxl(long double __x, long double __y)
 /usr/include/bits/mathcalls.h:339"""
 # /usr/include/bits/mathcalls.h 342
 fminf = _libraries['cufft'].fminf
@@ -2228,14 +2228,6 @@ __fpclassify.__doc__ = \
 """int __fpclassify(double __value)
 /usr/include/bits/mathcalls.h:347"""
 # /usr/include/bits/mathcalls.h 347
-__fpclassifyl = _libraries['cufft'].__fpclassifyl
-__fpclassifyl.restype = c_int
-# __fpclassifyl(__value)
-__fpclassifyl.argtypes = [c_longdouble]
-__fpclassifyl.__doc__ = \
-"""int __fpclassifyl(long double __value)
-/usr/include/bits/mathcalls.h:347"""
-# /usr/include/bits/mathcalls.h 347
 __fpclassifyf = _libraries['cufft'].__fpclassifyf
 __fpclassifyf.restype = c_int
 # __fpclassifyf(__value)
@@ -2243,6 +2235,22 @@ __fpclassifyf.argtypes = [c_float]
 __fpclassifyf.__doc__ = \
 """int __fpclassifyf(float __value)
 /usr/include/bits/mathcalls.h:347"""
+# /usr/include/bits/mathcalls.h 347
+__fpclassifyl = _libraries['cufft'].__fpclassifyl
+__fpclassifyl.restype = c_int
+# __fpclassifyl(__value)
+__fpclassifyl.argtypes = [c_longdouble]
+__fpclassifyl.__doc__ = \
+"""int __fpclassifyl(long double __value)
+/usr/include/bits/mathcalls.h:347"""
+# /usr/include/bits/mathcalls.h 351
+__signbitf = _libraries['cufft'].__signbitf
+__signbitf.restype = c_int
+# __signbitf(__value)
+__signbitf.argtypes = [c_float]
+__signbitf.__doc__ = \
+"""int __signbitf(float __value)
+/usr/include/bits/mathcalls.h:351"""
 # /usr/include/bits/mathcalls.h 351
 __signbitl = _libraries['cufft'].__signbitl
 __signbitl.restype = c_int
@@ -2259,21 +2267,13 @@ __signbit.argtypes = [c_double]
 __signbit.__doc__ = \
 """int __signbit(double __value)
 /usr/include/bits/mathcalls.h:351"""
-# /usr/include/bits/mathcalls.h 351
-__signbitf = _libraries['cufft'].__signbitf
-__signbitf.restype = c_int
-# __signbitf(__value)
-__signbitf.argtypes = [c_float]
-__signbitf.__doc__ = \
-"""int __signbitf(float __value)
-/usr/include/bits/mathcalls.h:351"""
 # /usr/include/bits/mathcalls.h 355
-fma = _libraries['cufft'].fma
-fma.restype = c_double
-# fma(__x, __y, __z)
-fma.argtypes = [c_double, c_double, c_double]
-fma.__doc__ = \
-"""double fma(double __x, double __y, double __z)
+fmal = _libraries['cufft'].fmal
+fmal.restype = c_longdouble
+# fmal(__x, __y, __z)
+fmal.argtypes = [c_longdouble, c_longdouble, c_longdouble]
+fmal.__doc__ = \
+"""long double fmal(long double __x, long double __y, long double __z)
 /usr/include/bits/mathcalls.h:355"""
 # /usr/include/bits/mathcalls.h 355
 fmaf = _libraries['cufft'].fmaf
@@ -2284,21 +2284,13 @@ fmaf.__doc__ = \
 """float fmaf(float __x, float __y, float __z)
 /usr/include/bits/mathcalls.h:355"""
 # /usr/include/bits/mathcalls.h 355
-fmal = _libraries['cufft'].fmal
-fmal.restype = c_longdouble
-# fmal(__x, __y, __z)
-fmal.argtypes = [c_longdouble, c_longdouble, c_longdouble]
-fmal.__doc__ = \
-"""long double fmal(long double __x, long double __y, long double __z)
+fma = _libraries['cufft'].fma
+fma.restype = c_double
+# fma(__x, __y, __z)
+fma.argtypes = [c_double, c_double, c_double]
+fma.__doc__ = \
+"""double fma(double __x, double __y, double __z)
 /usr/include/bits/mathcalls.h:355"""
-# /usr/include/bits/mathcalls.h 364
-scalbf = _libraries['cufft'].scalbf
-scalbf.restype = c_float
-# scalbf(__x, __n)
-scalbf.argtypes = [c_float, c_float]
-scalbf.__doc__ = \
-"""float scalbf(float __x, float __n)
-/usr/include/bits/mathcalls.h:364"""
 # /usr/include/bits/mathcalls.h 364
 scalbl = _libraries['cufft'].scalbl
 scalbl.restype = c_longdouble
@@ -2306,6 +2298,14 @@ scalbl.restype = c_longdouble
 scalbl.argtypes = [c_longdouble, c_longdouble]
 scalbl.__doc__ = \
 """long double scalbl(long double __x, long double __n)
+/usr/include/bits/mathcalls.h:364"""
+# /usr/include/bits/mathcalls.h 364
+scalbf = _libraries['cufft'].scalbf
+scalbf.restype = c_float
+# scalbf(__x, __n)
+scalbf.argtypes = [c_float, c_float]
+scalbf.__doc__ = \
+"""float scalbf(float __x, float __n)
 /usr/include/bits/mathcalls.h:364"""
 # /usr/include/bits/mathcalls.h 364
 scalb = _libraries['cufft'].scalb
