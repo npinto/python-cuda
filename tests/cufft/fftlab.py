@@ -5,6 +5,9 @@
 
 import sys, os, random
 
+import logging
+#logging.disable(logging.ERROR)
+
 from qt import *
 from matplotlib.numerix import arange, sin, pi
 QApplication.setColorSpec(QApplication.NormalColor)
@@ -13,11 +16,8 @@ from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 from cuda.sugar.fft import fftconvolve2d, centered, check_results, get_convolution_cpu, get_float2_ptr
-from scipy import *
+from scipy import lena
 from scipy.signal import fftconvolve, convolve2d
-from cuda.sugar.fft import fftconvolve2d, centered
-from scipy import *
-from scipy.signal import fftconvolve
 from pylab import fftshift
 import numpy as np
 
@@ -81,50 +81,27 @@ class FFTLab(QMainWindow):
 
         self.main_widget = QWidget(self, "Main widget")
 
-        #data = ((lena()/255.)[0:8,0:8]).astype("complex64"4
         data = ((lena()/255.)).astype("complex64")
-        kernel = np.ones((7,7)).astype("complex64")
+        kernel = np.ones((4,4)).astype("complex64")
         #data = np.random.uniform(0,1,(8,8)).astype("complex64")
         #kernel = np.random.uniform(0,1,(7,7)).astype("complex64")
+        #power_spec = fftshift(log(abs(signal.fftn(data))))
 
-        s1 = np.array(data.shape)
-        s2 = np.array(kernel.shape)
-
-        dh, dw = data.shape
-        kh, kw = kernel.shape        
-        print kh/2, kw/2
-        gpu_conv = fftconvolve2d(data,kernel).real[0:dh,0:dw][kh/2:-(kh/2), kw/2:-(kw/2)]
-
-        #cpu_conv = convolve2d(data.real, kernel.real, boundary="wrap", mode="valid")
+        gpu_conv = fftconvolve2d(data,kernel)
         cpu_conv = fftconvolve(data.real, kernel.real, mode="valid")
-        cpu_conv_sdk = np.zeros_like(data)
-
-        conv_gold = get_convolution_cpu() 
-        conv_gold(get_float2_ptr(cpu_conv_sdk), get_float2_ptr(data), get_float2_ptr(kernel), data.shape[0], data.shape[1], kernel.shape[0], kernel.shape[1], 1,6)
-
-
-        cpu_conv_sdk = cpu_conv_sdk[kh/2:-(kh/2), kw/2:-(kw/2)]
 
         print "GPU shape = ", gpu_conv.shape
         print "CPU shape = ", cpu_conv.shape
-        print "CPU SDK shape =", cpu_conv_sdk.shape
         
-        check_results(cpu_conv, gpu_conv, cpu_conv.shape[0], cpu_conv.shape[1],0)
-        #check_results(cpu_conv, cpu_conv_sdk, cpu_conv.shape[0], cpu_conv.shape[1],0)
-
-        #check_results(cpu_conv, gpu_conv, cpu_conv.shape[0], cpu_conv.shape[1], 0)
-        #check_results(cpu_conv, cpu_conv_sdk, cpu_conv.shape[0], cpu_conv.shape[1], 0)
+        check_results(cpu_conv, gpu_conv, cpu_conv.shape[0], cpu_conv.shape[1], 0)
 
         data_c = ImageCanvas(data.real, self.main_widget)
-        cpu_conv_sdk_c = ImageCanvas(cpu_conv_sdk.real, self.main_widget)
         gpu_conv_c = ImageCanvas(gpu_conv, self.main_widget)
         cpu_conv_c = ImageCanvas(cpu_conv, self.main_widget)
-        ##power_spec = ImageCanvas(fftshift(log(abs(signal.fftn(lena()/255.)))),self.main_widget)
+        #power_spec = ImageCanvas(power_spec,self.main_widget)
 
         data_label = QLabel("Input Data (lena)", self.main_widget)
         data_label.setAlignment(QLabel.AlignCenter)
-        cpu_conv_sdk_label = QLabel("CPU fftconvolve (CUDA)", self.main_widget)
-        cpu_conv_sdk_label.setAlignment(QLabel.AlignCenter)
         gpu_conv_label = QLabel("GPU fftconvolve (CUDA)", self.main_widget)
         gpu_conv_label.setAlignment(QLabel.AlignCenter)
         cpu_conv_label = QLabel("CPU fftconvolve (NumPy)", self.main_widget)
@@ -132,13 +109,11 @@ class FFTLab(QMainWindow):
 
         g = QGridLayout(self.main_widget)
         g.addWidget(data_label,0,0)
-        g.addWidget(cpu_conv_sdk_label,0,1)
+        g.addWidget(gpu_conv_label,0,1)
         g.addWidget(data_c,1,0)
-        g.addWidget(cpu_conv_sdk_c,1,1)
-        g.addWidget(gpu_conv_label,2,0)
-        g.addWidget(cpu_conv_label,2,1)
-        g.addWidget(gpu_conv_c,3,0)
-        g.addWidget(cpu_conv_c,3,1)
+        g.addWidget(gpu_conv_c,1,1)
+        g.addWidget(cpu_conv_label,2,0)
+        g.addWidget(cpu_conv_c,3,0)
 
         self.main_widget.setFocus()
         self.setCentralWidget(self.main_widget)
