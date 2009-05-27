@@ -82,7 +82,7 @@ class FFTLab(QMainWindow):
         self.main_widget = QWidget(self, "Main widget")
 
         data = ((lena()/255.)).astype("complex64")
-        kernel = np.ones((4,4)).astype("complex64")
+        kernel = np.ones((6,6)).astype("complex64")
         #data = np.random.uniform(0,1,(8,8)).astype("complex64")
         #kernel = np.random.uniform(0,1,(7,7)).astype("complex64")
         #power_spec = fftshift(log(abs(signal.fftn(data))))
@@ -96,12 +96,15 @@ class FFTLab(QMainWindow):
         check_results(cpu_conv, gpu_conv, cpu_conv.shape[0], cpu_conv.shape[1], 0)
 
         data_c = ImageCanvas(data.real, self.main_widget)
+        kernel_c = ImageCanvas(kernel.real, self.main_widget)
         gpu_conv_c = ImageCanvas(gpu_conv, self.main_widget)
         cpu_conv_c = ImageCanvas(cpu_conv, self.main_widget)
         #power_spec = ImageCanvas(power_spec,self.main_widget)
 
         data_label = QLabel("Input Data (lena)", self.main_widget)
         data_label.setAlignment(QLabel.AlignCenter)
+        kernel_label = QLabel("Convolution Kernel", self.main_widget)
+        kernel_label.setAlignment(QLabel.AlignCenter)
         gpu_conv_label = QLabel("GPU fftconvolve (CUDA)", self.main_widget)
         gpu_conv_label.setAlignment(QLabel.AlignCenter)
         cpu_conv_label = QLabel("CPU fftconvolve (NumPy)", self.main_widget)
@@ -109,11 +112,13 @@ class FFTLab(QMainWindow):
 
         g = QGridLayout(self.main_widget)
         g.addWidget(data_label,0,0)
-        g.addWidget(gpu_conv_label,0,1)
+        g.addWidget(kernel_label,0,1)
         g.addWidget(data_c,1,0)
-        g.addWidget(gpu_conv_c,1,1)
-        g.addWidget(cpu_conv_label,2,0)
-        g.addWidget(cpu_conv_c,3,0)
+        g.addWidget(kernel_c,1,1)
+        g.addWidget(gpu_conv_label,2,0)
+        g.addWidget(cpu_conv_label,2,1)
+        g.addWidget(gpu_conv_c,3,0)
+        g.addWidget(cpu_conv_c,3,1)
 
         self.main_widget.setFocus()
         self.setCentralWidget(self.main_widget)
@@ -127,7 +132,8 @@ class FFTLab(QMainWindow):
         QMessageBox.about(self, "About %s" % PROGNAME,
 u"""%(prog)s version %(version)s
 
-This program visualizes 2d ffts and convolutions 
+This application visualizes 2d ffts and convolutions 
+using python-cuda by Justin Riley and Nicolas Pinto @ (MIT)
 """ % {"prog": PROGNAME, "version": PROG_VERSION})
 
 def main():
