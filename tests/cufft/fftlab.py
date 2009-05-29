@@ -9,17 +9,19 @@ import logging
 #logging.disable(logging.ERROR)
 
 from qt import *
-from matplotlib.numerix import arange, sin, pi
 QApplication.setColorSpec(QApplication.NormalColor)
 app = QApplication(sys.argv)
+
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
-from cuda.sugar.fft import fftconvolve2d, centered, check_results, get_convolution_cpu, get_float2_ptr
+import numpy as np
 from scipy import lena
 from scipy.signal import fftconvolve, convolve2d
 from pylab import fftshift
-import numpy as np
+
+from cuda.utils import info
+from cuda.sugar.fft import fftconvolve2d, check_results
 
 # Required for PyQt
 TRUE  = 1
@@ -90,10 +92,10 @@ class FFTLab(QMainWindow):
         gpu_conv = fftconvolve2d(data,kernel)
         cpu_conv = fftconvolve(data.real, kernel.real, mode="valid")
 
-        print "GPU shape = ", gpu_conv.shape
-        print "CPU shape = ", cpu_conv.shape
+        info("GPU shape = (%s, %s)" % gpu_conv.shape)
+        info("CPU shape = (%s, %s)" % cpu_conv.shape)
         
-        check_results(cpu_conv, gpu_conv, cpu_conv.shape[0], cpu_conv.shape[1], 0)
+        check_results(cpu_conv, gpu_conv)
 
         data_c = ImageCanvas(data.real, self.main_widget)
         kernel_c = ImageCanvas(kernel.real, self.main_widget)

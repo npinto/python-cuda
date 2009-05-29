@@ -110,18 +110,8 @@ float2._fields_ = [
     ('y', ctypes.c_float),
 ]
 
-def centered(arr, newsize):
-    # Return the center newsize portion of the array.
-    newsize = np.asarray(newsize)
-    currsize = np.array(arr.shape)
-    startind = (currsize - newsize) / 2
-    endind = startind + newsize
-    myslice = [slice(startind[k], endind[k]) for k in range(len(endind))]
-    return arr[tuple(myslice)]
-
 def _get_float2_ptr(numpy_array):
     return numpy_array.ctypes.data_as(ctypes.POINTER(float2))
-
 
 def _load_dll():
     file = open('conv_gold.cpp','w')
@@ -172,7 +162,6 @@ def run():
     s1 = np.array(data.shape)
     s2 = np.array(kernel.shape)
 
-    #print centered(result, np.abs(s2-s1)+1)
     print result
     print 
     print fftconvolve(data.real, kernel.real, mode='full').astype('complex64')

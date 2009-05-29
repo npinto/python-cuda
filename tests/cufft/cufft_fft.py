@@ -20,7 +20,7 @@ def main():
 
     print ">>> Signal Size = %s" % size
 
-    numpy_array = randn(size)
+    numpy_array = randn(size).astype('complex64')
     numpy_array -= numpy_array.mean()
     numpy_array /= numpy_array.std()
 
