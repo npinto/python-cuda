@@ -3,10 +3,11 @@
 # fftlab.py --- Demonstrates 2d ffts and convolutions
 #
 
-import sys, os, random
+import os,sys
 
 import logging
-#logging.disable(logging.ERROR)
+logger = logging.getLogger(os.path.basename(__file__))
+info = logger.info
 
 from qt import *
 QApplication.setColorSpec(QApplication.NormalColor)
@@ -20,7 +21,6 @@ from scipy import lena
 from scipy.signal import fftconvolve, convolve2d
 from pylab import fftshift
 
-from cuda.utils import info
 from cuda.sugar.fft import fftconvolve2d, check_results
 
 # Required for PyQt
