@@ -11,7 +11,11 @@ def get_lib(name, cdll_opts = None):
     elif OSNAME == "Darwin": 
         libname = "lib" + name + ".dylib"
     elif OSNAME == "Windows": 
-        libname = None
+        import _winreg as wreg
+        reg = wreg.ConnectRegistry(None, wreg.HKEY_LOCAL_MACHINE)
+        key = wreg.OpenKey(reg, r"SOFTWARE\NVIDIA Corporation\Installed Products\NVIDIA CUDA")
+        cuda_bin = os.path.join(wreg.QueryValueEx(key, "InstallDir")[0],"bin")
+        libname = os.path.join(cuda_bin, "%.dll" % name)
     if cdll_opts:
         lib = CDLL(libname, cdll_opts)
     else: 
