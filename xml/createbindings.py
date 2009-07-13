@@ -2,6 +2,7 @@
 
 import re
 import os, sys
+from elementtree import ElementTree
 from optparse import OptionParser
 from subprocess import Popen, PIPE
 
@@ -18,6 +19,38 @@ def fix_cdll_imports(bindings, lib):
     new_bindings.insert(4,'c_longdouble = c_double\n')
     return new_bindings
 
+def clean_only_headers(xml_filename, only_headers):
+    """ 
+    removes definitions that are not defined in one of only_headers files
+
+    fd - file descriptor for xml file
+    only_headers - list of header files to check definitions against
+
+    """
+    gcc_xml = ElementTree.parse(xml_filename)
+    root = gcc_xml.getroot()
+    fields = root.getchildren()[:]
+    files = root.findall('File')
+    oheaders = {}
+
+    for file in files:
+        filename = file.get('name')
+        if only_headers.has_key(filename):
+            oheaders[file.get('id')] = file.get('name')
+        else:
+            for ohead in only_headers.keys():
+                if re.compile(ohead,re.IGNORECASE).search(filename):
+                    oheaders[file.get('id')] = file.get('name')
+
+    print oheaders
+        
+    for field in fields:
+        file = field.get('file')
+        if file is not None:
+            if not oheaders.has_key(file):
+                root.remove(field)
+    gcc_xml.write(xml_filename)
+
 def main(args=None):
     """ Autogenerates ctype'd python version of a shared library. 
         Takes an array of arguments in the same format as sys.argv
@@ -25,6 +58,7 @@ def main(args=None):
         -H header_file
         -l library_file
         -I include_dir
+        -o only_headers
         -x xml_output_file
         -p python_output-file
     """  
@@ -49,6 +83,12 @@ def main(args=None):
                       action="append",
                       dest="INCLUDE_DIRS",
                       help="[REQUIRED] paths to find dependency headers (e.g /usr/local/cuda/include/)",
+                      default = [])
+
+    parser.add_option("-o","--only-headers",
+                      action="append",
+                      dest="ONLY_HEADERS",
+                      help="[OPTIONAL] include only definitions found in specified headers (e.g /usr/include/example.h)",
                       default = [])
 
     parser.add_option("-x","--xml-output-file",
@@ -86,8 +126,15 @@ def main(args=None):
     # XXX: hack to remove Converter tags from the xml file
     lines = [line for line in open(xml_file).readlines() 
              if not line.startswith('  <Converter id="_')]
-    open(xml_file, 'w+').writelines(lines)
-    
+
+    fd = open(xml_file, 'w+')
+    fd.writelines(lines)
+    fd.close()
+
+    if len(options.ONLY_HEADERS) != 0:
+        only_headers = {}.fromkeys(options.ONLY_HEADERS, 1)
+        clean_only_headers(xml_file, only_headers)
+
     # -- xml2py
     xml2pycmd_l = ["python -m ctypeslib.xml2py"]
     xml2pycmd_l += [xml_file]

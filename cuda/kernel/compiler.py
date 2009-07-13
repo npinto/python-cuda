@@ -1,7 +1,7 @@
 from ctypes import cdll
 import commands
 from subprocess import Popen, PIPE
-from pytools import memoize
+from cuda.utils import memoize
 
 class CompileError(Exception):
     pass
