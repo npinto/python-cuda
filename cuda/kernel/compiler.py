@@ -122,10 +122,10 @@ def compile(source, nvcc="nvcc", options=[], keep=False,
     if cache_dir is None:
         from os.path import expanduser, join, exists
         import os
-		try:
-			getattr( os , 'getuid' )	
-		except:
-			os.getuid = os.getenv('USERNAME')
+        try:
+            getattr( os , 'getuid' )	
+        except:
+            os.getuid = os.getenv('USERNAME')
 
         from tempfile import gettempdir
         cache_dir = join(gettempdir(), 
