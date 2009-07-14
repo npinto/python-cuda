@@ -30,8 +30,8 @@ setup(
     package_data = {'cuda.sugar.fft': ['*.cu'] },
 
     install_requires=[
-        "numpy==1.3.0",
-        "scipy==0.7.0",
+        "numpy>=1.3.0",
+        "scipy>=0.7.0",
     ],
 
 
