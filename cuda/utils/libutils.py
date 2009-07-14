@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from ctypes import CDLL
+import os
 import platform
 
 OSNAME = platform.system()

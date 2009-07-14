@@ -21,6 +21,8 @@ setup(
                 'cuda.cublas', 
                 'cuda.cufft', 
                 'cuda.sugar',
+                'cuda.sugar.fft',
+                'cuda.sugar.blas',
                 'cuda.utils'],
 
     package_dir = {'cuda':'cuda'},
