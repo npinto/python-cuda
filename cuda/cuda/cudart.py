@@ -9,63 +9,63 @@ _libraries['cudart'] = get_lib('cudart')
 STRING = c_char_p
 
 
-cudaErrorInvalidTexture = 18
-cudaErrorMixedDeviceExecution = 28
-cudaErrorMemoryAllocation = 2
-cudaAddressModeWrap = 0
-cudaErrorInvalidTextureBinding = 19
-cudaErrorInitializationError = 3
-cudaErrorSynchronizationError = 25
-cudaAddressModeClamp = 1
-cudaMemcpyDeviceToHost = 2
-cudaErrorInvalidChannelDescriptor = 20
-cudaErrorLaunchFailure = 4
-cudaFilterModePoint = 0
-cudaErrorInvalidNormSetting = 27
-cudaErrorInvalidSymbol = 13
-cudaErrorInvalidMemcpyDirection = 21
-cudaErrorMemoryValueTooLarge = 32
-cudaErrorAddressOfConstant = 22
-cudaErrorLaunchTimeout = 6
-cudaErrorCudartUnloading = 29
-cudaErrorTextureFetchFailed = 23
-cudaErrorLaunchOutOfResources = 7
-cudaErrorUnknown = 30
-cudaErrorTextureNotBound = 24
-cudaRoundNearest = 0
-cudaErrorInvalidDeviceFunction = 8
-cudaErrorInvalidFilterSetting = 26
-cudaMemcpyDeviceToDevice = 3
-cudaErrorNotYetImplemented = 31
-cudaRoundZero = 1
-cudaErrorInvalidConfiguration = 9
-cudaRoundPosInf = 2
-cudaErrorInvalidDevice = 10
-cudaErrorInvalidResourceHandle = 33
-cudaRoundMinInf = 3
-cudaErrorInvalidValue = 11
-cudaErrorPriorLaunchFailure = 5
-cudaErrorNotReady = 34
-cudaReadModeElementType = 0
-cudaErrorInvalidPitchValue = 12
-cudaReadModeNormalizedFloat = 1
-cudaErrorSetOnActiveProcess = 36
-cudaErrorMapBufferObjectFailed = 14
-cudaChannelFormatKindSigned = 0
-cudaErrorStartupFailure = 127
-cudaMemcpyHostToDevice = 1
-cudaErrorUnmapBufferObjectFailed = 15
-cudaChannelFormatKindUnsigned = 1
-cudaErrorApiFailureBase = 10000
-cudaErrorInsufficientDriver = 35
-cudaErrorInvalidHostPointer = 16
-cudaChannelFormatKindFloat = 2
 cudaSuccess = 0
+cudaFilterModePoint = 0
+cudaErrorMapBufferObjectFailed = 14
+cudaErrorInvalidDeviceFunction = 8
+cudaErrorInvalidTexture = 18
+cudaErrorInvalidMemcpyDirection = 21
+cudaErrorMixedDeviceExecution = 28
+cudaErrorLaunchFailure = 4
 cudaFilterModeLinear = 1
+cudaChannelFormatKindSigned = 0
+cudaErrorPriorLaunchFailure = 5
 cudaMemcpyHostToHost = 0
+cudaRoundNearest = 0
+cudaErrorInvalidTextureBinding = 19
+cudaRoundMinInf = 3
+cudaAddressModeWrap = 0
+cudaErrorInvalidConfiguration = 9
+cudaErrorCudartUnloading = 29
+cudaErrorInitializationError = 3
+cudaAddressModeClamp = 1
+cudaErrorUnknown = 30
+cudaErrorSetOnActiveProcess = 36
+cudaChannelFormatKindUnsigned = 1
+cudaErrorInvalidValue = 11
+cudaRoundZero = 1
+cudaMemcpyHostToDevice = 1
+cudaErrorInvalidChannelDescriptor = 20
+cudaErrorInvalidFilterSetting = 26
+cudaErrorInvalidHostPointer = 16
+cudaErrorInvalidPitchValue = 12
+cudaErrorStartupFailure = 127
+cudaErrorInvalidDevice = 10
+cudaErrorLaunchTimeout = 6
+cudaErrorTextureNotBound = 24
+cudaErrorInsufficientDriver = 35
+cudaErrorAddressOfConstant = 22
+cudaErrorSynchronizationError = 25
+cudaErrorNotYetImplemented = 31
+cudaRoundPosInf = 2
+cudaErrorApiFailureBase = 10000
+cudaChannelFormatKindFloat = 2
+cudaErrorInvalidResourceHandle = 33
+cudaReadModeElementType = 0
+cudaMemcpyDeviceToHost = 2
+cudaErrorInvalidNormSetting = 27
 cudaErrorInvalidDevicePointer = 17
-cudaChannelFormatKindNone = 3
+cudaErrorMemoryValueTooLarge = 32
+cudaErrorInvalidSymbol = 13
+cudaErrorUnmapBufferObjectFailed = 15
+cudaErrorLaunchOutOfResources = 7
+cudaErrorTextureFetchFailed = 23
+cudaErrorMemoryAllocation = 2
 cudaErrorMissingConfiguration = 1
+cudaChannelFormatKindNone = 3
+cudaErrorNotReady = 34
+cudaReadModeNormalizedFloat = 1
+cudaMemcpyDeviceToDevice = 3
 # ./my_CUDA2100_vector_types.h 55
 class char1(Structure):
     pass
@@ -412,7 +412,6 @@ dim3._fields_ = [
     ('y', c_uint),
     ('z', c_uint),
 ]
-ptrdiff_t = c_long
 size_t = c_ulong
 # /usr/local/cuda/include/driver_types.h 113
 class cudaChannelFormatDesc(Structure):
@@ -1320,7 +1319,7 @@ __all__ = ['cudaMalloc3DArray', 'cudaGetTextureAlignmentOffset',
            'cudaMemcpyFromSymbol', 'cudaError_t', 'cudaMemset',
            'cudaRoundMode', 'cudaErrorUnmapBufferObjectFailed',
            'cudaGetTextureReference', 'cudaMemcpy2DToArrayAsync',
-           'cudaMemset2D', 'cudaRoundPosInf', 'ptrdiff_t',
+           'cudaMemset2D', 'cudaRoundPosInf',
            'cudaErrorInvalidMemcpyDirection', 'short4',
            'cudaErrorInvalidDevice', 'cudaFree', 'short1', 'short2',
            'short3', 'cudaAddressModeClamp', 'cudaEvent_t',
