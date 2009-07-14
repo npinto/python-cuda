@@ -16,7 +16,7 @@ def get_lib(name, cdll_opts = None):
         reg = wreg.ConnectRegistry(None, wreg.HKEY_LOCAL_MACHINE)
         key = wreg.OpenKey(reg, r"SOFTWARE\NVIDIA Corporation\Installed Products\NVIDIA CUDA")
         cuda_bin = os.path.join(wreg.QueryValueEx(key, "InstallDir")[0],"bin")
-        libname = os.path.join(cuda_bin, "%.dll" % name)
+        libname = os.path.join(cuda_bin, "%s.dll" % name)
         if name == "cuda":
             libname = "nvcuda.dll"
     if cdll_opts:
