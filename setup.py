@@ -25,6 +25,10 @@ setup(
 
     package_dir = {'cuda':'cuda'},
 
+    install_requires=[
+    ],
+
+
 #     author='',
 #     author_email='',
 #     url='',

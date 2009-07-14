@@ -48,7 +48,9 @@ def clean_only_headers(xml_filename, only_headers):
         file = field.get('file')
         if file is not None:
             if not oheaders.has_key(file):
-                root.remove(field)
+                #print "%s %s" % (field.tag, file)
+                if not field.get('location') == "f8:214":
+                    root.remove(field)
     gcc_xml.write(xml_filename)
 
 def main(args=None):
