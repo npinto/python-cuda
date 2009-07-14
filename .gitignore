@@ -1,4 +1,5 @@
 *.pyc
+*.py~
 junk
 build
 *egg*

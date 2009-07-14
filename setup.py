@@ -27,6 +27,8 @@ setup(
 
     package_dir = {'cuda':'cuda'},
 
+    package_data = {'cuda.sugar.fft': ['*.cu'] },
+
     install_requires=[
     ],
 
