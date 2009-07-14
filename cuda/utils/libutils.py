@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from ctypes import CDLL
+import ctypes 
 import os
 import platform
 
@@ -19,10 +19,12 @@ def get_lib(name, cdll_opts = None):
         libname = os.path.join(cuda_bin, "%s.dll" % name)
         if name == "cuda":
             libname = "nvcuda.dll"
+        lib = ctypes.windll.LoadLibrary( libname ) 
+        return lib
     if cdll_opts:
-        lib = CDLL(libname, cdll_opts)
+        lib = ctypes.CDLL(libname, cdll_opts)
     else: 
-        lib = CDLL(libname)
+        lib = ctypes.CDLL(libname)
     return lib
 
 if __name__ == "__main__":
