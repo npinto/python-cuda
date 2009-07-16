@@ -125,7 +125,9 @@ def compile(source, nvcc="nvcc", options=[], keep=False,
         try:
             getattr( os , 'getuid' )	
         except:
-            os.getuid = os.getenv('USERNAME')
+            def getuid():
+                return os.getenv('USERNAME')
+            os.getuid = getuid
 
         from tempfile import gettempdir
         cache_dir = join(gettempdir(), 

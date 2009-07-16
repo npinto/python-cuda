@@ -25,4 +25,4 @@ if platform.system() == "Windows":
     key = wreg.OpenKey(reg, r"SOFTWARE\NVIDIA Corporation\Installed Products\NVIDIA CUDA")
     import os
     cuda_bin = os.path.join(wreg.QueryValueEx(key, "InstallDir")[0],"bin")
-    os.environ['PATH'] += os.path.join(os.path.pathsep, cuda_bin)
+    os.environ['PATH'] += os.path.pathsep + cuda_bin
