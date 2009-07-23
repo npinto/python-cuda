@@ -3,16 +3,21 @@ Description
 
 Python bindings for CUDA 2.1 with numpy integration
 
-Mailing list
+Authors
+-------
+
+Justin Riley (jtriley@mit.edu)
+Nicolas Pinto (pinto@mit.edu)
+
+Mailing List
 ============
 
 http://groups.google.com/group/python-cuda
 
-Authors
-======
+Bug Tracker
+===========
 
-Justin Riley (jtriley@mit.edu)
-Nicolas Pinto (pinto@mit.edu)
+http://npinto.lighthouseapp.com/projects/24960-python-cuda
 
 License
 =======
