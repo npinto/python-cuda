@@ -15,7 +15,7 @@ error = logger.error
 import fft 
 import cuda.cufft as cufft
 import cuda.cuda as cuda
-from cuda.kernel.kernelfactoryrt import SourceModule
+from cuda.sugar.kernel.kernelfactoryrt import SourceModule
 
 def _centered(arr, newsize):
     # Return the center newsize portion of the array.

@@ -1,6 +1,6 @@
 import ctypes
 from cuda.cuda import *
-from cuda.kernel.compiler import compile
+from cuda.sugar.kernel.compiler import compile
 
 class SourceModule(object):
     """ Wraps a ctypes CDLL instance for accessing CUDA kernels.

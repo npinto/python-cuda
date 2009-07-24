@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from cuda.cuda import cudaThreadSynchronize
 from cuda.cublas import cublasInit, cublasShutdown, cublasSgemm
-from cuda.memory import Linear
+from cuda.sugar.memory import Linear
 
 from numpy import empty_like,dot
 from numpy.random import randn

@@ -4,8 +4,8 @@ from ctypes import *
 from time import time
 
 from cuda.cublas import *
-from cuda.memory import Linear
 from cuda.cuda import cudaThreadSynchronize
+from cuda.sugar.memory import Linear
 
 from numpy import dot
 from numpy.random import randn

@@ -29,8 +29,7 @@ class cu_CUDA(object):
         status = cuCtxCreate(byref(self.context),0,self.device)
         if status != CUDA_SUCCESS:
             cuCtxDetach(self.context)
-            raise GPUException(
-                "Failed to create CUDA context")
+            raise GPUException("Failed to create CUDA context")
         self.getInfo()
 
     def getSourceModule(self,name=None):
@@ -104,31 +103,3 @@ class cu_CUDA(object):
         s.append(21*"-")
         s.append(str(i["properties"]))
         return "\n".join(s)
-
-def getMemory(d,dtype=c_int):
-    gmem =  CUdeviceptr()
-    if isinstance(d,(int,long)):
-        size = d*sizeof(dtype)
-        status = cuMemAlloc(byref(gmem),size)
-        if status != CUDA_SUCCESS:
-            raise GPUException(
-            "Failed to allocate memory")
-        cuMemsetD8(gmem,0,size)
-    else:
-        size = len(d)*sizeof(d._type_)
-        status = cuMemAlloc(byref(gmem),size)
-        if status != CUDA_SUCCESS:
-            raise GPUException(
-            "Failed to allocate memory")
-        cuMemcpyHtoD(gmem,d,size)
-    return gmem.value
-
-def devMemToTex(module,name,data,size):
-    tex = CUtexref()
-    nul = c_uint()
-    status = cuModuleGetTexRef(byref(tex),module,name)
-    if status != CUDA_SUCCESS:
-        raise GPUException(
-        "No such texture: %s" % name)
-    cuTexRefSetAddress(byref(nul),tex,data,size)
-    return tex
