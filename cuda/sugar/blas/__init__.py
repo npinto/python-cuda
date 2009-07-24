@@ -1,3 +1,3 @@
 from saxpy import *
-#from sdot import *
-#from sgemm import *
+from sdot import *
+from sgemm import *

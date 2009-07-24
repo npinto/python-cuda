@@ -4,7 +4,7 @@ from ctypes import *
 from time import time
 
 from cuda.cublas import *
-from cuda.memory import Linear
+from cuda.sugar.memory import Linear
 from cuda.cuda import cudaThreadSynchronize
 
 from numpy import dot

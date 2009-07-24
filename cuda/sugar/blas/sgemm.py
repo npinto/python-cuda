@@ -3,48 +3,54 @@ from cuda.cuda import cudaThreadSynchronize
 from cuda.cublas import cublasInit, cublasShutdown, cublasSgemm
 from cuda.sugar.memory import Linear
 
-from numpy import empty_like,dot
+import numpy 
 from numpy.random import randn
 
-# Size of square matrix
-N = 2
+def gpu_sgemm(a,b, alpha=1):
+    """ Single Precision Matrix Multiplication on GPU, expects two, two-dimensional numpy arrays as input. Arrays must be such that a.shape[1] == b.shape[0]. Optionally specify alpha for scalar multiplication"""
+    # init cublas
+    cublasInit()
 
-# init cublas
-cublasInit()
+    assert a.shape[1] == b.shape[0]
 
-# allocate host matrices
-A = randn(N,N).astype('float32')
-B = randn(N,N).astype('float32')
-C = empty_like(A).astype('float32')
+    c_shape = (a.shape[0], b.shape[1])
+    # allocate device matrices from host
+    dA = Linear(a.shape, order='F').from_numpy(a)
+    dB = Linear(b.shape, order='F').from_numpy(b)
+    dC = Linear(c_shape, order='F')
 
-# allocate device matrices from host
-dA = Linear(A.shape, order='F').from_numpy(A)
+    # transpose a/b ? t = yes, n = no
+    transa = 'n'
+    transb = 'n'
 
-dB = Linear(B.shape, order='F').from_numpy(B)
+    # compute with CUBLAS
+    cublasSgemm( transa, transb, a.shape[0], b.shape[1], a.shape[1], alpha, dA.ref, a.shape[0], dB.ref, b.shape[0], 0, dC.ref, a.shape[0] )
+    cudaThreadSynchronize()
+    # shutdown
+    cublasShutdown() 
+    return dC.to_numpy()
 
-dC = Linear(C.shape, order='F').from_numpy(C)
 
-# transpose a/b ? t = yes, n = no
-transa = 'n'
-transb = 'n'
 
-# compute with CUBLAS
-cublasSgemm( transa, transb, N, N, N, 1, dA.ref, N, dB.ref, N, 0, dC.ref, N )
-cudaThreadSynchronize()
+def test():
+    # Size of square matrix
+    N = 2
 
-# retrieve results
-C = dC.to_numpy()
+    # allocate host matrices
+    A = randn(3,N).astype('float32')
+    B = randn(3,5).astype('float32')
 
-# compute the cpu reference
-ref = dot(A,B)
+    # compute the cpu reference
+    ref = numpy.dot(A,B)
 
-print '-'*80
-print C 
-print '-'*80
+    print '-'*80
+    print ref 
+    print '-'*80
 
-print '-'*80
-print ref 
-print '-'*80
+    print '-'*80
+    print gpu_sgemm(A,B) 
+    print '-'*80
 
-# shutdown
-cublasShutdown() 
+
+if __name__ == "__main__":
+    test()

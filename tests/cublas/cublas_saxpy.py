@@ -7,7 +7,7 @@ from numpy.random import randn
 
 from cuda.cublas import *
 from cuda.cuda import cudaThreadSynchronize
-from cuda.memory import Linear
+from cuda.sugar.memory import Linear
 
 def embed_ipython():
     from IPython.Shell import IPShellEmbed
