@@ -1,59 +1,57 @@
 #!/bin/env python
-from time import time
-from ctypes import cast,c_float, POINTER
 
-from numpy import empty_like,dot
-from numpy.random import randn
-
-from cuda.cublas import *
-from cuda.cuda import cudaThreadSynchronize
-from cuda.memory import Linear
+import numpy as np
+from cuda.sugar.memory import Linear
+import cuda.sugar.blas as blas 
 
 class TestCublas:
+
     def embed_ipython():
         from IPython.Shell import IPShellEmbed
         ipshell = IPShellEmbed(user_ns = dict())
         ipshell()
 
-    def cpuSaxpy(a,b, alpha):
+    def cpu_saxpy(self, a, b, alpha):
         return (alpha*a+b)
 
     def test_saxpy(self):
         vlength = 8192
         alpha = 1
+        a = np.random.randn(1,vlength).astype('float32')
+        b = np.random.randn(1,vlength).astype('float32')
+        cpu_result = self.cpu_saxpy(a,b,alpha)
+        gpu_result = blas.gpu_saxpy(a,b,alpha)
 
-        # init cublas lib
-        cublasInit()
+        print cpu_result   
+        print gpu_result
 
-        # allocate host vectors
-        h_X = randn(1,vlength).astype('float32')
-        h_Y = randn(1,vlength).astype('float32')
+        assert np.allclose(cpu_result, gpu_result) == True
 
-        # allocate device vectors from host
-        d_X = Linear(h_X.shape).from_numpy(h_X)
-        d_Y = Linear(h_Y.shape).from_numpy(h_Y)
+    def test_sdot(self):
+        vlength = 1024
+        n2 = vlength*vlength
+        a = np.random.randn(1,n2).astype('float32')
+        b = np.random.randn(1,n2).astype('float32')
+        cpu_result = np.dot(a,b.transpose())[0][0]
+        gpu_result = blas.gpu_sdot(a, b.transpose())
 
-        print "-"*80
-        print 'h_X:'
-        print h_X
-        print "-"*80
+        print cpu_result
+        print gpu_result
 
-        print "-"*80
-        print 'h_Y:'
-        print h_Y
-        print "-"*80
+        assert np.allclose([cpu_result], [gpu_result], atol=1e-1) == True
 
-        print "-"*80
-        print 'CPU RESULT:'
-        print cpuSaxpy(h_X,h_Y,alpha)
-        print "-"*80
-
-        # execute cublasSaxpy and sync threads
-        #embed_ipython()
-        cublasSaxpy(vlength,alpha,d_X.ref,1,d_Y.ref,1)
-        cudaThreadSynchronize()
-
-        print "-"*80
-        print 'GPU RESULT:'
-        print d_Y.to_numpy()
-        print "-"*80
+    def test_sgemm(self):
+        M=7; N=5; P=3;
+        a = np.random.randn(M,N).astype('float32')
+        b = np.random.randn(N,P).astype('float32')
+        cpu_result = np.dot(a,b)
+        gpu_result = blas.gpu_sgemm(a,b)
+        print cpu_result
+        print gpu_result
+        assert np.allclose(cpu_result, gpu_result)
+        
+if __name__ == "__main__":
+    test_cublas = TestCublas()
+    test_cublas.test_saxpy()
+    test_cublas.test_sdot()
+    test_cublas.test_sgemm()
