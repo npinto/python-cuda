@@ -22,3 +22,6 @@ if platform.system() == "Windows":
 
 import atexit
 atexit.register(cuda.cudaThreadExit)
+
+def debug():
+    utils.enable_debug()

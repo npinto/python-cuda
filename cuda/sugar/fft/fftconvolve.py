@@ -4,11 +4,7 @@ import numpy
 import scipy.signal
 
 import logging
-logger = logging.getLogger(os.path.basename(__file__))
-debug = logger.debug
-info = logger.info
-warn = logger.warn
-error = logger.error
+log = logging.getLogger('python-cuda')
 
 #from conv_gold import get_convolution_cpu, get_check_results,centered
 
@@ -28,11 +24,11 @@ def _centered(arr, newsize):
 
 def check_results(h_ResultCPU, h_ResultGPU):
     L2norm = numpy.linalg.norm(h_ResultCPU - h_ResultGPU)/numpy.linalg.norm(h_ResultCPU)
-    info('L2 norm: %s' % L2norm)
+    log.info('L2 norm: %s' % L2norm)
     if L2norm < 1e-6:
-        info("TEST PASSED")
+        log.info("TEST PASSED")
     else:
-        info("TEST FAILED")
+        log.info("TEST FAILED")
 
 def _i_div_up(a, b):
     """ Round a / b to nearest higher integer value """
@@ -52,7 +48,7 @@ def cuda_check_error(status):
     try:
         assert status == 0 
     except AssertionError,e:
-        error('ERROR: status = %s' % status)
+        log.error('ERROR: status = %s' % status)
 
 def _calc_fft_size(dataSize):
     # Highest non-zero bit position of dataSize
@@ -136,17 +132,17 @@ def fftconvolve2d(data, kernel, test=False):
     e = ctypes.sizeof(ctypes.c_float) * 8
     float2tex = cuda.cudaCreateChannelDesc(e, e, 0, 0, cuda.cudaChannelFormatKindFloat)
 
-    info("Input data size           : %i x %i" % (DATA_W, DATA_H))
-    info("Convolution kernel size   : %i x %i" % (KERNEL_W, KERNEL_H))
-    info("Padded image size         : %i x %i" % (DATA_W + PADDING_W, DATA_H + PADDING_H))
-    info("Aligned padded image size : %i x %i" % (FFT_W, FFT_H))
+    log.debug("Input data size           : %i x %i" % (DATA_W, DATA_H))
+    log.debug("Convolution kernel size   : %i x %i" % (KERNEL_W, KERNEL_H))
+    log.debug("Padded image size         : %i x %i" % (DATA_W + PADDING_W, DATA_H + PADDING_H))
+    log.debug("Aligned padded image size : %i x %i" % (FFT_W, FFT_H))
 
-    info(">>> Loading Kernels...")
+    log.debug("Loading Kernels...")
     kernel_src = os.path.join(os.path.dirname(__file__), 'fftconvolve2d_kernel.cu')
     fftconvolve2d = SourceModule(open(kernel_src,'r').read(), no_extern_c=True)
 
-    info(">>> Extracting functions from Kernel...")
-    info("[*] Configuring Block/Grid dimensions...")
+    log.debug("Extracting functions from Kernel...")
+    log.debug("[*] Configuring Block/Grid dimensions...")
     # Block width should be a multiple of maximum coalesced write size 
     # for coalesced memory writes in padKernel() and padData()
     threadBlock = cuda.dim3(16, 12, 1)
@@ -155,31 +151,31 @@ def fftconvolve2d(data, kernel, test=False):
     sixteen = cuda.dim3(16,1,1)
     onetwentyeight = cuda.dim3(128,1,1)
     # Extract kernel functions from SourceModule
-    info("[*] Loading padKernel...")
+    log.debug("[*] Loading padKernel...")
     padKernel = fftconvolve2d.padKernel(kernelBlockGrid, threadBlock)
-    info("[*] Loading padData...")
+    log.debug("[*] Loading padData...")
     padData = fftconvolve2d.padData(dataBlockGrid, threadBlock)
-    info("[*] Loading modulateAndNormalize...")
+    log.debug("[*] Loading modulateAndNormalize...")
     modulateAndNormalize = fftconvolve2d.modulateAndNormalize(sixteen, onetwentyeight)
 
-    info(">>> Allocating memory...")
+    log.debug("Allocating memory...")
 
-    #info("[*] Generating random input data...")
+    #log.debug("[*] Generating random input data...")
     #h_Kernel = numpy.random.uniform(0,1,(KERNEL_W,KERNEL_H)).astype(numpy.complex64)
     #h_Data = numpy.random.uniform(0,1,(DATA_W,DATA_H)).astype(numpy.complex64)
 
-    info("[*] Allocating host memory for results...")
+    log.debug("[*] Allocating host memory for results...")
     h_ResultGPU = numpy.zeros((FFT_W,FFT_H)).astype(numpy.complex64)
 
-    info("[*] Allocating linear device memory (Complex)...")
+    log.debug("[*] Allocating linear device memory (Complex)...")
     d_PaddedKernel = fft._get_cufft_signal(numpy.zeros((FFT_W,FFT_H)).astype(numpy.complex64))
     d_PaddedData = fft._get_cufft_signal(numpy.zeros((FFT_W,FFT_H)).astype(numpy.complex64))
 
-    info("[*] Allocating cuda array device memory...")
+    log.debug("[*] Allocating cuda array device memory...")
     a_Kernel = _get_cuda_array(h_Kernel,float2tex)
     a_Data = _get_cuda_array(h_Data, float2tex)
 
-    info("[*] Binding textures...")
+    log.debug("[*] Binding textures...")
     texKernel = ctypes.cast(ctypes.c_void_p(), ctypes.POINTER(cuda.textureReference))
     cuda_check_error(cuda.cudaGetTextureReference(texKernel,'texKernel')) 
     texData = ctypes.cast(ctypes.c_void_p(), ctypes.POINTER(cuda.textureReference))
@@ -193,60 +189,60 @@ def fftconvolve2d(data, kernel, test=False):
     cuda_check_error(cuda.cudaGetChannelDesc(fdesc2, a_Data))
     cuda_check_error(cuda.cudaBindTextureToArray(texData, a_Data, fdesc2))
 
-    info('>>> Calling kernels')
-    info("[*] Padding convolution kernel")
+    log.debug('Calling kernels')
+    log.debug("[*] Padding convolution kernel")
     padKernel(d_PaddedKernel, FFT_W, FFT_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
 
-    info("[*] Padding input data array")
+    log.debug("[*] Padding input data array")
     padData(d_PaddedData, FFT_W, FFT_H, DATA_W, DATA_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
 
     # Not including kernel transformation into time measurement,
     # since convolution kernel is not changed very frequently
-    info('>>> Calling CUFFT')
-    info("[*] Transforming convolution kernel (CUFFT)...")
+    log.debug('Calling CUFFT')
+    log.debug("[*] Transforming convolution kernel (CUFFT)...")
     FFTplan = fft._get_plan(h_ResultGPU.shape)
     cuda_check_error(cufft.cufftExecC2C(FFTplan, d_PaddedKernel, d_PaddedKernel, cufft.CUFFT_FORWARD))
-    info("[*] Transforming data (CUFFT)...")
+    log.debug("[*] Transforming data (CUFFT)...")
     cuda_check_error(cuda.cudaThreadSynchronize())
     cuda_check_error(cufft.cufftExecC2C(FFTplan, d_PaddedData, d_PaddedData, cufft.CUFFT_FORWARD))
 
-    info('>>> Calling kernel')
-    info("[*] modulateAndNormalize()")
+    log.debug('Calling kernel')
+    log.debug("[*] modulateAndNormalize()")
     modulateAndNormalize(d_PaddedData, d_PaddedKernel, FFT_W * FFT_H)
-    info('>>> Calling CUFFT')
-    info("[*] Inverse transforming data (CUFFT)...")
+    log.debug('Calling CUFFT')
+    log.debug("[*] Inverse transforming data (CUFFT)...")
     cuda_check_error(cufft.cufftExecC2C(FFTplan, d_PaddedData, d_PaddedData, cufft.CUFFT_INVERSE))
     cuda_check_error(cuda.cudaThreadSynchronize())
 
-    info(">>> Copying results from GPU...")
+    log.debug("Copying results from GPU...")
     cuda_check_error(cuda.cudaMemcpy(h_ResultGPU.ctypes.data, d_PaddedData, FFT_SIZE, cuda.cudaMemcpyDeviceToHost))
     h_ResultGPU = _centered(h_ResultGPU.real[0:dh,0:dw], abs(s2-s1)+1)
 
     if test:
-        info(">>> Checking GPU results...")
-        info("[*] running reference CPU convolution...")
+        log.info("Checking GPU results...")
+        log.info("[*] running reference CPU convolution...")
         #conv_gold = get_convolution_cpu() 
         #conv_gold(_get_float2_ptr(h_ResultCPU), _get_float2_ptr(h_Data), _get_float2_ptr(h_Kernel), DATA_W, DATA_H, KERNEL_W, KERNEL_H, KERNEL_X, KERNEL_Y)
         h_ResultCPU = scipy.signal.fftconvolve(h_Data.real, h_Kernel.real, mode='valid')
-        info( "[*] comparing the results...")
+        log.info( "[*] comparing the results...")
         check_results(h_ResultCPU, h_ResultGPU)
 
-    info( ">>> Shutting down...")
+    log.debug( "Shutting down...")
 
-    info( "[*] Destroying FFT plans...")
+    log.debug( "[*] Destroying FFT plans...")
     cuda_check_error(cufft.cufftDestroy(FFTplan))
 
-    info( "[*] Unbinding textures...")
+    log.debug( "[*] Unbinding textures...")
     cuda_check_error(cuda.cudaUnbindTexture(texData))
     cuda_check_error(cuda.cudaUnbindTexture(texKernel))
 
-    info( "[*] Freeing device memory...")
+    log.debug( "[*] Freeing device memory...")
     cuda_check_error(cuda.cudaFree(d_PaddedData))
     cuda_check_error(cuda.cudaFree(d_PaddedKernel))
     cuda_check_error(cuda.cudaFreeArray(a_Data))
     cuda_check_error(cuda.cudaFreeArray(a_Kernel))
 
-    info( "[*] CUDA Thread Exit")
+    log.debug( "[*] CUDA Thread Exit")
     cuda.cudaThreadExit()
 
     return h_ResultGPU

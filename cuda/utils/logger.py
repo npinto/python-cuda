@@ -46,3 +46,6 @@ if platform.system() == "Linux":
     formatter = logging.Formatter("%(filename)s:%(lineno)d - %(levelname)s - %(message)s\n")
     syslog_handler.setFormatter(formatter)
     logger.addHandler(syslog_handler)
+
+def enable_debug():
+    logger.setLevel(logging.DEBUG)

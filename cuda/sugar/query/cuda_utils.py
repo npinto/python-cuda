@@ -28,14 +28,14 @@ def has_cuda_device():
     for dev in range(0, dev_count):
         dev_prop = cuda.cudaDeviceProp()
         retval = cuda.cudaGetDeviceProperties(byref(dev_prop), dev)
-        if retval == 3:
-            log.debug( "Device %s does not support CUDA" % dev)
-            continue
         if dev_prop.major == 9999 and dev_prop.minor == 9999:
             log.debug( "Device %s does not support cuda." % dev)
             continue
         cuda_enabled = True
         break
+
+    if not cuda_enabled:
+        log.debug("There is no device supporting CUDA")
     return cuda_enabled
 
 def needs_emulation():
@@ -84,4 +84,3 @@ def get_devices():
 
         if CUDART_VERSION >= 2000:
             log.debug("Concurrent copy and execution:                 %s" % bool(dev_prop.deviceOverlap))
-    log.debug( "Test PASSED")
